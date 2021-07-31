@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { login } from '../../actions/session'
+import { login, createNewUser } from '../../actions/session';
 import LandingPage from './landing_page';
 
 const mSTP = (state) => ({
@@ -8,6 +8,7 @@ const mSTP = (state) => ({
 
 const mDTP = (dispatch) => ({
   login: (user) => dispatch(login(user)),
+  createNewUser: (user) => dispatch(createNewUser(user)),
 });
 
 export default connect(mSTP, mDTP)(LandingPage);

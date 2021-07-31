@@ -200,35 +200,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "login": () => (/* binding */ login),
 /* harmony export */   "logout": () => (/* binding */ logout)
 /* harmony export */ });
-/* harmony import */ var _utils_session__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/session */ "./frontend/utils/session.js");
+/* harmony import */ var _utils_session_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/session_util */ "./frontend/utils/session_util.js");
 
 var RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 
 var receiveCurrentUser = function receiveCurrentUser(user) {
   return {
-    type: RECEIVE_USER,
+    type: RECEIVE_CURRENT_USER,
     user: user
   };
 };
 
 var createNewUser = function createNewUser(user) {
   return function (dispatch) {
-    return _utils_session__WEBPACK_IMPORTED_MODULE_0__.postUser(user).then(function (user) {
+    return _utils_session_util__WEBPACK_IMPORTED_MODULE_0__.postUser(user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     });
   };
 };
 var login = function login(user) {
   return function (dispatch) {
-    return _utils_session__WEBPACK_IMPORTED_MODULE_0__.postSession(user).then(function (user) {
+    return _utils_session_util__WEBPACK_IMPORTED_MODULE_0__.postSession(user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     });
   };
 };
 var logout = function logout() {
   return function (dispatch) {
-    return _utils_session__WEBPACK_IMPORTED_MODULE_0__.deleteSession().then(function () {
+    return _utils_session_util__WEBPACK_IMPORTED_MODULE_0__.deleteSession().then(function () {
       return dispatch(receiveCurrentUser());
     });
   };
@@ -318,7 +318,11 @@ var LandingPage = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var forms = this.props.currentUser ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signin_form__WEBPACK_IMPORTED_MODULE_1__.default, {
         login: this.props.login
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signup_form__WEBPACK_IMPORTED_MODULE_2__.default, null));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signup_form__WEBPACK_IMPORTED_MODULE_2__.default, {
+        currentUser: this.props.currentUser,
+        createNewUser: this.props.createNewUser,
+        login: this.props.login
+      }));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "landing-page-title"
       }, "phasebook"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Connect with friends and the world around you on Phasebook.")), forms);
@@ -360,6 +364,9 @@ var mDTP = function mDTP(dispatch) {
   return {
     login: function login(user) {
       return dispatch((0,_actions_session__WEBPACK_IMPORTED_MODULE_1__.login)(user));
+    },
+    createNewUser: function createNewUser(user) {
+      return dispatch((0,_actions_session__WEBPACK_IMPORTED_MODULE_1__.createNewUser)(user));
     }
   };
 };
@@ -457,7 +464,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         className: "signin-form-label-email"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "text",
-        placeholder: "Email or Phone Number"
+        placeholder: "Email"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "signin-form-label-pw"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -494,6 +501,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -521,31 +530,165 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(SigninForm);
 
-  function SigninForm() {
+  function SigninForm(props) {
+    var _this;
+
     _classCallCheck(this, SigninForm);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // setup a new Date object and get current date
+
+    _this.date = new Date();
+
+    var dateidx = _this.date.getMonth();
+
+    _this.currentDate = {
+      month: _this.allMonths[dateidx],
+      day: _this.date.getDate(),
+      year: _this.date.getFullYear()
+    };
+    _this.state = {
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      birthMonth: _this.currentDate.month,
+      birthDate: _this.currentDate.day,
+      birthYear: _this.currentDate.year,
+      gender: ''
+    }; // Map over the array of allMonths, returning <select> elements
+
+    _this.months = _this.allMonths.map(function (month, idx) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+        key: idx,
+        value: month
+      }, month);
+    }); // Create an array of days, then map over them returning <select> elements
+
+    _this.days = [];
+
+    for (var i = 1; i < 32; i++) {
+      _this.days.push(i);
+    }
+
+    _this.days = _this.days.map(function (day, idx) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+        key: idx,
+        value: day
+      }, day);
+    }); // Create an array of years, then map over them returning <select> elements
+
+    _this.years = [];
+
+    for (var _i = 1905; _i < 2022; _i++) {
+      _this.years.push(_i);
+    } // debugger;
+
+
+    _this.years = _this.years.map(function (year, idx) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+        key: idx,
+        value: year
+      }, year);
+    });
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(SigninForm, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      console.log(this.props.currentUser);
+      var user = Object.assign({}, this.state, {
+        birthday: "".concat(this.state.birthYear, "/").concat(this.allMonths.indexOf(this.state.birthMonth) + 1, "/").concat(this.state.birthDate)
+      });
+      this.props.createNewUser(user);
+      console.log(user);
+      console.log(this.props.currentUser);
+    }
+  }, {
+    key: "updateField",
+    value: function updateField(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-        id: "signup-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-        className: "signup-form-label-email"
+        id: "signup-form",
+        className: "sf",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "It's quick and easy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-firstname"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "text",
-        placeholder: "Email or Phone Number"
+        placeholder: "First name",
+        value: this.state.first_name,
+        onChange: this.updateField('first_name')
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-        className: "signup-form-label-pw"
+        className: "sf-label-lastname"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        placeholder: "Last name",
+        value: this.state.last_name,
+        onChange: this.updateField('last_name')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-email"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        placeholder: "Email",
+        value: this.state.email,
+        onChange: this.updateField('email')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-pw"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "password",
-        placeholder: "Password"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        placeholder: "New password",
+        value: this.state.password,
+        onChange: this.updateField('password')
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        id: "sf-section-birthdate"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Birthday"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-bday-month"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+        defaultValue: this.state.birthMonth,
+        onChange: this.updateField('birthMonth')
+      }, this.months)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-bday-day"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+        defaultValue: this.state.birthDate,
+        onChange: this.updateField('birthDate')
+      }, this.days)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "sf-label-bday-year"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+        defaultValue: this.state.birthYear,
+        onChange: this.updateField('birthYear')
+      }, this.years))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        id: "sf-section-gender"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Gender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Male", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "radio",
+        name: "gender",
+        value: "male",
+        onChange: this.updateField('gender')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Female", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "radio",
+        name: "gender",
+        value: "female",
+        onChange: this.updateField('gender')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "Custom", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "radio",
+        name: "gender",
+        value: "other",
+        onChange: this.updateField('gender')
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "DISCLAIMER: This is a TEST website, please do NOT use sensitive information.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "submit",
         value: "Sign Up",
-        className: "signup-form-button"
+        className: "sf-button"
       }));
     }
   }]);
@@ -602,7 +745,7 @@ var _nullSession = {
   switch (action.type) {
     case _actions_session__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_CURRENT_USER:
       return Object.assign({}, {
-        currentUser: action.user
+        id: action.currentUser.id
       });
 
     case _actions_session__WEBPACK_IMPORTED_MODULE_0__.LOGOUT_CURRENT_USER:
@@ -627,27 +770,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/root_reducer */ "./frontend/reducers/root_reducer.js");
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers/root_reducer */ "./frontend/reducers/root_reducer.js");
 
 
 
 
 
-var configureStore = function configureStore(preloadedState) {
-  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_1__.default, preloadedState, (0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_2__.default, (redux_logger__WEBPACK_IMPORTED_MODULE_0___default())));
+var configureStore = function configureStore() {
+  var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_2__.default, preloadedState, (0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_0__.default, (redux_logger__WEBPACK_IMPORTED_MODULE_1___default())));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configureStore);
 
 /***/ }),
 
-/***/ "./frontend/utils/session.js":
-/*!***********************************!*\
-  !*** ./frontend/utils/session.js ***!
-  \***********************************/
+/***/ "./frontend/utils/session_util.js":
+/*!****************************************!*\
+  !*** ./frontend/utils/session_util.js ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -661,14 +805,18 @@ var postUser = function postUser(user) {
   return $.ajax({
     method: "POST",
     url: "/api/users",
-    data: user
+    data: {
+      user: user
+    }
   });
 };
 var postSession = function postSession(user) {
   return $.ajax({
     method: "POST",
     url: "/api/session",
-    data: user
+    data: {
+      user: user
+    }
   });
 };
 var deleteSession = function deleteSession() {
@@ -37107,7 +37255,18 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById("root");
-  var store = (0,_store_store__WEBPACK_IMPORTED_MODULE_3__.default)();
+  var preloadedState = undefined;
+  debugger;
+
+  if (window.currentUser) {
+    preloadedState = {
+      session: {
+        id: window.currentUser.id
+      }
+    };
+  }
+
+  var store = (0,_store_store__WEBPACK_IMPORTED_MODULE_3__.default)(preloadedState);
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__.default, {
     store: store
   }), root);

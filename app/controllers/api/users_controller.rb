@@ -1,10 +1,14 @@
+require 'byebug'
+
 class Api::UsersController < ApplicationController
   # Create a new user
   def create
     @user = User.new(user_params)
     if @user.save
       login!(@user)
-      redirect
+      render "api/posts/show"
+    else
+
     end
   end
 

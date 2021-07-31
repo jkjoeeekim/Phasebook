@@ -5,7 +5,16 @@ import createStore from './store/store';
 
 document.addEventListener("DOMContentLoaded", () => {
   let root = document.getElementById("root");
-  let store = createStore();
+  let preloadedState = undefined;
+  debugger
+  if (window.currentUser) {
+    preloadedState = {
+      session: {
+        id: window.currentUser.id
+      }
+    }
+  }
+  let store = createStore(preloadedState);
 
   ReactDOM.render(<Root store={store} />, root);
 });

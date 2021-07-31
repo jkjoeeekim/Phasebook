@@ -9,7 +9,7 @@ export default class LandingPage extends React.Component {
     ) : (
       <div>
         <SigninForm login={this.props.login} />
-        <SignupForm />
+        <SignupForm currentUser={this.props.currentUser} createNewUser={this.props.createNewUser} login={this.props.login} />
       </div>
     );
 
