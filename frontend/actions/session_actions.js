@@ -1,24 +1,29 @@
-import * as SessionAPIUtil from '../utils/session_util';
+import * as APIUtils from '../utils/api_utils';
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 
 const receiveCurrentUser = (user) => ({
   type: RECEIVE_CURRENT_USER,
-  user: user,
+  currentUser: user,
 });
 
+const removeCurrentUser = () => ({
+  type: LOGOUT_CURRENT_USER,
+  currentUser: null
+})
+
 export const createNewUser = (user) => (dispatch) => (
-  SessionAPIUtil.postUser(user)
+  APIUtils.postUser(user)
     .then((user) => dispatch(receiveCurrentUser(user)))
 );
 
 export const login = (user) => (dispatch) => (
-  SessionAPIUtil.postSession(user)
+  APIUtils.postSession(user)
     .then((user) => dispatch(receiveCurrentUser(user)))
 );
 
 export const logout = () => (dispatch) => (
-  SessionAPIUtil.deleteSession()
-    .then(() => dispatch(receiveCurrentUser()))
+  APIUtils.deleteSession()
+    .then(() => dispatch(removeCurrentUser()))
 );

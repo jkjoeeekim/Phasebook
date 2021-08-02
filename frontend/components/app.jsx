@@ -1,9 +1,9 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import LandingPageContainer from './landing_page/landing_page_container';
+import { AuthRoute } from '../utils/route_util';
 
 export default () => (
   <div>
-    <Route path="/" component={LandingPageContainer} />
+    {/* <Route path="/" component={LandingPageContainer} /> */}
+    <AuthRoute exact path="/"/>
   </div>
 );

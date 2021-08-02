@@ -1,3 +1,4 @@
+// Create a new User
 export const postUser = (user) => (
   $.ajax({
     method: "POST",
@@ -6,6 +7,7 @@ export const postUser = (user) => (
   })
 );
 
+// Sign in existing User
 export const postSession = (user) => (
   $.ajax({
     method: "POST",
@@ -14,9 +16,18 @@ export const postSession = (user) => (
   })
 );
 
+// Log out User
 export const deleteSession = () => (
   $.ajax({
     method: "DELETE",
     url: "/api/session"
+  })
+);
+
+// Fetch User
+export const fetchUser = (userId) => (
+  $.ajax({
+    method: "GET",
+    url: `/api/users/${userId}`
   })
 );

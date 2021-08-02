@@ -61,7 +61,6 @@ export default class SigninForm extends React.Component {
     for (let i = 1905; i < 2022; i++) {
       this.years.push(i);
     }
-    // debugger;
     this.years = this.years.map((year, idx) => {
       return (
         <option key={idx} value={year}>{year}</option>
@@ -75,6 +74,16 @@ export default class SigninForm extends React.Component {
     e.preventDefault();
     console.log(this.props.currentUser);
     let user = Object.assign({}, this.state, { birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}` });
+    this.setState({
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      birthMonth: this.currentDate.month,
+      birthDate: this.currentDate.day,
+      birthYear: this.currentDate.year,
+      gender: '',
+    });
     this.props.createNewUser(user);
     console.log(user);
     console.log(this.props.currentUser);
