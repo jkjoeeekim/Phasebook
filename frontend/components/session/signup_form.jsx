@@ -72,7 +72,6 @@ export default class SigninForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.props.currentUser);
     let user = Object.assign({}, this.state, { birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}` });
     this.setState({
       first_name: '',
@@ -85,8 +84,6 @@ export default class SigninForm extends React.Component {
       gender: '',
     });
     this.props.createNewUser(user);
-    console.log(user);
-    console.log(this.props.currentUser);
   }
 
   updateField(field) {
