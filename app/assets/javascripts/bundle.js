@@ -351,6 +351,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
     key: "displaySignupForm",
     value: function displaySignupForm(e) {
       e.preventDefault();
+      document.getElementById("signup-form-div").style.display = 'block';
       document.getElementById("signup-form").style.display = 'block';
     }
   }, {
@@ -497,7 +498,9 @@ var SigninPage = /*#__PURE__*/function (_React$Component) {
         className: "login-page-desc"
       }, "Connect with friends and the world around you on Phasebook.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "login-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signin_form_container__WEBPACK_IMPORTED_MODULE_1__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_2__.default, null)));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signin_form_container__WEBPACK_IMPORTED_MODULE_1__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: "signup-form-div"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_session_signup_form_container__WEBPACK_IMPORTED_MODULE_2__.default, null)));
     }
   }]);
 
@@ -650,9 +653,18 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         id: "signup-form",
         className: "sf",
         onSubmit: this.handleSubmit
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "It's quick and easy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "signup-form-section-top"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "signup-form-section-top-title"
+      }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "signup-form-section-top-desc"
+      }, "It's quick and easy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "sf-label-fullname"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "sf-label-firstname"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        className: "sf-input-firstname",
         type: "text",
         placeholder: "First name",
         value: this.state.first_name,
@@ -660,11 +672,12 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "sf-label-lastname"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        className: "sf-input-lastname",
         type: "text",
         placeholder: "Last name",
         value: this.state.last_name,
         onChange: this.updateField('last_name')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "sf-label-email"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "text",

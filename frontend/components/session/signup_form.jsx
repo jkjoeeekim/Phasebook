@@ -93,17 +93,19 @@ export default class SigninForm extends React.Component {
   render() {
     return (
       <form id="signup-form" className="sf" onSubmit={this.handleSubmit}>
-        <section>
-          <p>Sign Up</p>
-          <p>It's quick and easy.</p>
+        <section className="signup-form-section-top">
+          <p className="signup-form-section-top-title">Sign Up</p>
+          <p className="signup-form-section-top-desc">It's quick and easy.</p>
         </section>
         <section>
-          <label className="sf-label-firstname">
-            <input type="text" placeholder="First name" value={this.state.first_name} onChange={this.updateField('first_name')} />
-          </label>
-          <label className="sf-label-lastname">
-            <input type="text" placeholder="Last name" value={this.state.last_name} onChange={this.updateField('last_name')} />
-          </label>
+          <section className="sf-label-fullname">
+            <label className="sf-label-firstname">
+              <input className="sf-input-firstname" type="text" placeholder="First name" value={this.state.first_name} onChange={this.updateField('first_name')} />
+            </label>
+            <label className="sf-label-lastname">
+              <input className="sf-input-lastname" type="text" placeholder="Last name" value={this.state.last_name} onChange={this.updateField('last_name')} />
+            </label>
+          </section>
           <label className="sf-label-email">
             <input type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
           </label>

@@ -13,7 +13,7 @@ export default class SigninPage extends React.Component {
         <div className="login-form">
           <SigninFormContainer />
         </div>
-        <div>
+        <div id="signup-form-div">
           <SignupFormContainer />
         </div>
       </section>

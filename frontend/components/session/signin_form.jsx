@@ -23,6 +23,7 @@ export default class SigninForm extends React.Component {
 
   displaySignupForm(e) {
     e.preventDefault();
+    document.getElementById("signup-form-div").style.display = 'block';
     document.getElementById("signup-form").style.display = 'block';
   }
 
