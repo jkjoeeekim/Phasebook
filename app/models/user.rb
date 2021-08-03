@@ -45,6 +45,11 @@ class User < ApplicationRecord
     through: :friendships,
     source: :friend
 
+  has_many :posts,
+    primary_key: :id,
+    foreign_key: :author_id,
+    class_name: :Post
+
   class << self
     def find_by_credentials(email, password)
       user = User.find_by(email: email)

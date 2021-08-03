@@ -329,6 +329,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.demoLogin = _this.demoLogin.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -353,6 +354,15 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       document.getElementById("signup-form-div").style.display = 'block';
       document.getElementById("signup-form").style.display = 'block';
+    }
+  }, {
+    key: "demoLogin",
+    value: function demoLogin(e) {
+      e.preventDefault();
+      this.props.login({
+        email: 'Joe@Kim.com',
+        password: '111111'
+      });
     }
   }, {
     key: "render",
@@ -383,6 +393,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "signin-demo-acc"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        onClick: this.demoLogin,
         className: "signin-demo-acc-text"
       }, "Demo Login")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: this.displaySignupForm,
@@ -909,9 +920,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var _nullUser = {
-  currentUser: null
-};
+var _nullUser = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
