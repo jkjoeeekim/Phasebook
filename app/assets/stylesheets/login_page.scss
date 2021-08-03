@@ -1,11 +1,322 @@
-#signup-form {
-  display: none;
-}
-
 .input-create-post {
   width: 600px;
 }
 
 .input-create-post:hover {
+  cursor: pointer;
+} 
+
+#login-section {
+  height: 650px;
+  width: 950px;
+  padding: 72px 0px 112px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.login-left-aside {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.login-page-title {
+  font-weight: bolder;
+  font-size: 42px;
+  color: rgb(24,119,242);
+  padding-bottom: 20px;
+  padding-left: 5px;
+}
+
+.login-page-desc {
+  font-size: 21px;
+  padding-bottom: 165px;
+}
+
+#signin-form {
+  width: 320px;
+  height: 300px;
+  box-shadow: 5px 5px 20px 10px rgb(221,223,226);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  background-color: white;
+}
+
+.signin-labels {
+  padding: 13px;
+}
+
+
+.signin-form-label-pw {
+  padding-top: 0px;
+}
+
+.signin-inputs {
+  padding: 13px;
+  width: 260px;
+  border: 1px solid rgb(221,223,226);
+  border-radius: 6px;
+}
+
+.signin-inputs:focus {
+  outline: none !important;
+  border-color: rgb(28,122,243);
+}
+
+.signin-submit-button  {
+  width: 290px;
+  padding: 9px;
+  border-radius: 6px;
+  background-color: rgb(23,116,238);
+  align-self: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+}
+
+.signin-submit-button:hover {
+  cursor: pointer;
+  background-color: rgb(22,111,229);
+}
+
+.signin-demo-acc {
+  outline: none;
+  background: none;
+  padding: 0;
+  border: none;
+  border-bottom: 2px solid rgb(221, 223, 226);
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: rgb(98,119,243);
+}
+
+.signin-demo-acc-text {
+  width: 80px;
+  margin: 0 auto;
+}
+
+.signin-demo-acc-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.signin-display-create-button {
+  width: 170px;
+  padding: 9px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(66,183,42);
+  align-self: center;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 20px;
+  margin-bottom: 25px;
+}
+
+.signin-display-create-button:hover {
+  background-color: rgb(54,164,32);
+  cursor: pointer;
+}
+
+
+// signup form styling properties
+#signup-form-div {
+  position: absolute;
+  display: none;
+  height: 90%;
+  width: 100%;
+  background-color: rgba(252, 252, 253, 0.8);
+  z-index: 10;
+}
+
+#signup-form {
+  display: none;
+  width: 352px;
+  height: 410px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  box-shadow: 5px 5px 20px 10px rgb(221,223,226);
+  border-radius: 8px;
+  background-color: white;
+}
+
+.signup-form-section-top-title {
+  font-size: 24px;
+  font-weight: bolder;
+  padding: 12px;
+}
+
+.signup-form-section-top-desc {
+  padding: 12px;
+  padding-top: 0px;
+  font-size: 12px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid rgb(221, 223, 226);
+}
+
+.sf-label-fullname {
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sf-input-firstname {
+  width: 95%;
+  padding: 8px;
+  padding-left: 10px;
+  background-color: rgb(245,246,247);
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.sf-label-firstname {
+  margin-right: 15px;
+  margin-left: 13px;
+}
+
+.sf-label-lastname {
+  margin-right: -6px;
+}
+
+.sf-input-lastname {
+  width: 95%;
+  padding: 8px;
+  padding-left: 10px;
+  background-color: rgb(245,246,247);
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.sf-label-email {
+  margin: 13px;
+}
+
+.sf-input-email {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 8px;
+  padding-left: 10px;
+  width: 87.5%;
+  background-color: rgb(245,246,247);
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.sf-label-pw {
+  margin: 13px;
+}
+
+.sf-input-pw {
+  padding: 8px;
+  padding-left: 10px;
+  width: 87.5%;
+  background-color: rgb(245,246,247);
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+#sf-section-birthdate {
+  margin: 13px;
+}
+
+.sf-birthdate-title {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+#sf-section-birthdate-selections {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sf-selects {
+  width: 103px;
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+}
+
+#sf-section-gender {
+  margin: 13px;
+}
+
+.sf-gender-title {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+#sf-section-gender-selections {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sf-gender-labels {
+  border: 1px solid rgb(221,223,226);
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 8px;
+  display: flex;
+}
+
+.sf-input-genders {
+  width: 63px;
+  margin-right: -20px;
+}
+
+.sf-label-gender-titles {
+  margin-top: 3px;
+}
+
+#sf-section-disclaimer {
+  padding: 13px;
+  margin-top: -15px;
+}
+
+.sf-section-disclaimer-desc {
+  font-size: 10px;
+  color: rgb(119,119,119);
+}
+
+#sf-submit-button-container {
+  width: 145px;
+  margin: 0 auto;
+}
+
+.sf-button {
+  width: 145px;
+  padding: 6px;
+  color: white;
+  font-weight: bolder;
+  background-color: rgb(0,164,0);
+  border-radius: 4px;
+  border: none;
+}
+
+.sf-button:hover {
+  background-color: rgb(108,160,95);
   cursor: pointer;
 }

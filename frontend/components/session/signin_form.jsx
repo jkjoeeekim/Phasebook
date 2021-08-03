@@ -23,21 +23,22 @@ export default class SigninForm extends React.Component {
 
   displaySignupForm(e) {
     e.preventDefault();
+    document.getElementById("signup-form-div").style.display = 'block';
     document.getElementById("signup-form").style.display = 'block';
   }
 
   render() {
     return (
       <form id="signin-form" onSubmit={this.handleSubmit}>
-        <label className="signin-form-label-email">
-          <input type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
+        <label className="signin-form-label-email signin-labels">
+          <input className="signin-inputs" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
         </label>
-        <label className="signin-form-label-pw">
-          <input type="password" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
+        <label className="signin-form-label-pw signin-labels">
+          <input className="signin-inputs" type="password" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
         </label>
-        <input type="submit" value="Log In" className="signin-form-button" />
-        <button>Demo Login</button>
-        <button onClick={this.displaySignupForm}>Create New Account</button>
+        <input type="submit" value="Log In" className="signin-submit-button" />
+        <button className="signin-demo-acc"><p className="signin-demo-acc-text">Demo Login</p></button>
+        <button onClick={this.displaySignupForm} className="signin-display-create-button">Create New Account</button>
       </form>
     );
   }
