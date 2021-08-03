@@ -151,7 +151,8 @@ export default class SigninForm extends React.Component {
           </section>
         </section>
         <section id="sf-section-disclaimer">
-          <p className="sf-section-disclaimer-desc">DISCLAIMER: This is a TEST website, please do NOT use sensitive information.</p>
+          <p className="sf-section-disclaimer-title">DISCLAIMER: </p>
+          <p className="sf-section-disclaimer-desc">This is a TEST website, do NOT use sensitive information.</p>
         </section>
         <div id="sf-submit-button-container">
           <input type="submit" value="Sign Up" className="sf-button" />
