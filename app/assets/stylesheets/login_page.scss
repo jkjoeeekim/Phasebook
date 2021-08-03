@@ -8,4 +8,125 @@
 
 .input-create-post:hover {
   cursor: pointer;
+} 
+
+#login-section {
+  height: 650px;
+  width: 950px;
+  padding: 72px 0px 112px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.login-left-aside {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-page-title {
+  font-weight: bolder;
+  font-size: 42px;
+  color: rgb(24,119,242);
+  padding-bottom: 20px;
+  padding-left: 5px;
+}
+
+.login-page-desc {
+  font-size: 23px;
+  padding-bottom: 100px;
+}
+
+#signin-form {
+  width: 320px;
+  height: 300px;
+  border: 3px solid rgb(221,223,226);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+.signin-labels {
+  padding: 13px;
+}
+
+
+.signin-form-label-pw {
+  padding-top: 0px;
+}
+
+.signin-inputs {
+  padding: 13px;
+  width: 260px;
+  border: 1px solid rgb(221,223,226);
+  border-radius: 6px;
+}
+
+.signin-inputs:focus {
+  outline: none !important;
+  border-color: rgb(28,122,243);
+}
+
+.signin-submit-button  {
+  width: 290px;
+  padding: 9px;
+  border-radius: 6px;
+  background-color: rgb(23,116,238);
+  align-self: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+}
+
+.signin-submit-button:hover {
+  cursor: pointer;
+  background-color: rgb(22,111,229);
+}
+
+.signin-demo-acc {
+  outline: none;
+  background: none;
+  padding: 0;
+  border: none;
+  border-bottom: 2px solid rgb(221, 223, 226);
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: rgb(98,119,243);
+}
+
+.signin-demo-acc-text {
+  width: 80px;
+  margin: 0 auto;
+}
+
+.signin-demo-acc-text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.signin-display-create-button {
+  width: 170px;
+  padding: 9px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(66,183,42);
+  align-self: center;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 20px;
+  margin-bottom: 25px;
+}
+
+.signin-display-create-button:hover {
+  background-color: rgb(54,164,32);
+  cursor: pointer;
 }
