@@ -107,46 +107,55 @@ export default class SigninForm extends React.Component {
             </label>
           </section>
           <label className="sf-label-email">
-            <input type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
+            <input className="sf-input-email" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
           </label>
           <label className="sf-label-pw">
-            <input type="password" placeholder="New password" value={this.state.password} onChange={this.updateField('password')} />
+            <input className="sf-input-pw" type="password" placeholder="New password" value={this.state.password} onChange={this.updateField('password')} />
           </label>
         </section>
         <section id="sf-section-birthdate">
-          <p>Birthday</p>
-          <label className="sf-label-bday-month">
-            <select defaultValue={this.state.birthMonth} onChange={this.updateField('birthMonth')}>
-              {this.months}
-            </select>
-          </label>
-          <label className="sf-label-bday-day">
-            <select defaultValue={this.state.birthDate} onChange={this.updateField('birthDate')}>
-              {this.days}
-            </select>
-          </label>
-          <label className="sf-label-bday-year">
-            <select defaultValue={this.state.birthYear} onChange={this.updateField('birthYear')}>
-              {this.years}
-            </select>
-          </label>
+          <p className="sf-birthdate-title">Birthday</p>
+          <section id="sf-section-birthdate-selections">
+            <label className="sf-label-bday-month">
+              <select className="sf-select-bday-month sf-selects" defaultValue={this.state.birthMonth} onChange={this.updateField('birthMonth')}>
+                {this.months}
+              </select>
+            </label>
+            <label className="sf-label-bday-day">
+              <select className="sf-select-bday-day sf-selects" defaultValue={this.state.birthDate} onChange={this.updateField('birthDate')}>
+                {this.days}
+              </select>
+            </label>
+            <label className="sf-label-bday-year">
+              <select className="sf-select-bday-year sf-selects" defaultValue={this.state.birthYear} onChange={this.updateField('birthYear')}>
+                {this.years}
+              </select>
+            </label>
+          </section>
         </section>
         <section id="sf-section-gender">
-          <p>Gender</p>
-          <label>Male
-            <input type="radio" name="gender" value="male" onChange={this.updateField('gender')} />
-          </label>
-          <label>Female
-            <input type="radio" name="gender" value="female" onChange={this.updateField('gender')} />
-          </label>
-          <label>Custom
-            <input type="radio" name="gender" value="other" onChange={this.updateField('gender')} />
-          </label>
+          <p className="sf-gender-title">Gender</p>
+          <section id="sf-section-gender-selections">
+            <label className="sf-label-gender-female sf-gender-labels">
+              <p className="sf-label-gender-titles">Female</p>
+              <input className="sf-input-gender-female sf-input-genders" type="radio" name="gender" value="female" onChange={this.updateField('gender')} />
+            </label>
+            <label className="sf-label-gender-male sf-gender-labels">
+              <p className="sf-label-gender-titles">Male</p>
+              <input className="sf-input-gender-male sf-input-genders" type="radio" name="gender" value="male" onChange={this.updateField('gender')} />
+            </label>
+            <label className="sf-label-gender-custom sf-gender-labels">
+              <p className="sf-label-gender-titles">Custom</p>
+              <input className="sf-input-gender-custom sf-input-genders" type="radio" name="gender" value="other" onChange={this.updateField('gender')} />
+            </label>
+          </section>
         </section>
-        <section>
-          <p>DISCLAIMER: This is a TEST website, please do NOT use sensitive information.</p>
+        <section id="sf-section-disclaimer">
+          <p className="sf-section-disclaimer-desc">DISCLAIMER: This is a TEST website, please do NOT use sensitive information.</p>
         </section>
-        <input type="submit" value="Sign Up" className="sf-button" />
+        <div id="sf-submit-button-container">
+          <input type="submit" value="Sign Up" className="sf-button" />
+        </div>
       </form>
     );
   }
