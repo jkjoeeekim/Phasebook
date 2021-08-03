@@ -10,6 +10,7 @@ export default class SigninForm extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.demoLogin = this.demoLogin.bind(this);
   }
 
   handleSubmit(e) {
@@ -27,6 +28,14 @@ export default class SigninForm extends React.Component {
     document.getElementById("signup-form").style.display = 'block';
   }
 
+  demoLogin(e) {
+    e.preventDefault();
+    this.props.login({
+      email: 'Joe@Kim.com',
+      password: '111111'
+    });
+  }
+
   render() {
     return (
       <form id="signin-form" onSubmit={this.handleSubmit}>
@@ -37,7 +46,7 @@ export default class SigninForm extends React.Component {
           <input className="signin-inputs" type="password" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
         </label>
         <input type="submit" value="Log In" className="signin-submit-button" />
-        <button className="signin-demo-acc"><p className="signin-demo-acc-text">Demo Login</p></button>
+        <button className="signin-demo-acc"><p onClick={this.demoLogin} className="signin-demo-acc-text">Demo Login</p></button>
         <button onClick={this.displaySignupForm} className="signin-display-create-button">Create New Account</button>
       </form>
     );
