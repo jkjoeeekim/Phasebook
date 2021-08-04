@@ -11,6 +11,7 @@ export default class SigninForm extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.demoLogin = this.demoLogin.bind(this);
+    this.pwStateChange = this.pwStateChange.bind(this);
   }
 
   handleSubmit(e) {
@@ -19,13 +20,24 @@ export default class SigninForm extends React.Component {
   }
 
   updateField(field) {
+    if (field === 'password') {
+      let icon = document.getElementById("pw-hidden");
+      if (icon) {
+        if (this.state.password.length > 0) {
+          document.getElementById("pw-hidden").classList.add("enabled");
+        } else {
+          document.getElementById("pw-hidden").classList.remove("enabled");
+        }
+      }
+    };
+
     return (e) => { this.setState({ [field]: e.currentTarget.value }); };
   }
 
   displaySignupForm(e) {
     e.preventDefault();
-    document.getElementById("signup-form-div").style.display = 'block';
-    document.getElementById("signup-form").style.display = 'block';
+    document.getElementById("signup-form-div").classList.add('enabled');
+    document.getElementById("signup-form").classList.add('enabled');
   }
 
   demoLogin(e) {
@@ -36,14 +48,37 @@ export default class SigninForm extends React.Component {
     });
   }
 
+  pwStateChange(stateChange) {
+    if (stateChange === 'reveal') {
+      document.getElementById("pw-hidden").classList.remove("enabled");
+      document.getElementById("pw-revealed").classList.add("enabled");
+      document.getElementById("signin-input-pw-hidden").classList.add("disabled");
+      document.getElementById("signin-input-pw-revealed").classList.add("enabled");
+    } else if (stateChange === 'hide') {
+      document.getElementById("pw-revealed").classList.remove("enabled");
+      document.getElementById("pw-hidden").classList.add("enabled");
+      document.getElementById("signin-input-pw-hidden").classList.remove("disabled");
+      document.getElementById("signin-input-pw-revealed").classList.remove("enabled");
+    }
+  }
+
   render() {
     return (
       <form id="signin-form" onSubmit={this.handleSubmit}>
         <label className="signin-form-label-email signin-labels">
-          <input className="signin-inputs" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
+          <input className="signin-inputs" id="signin-input-email" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
         </label>
         <label className="signin-form-label-pw signin-labels">
-          <input className="signin-inputs" type="password" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
+          <input className="signin-inputs" id="signin-input-pw-hidden" type="password" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
+          <input className="signin-inputs" id="signin-input-pw-revealed" type="text" placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
+          <div>
+            <a id="signin-form-pw-input-hidden">
+              <div onClick={() => this.pwStateChange('reveal')} id="pw-hidden"></div>
+            </a>
+            <a id="signin-form-pw-input-revealed">
+              <div onClick={() => this.pwStateChange('hide')} id="pw-revealed"></div>
+            </a>
+          </div>
         </label>
         <input type="submit" value="Log In" className="signin-submit-button" />
         <button className="signin-demo-acc"><p onClick={this.demoLogin} className="signin-demo-acc-text">Demo Login</p></button>
