@@ -330,6 +330,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.demoLogin = _this.demoLogin.bind(_assertThisInitialized(_this));
+    _this.pwStateChange = _this.pwStateChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -344,6 +345,19 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
     value: function updateField(field) {
       var _this2 = this;
 
+      if (field === 'password') {
+        var icon = document.getElementById("pw-hidden");
+
+        if (icon) {
+          if (this.state.password.length > 0) {
+            document.getElementById("pw-hidden").classList.add("enabled");
+          } else {
+            document.getElementById("pw-hidden").classList.remove("enabled");
+          }
+        }
+      }
+
+      ;
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.currentTarget.value));
       };
@@ -352,8 +366,8 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
     key: "displaySignupForm",
     value: function displaySignupForm(e) {
       e.preventDefault();
-      document.getElementById("signup-form-div").style.display = 'block';
-      document.getElementById("signup-form").style.display = 'block';
+      document.getElementById("signup-form-div").classList.add('enabled');
+      document.getElementById("signup-form").classList.add('enabled');
     }
   }, {
     key: "demoLogin",
@@ -365,8 +379,25 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "pwStateChange",
+    value: function pwStateChange(stateChange) {
+      if (stateChange === 'reveal') {
+        document.getElementById("pw-hidden").classList.remove("enabled");
+        document.getElementById("pw-revealed").classList.add("enabled");
+        document.getElementById("signin-input-pw-hidden").classList.add("disabled");
+        document.getElementById("signin-input-pw-revealed").classList.add("enabled");
+      } else if (stateChange === 'hide') {
+        document.getElementById("pw-revealed").classList.remove("enabled");
+        document.getElementById("pw-hidden").classList.add("enabled");
+        document.getElementById("signin-input-pw-hidden").classList.remove("disabled");
+        document.getElementById("signin-input-pw-revealed").classList.remove("enabled");
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         id: "signin-form",
         onSubmit: this.handleSubmit
@@ -374,6 +405,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         className: "signin-form-label-email signin-labels"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         className: "signin-inputs",
+        id: "signin-input-email",
         type: "text",
         placeholder: "Email",
         value: this.state.email,
@@ -382,11 +414,33 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         className: "signin-form-label-pw signin-labels"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         className: "signin-inputs",
+        id: "signin-input-pw-hidden",
         type: "password",
         placeholder: "Password",
         value: this.state.password,
         onChange: this.updateField('password')
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        className: "signin-inputs",
+        id: "signin-input-pw-revealed",
+        type: "text",
+        placeholder: "Password",
+        value: this.state.password,
+        onChange: this.updateField('password')
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+        id: "signin-form-pw-input-hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        onClick: function onClick() {
+          return _this3.pwStateChange('reveal');
+        },
+        id: "pw-hidden"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+        id: "signin-form-pw-input-revealed"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        onClick: function onClick() {
+          return _this3.pwStateChange('hide');
+        },
+        id: "pw-revealed"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "submit",
         value: "Log In",
         className: "signin-submit-button"
@@ -626,6 +680,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       }, year);
     });
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.exitSignupForm = _this.exitSignupForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -658,6 +713,12 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "exitSignupForm",
+    value: function exitSignupForm() {
+      document.getElementById("signup-form-div").classList.remove('enabled');
+      document.getElementById("signup-form").classList.remove('enabled');
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
@@ -670,7 +731,12 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         className: "signup-form-section-top-title"
       }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "signup-form-section-top-desc"
-      }, "It's quick and easy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+      }, "It's quick and easy."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+        id: "signup-form-exit"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        onClick: this.exitSignupForm,
+        id: "x"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "sf-label-fullname"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "sf-label-firstname"
@@ -770,7 +836,7 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
         className: "sf-section-disclaimer-title"
       }, "DISCLAIMER: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "sf-section-disclaimer-desc"
-      }, "This is a TEST website, do NOT use sensitive information.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, "This is a MOCK website, do NOT use sensitive information.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "sf-submit-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "submit",

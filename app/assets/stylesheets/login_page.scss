@@ -59,7 +59,22 @@
   padding-top: 0px;
 }
 
-.signin-inputs {
+#signin-input-email {
+  padding: 15px;
+  width: 91%;
+  border: 1px solid rgb(221,223,226);
+  border-radius: 6px;
+  font-size: 17px;
+}
+#signin-input-pw-hidden {
+  padding: 15px;
+  width: 91%;
+  border: 1px solid rgb(221,223,226);
+  border-radius: 6px;
+  font-size: 17px;
+}
+#signin-input-pw-revealed {
+  display: none;
   padding: 15px;
   width: 91%;
   border: 1px solid rgb(221,223,226);
@@ -69,7 +84,42 @@
 
 .signin-inputs:focus {
   outline: none !important;
-  border-color: rgb(28,122,243);
+  border-color: rgb(28,122,243) !important;
+}
+
+#signin-form-pw-input-hidden {
+  position: absolute;
+}
+#signin-form-pw-input-revealed {
+  position: absolute;
+}
+
+#pw-hidden {
+  display: none;
+  content: url(https://image.flaticon.com/icons/png/512/876/876769.png);
+  position: absolute;
+  top: -35px;
+  right: -360px;
+  height: 16px;
+  width: 16px;
+}
+
+#pw-revealed {
+  display: none;
+  content: url(https://image.flaticon.com/icons/png/512/1442/1442954.png);
+  position: absolute;
+  top: -35px;
+  right: -360px;
+  height: 16px;
+  width: 16px;
+}
+
+#pw-hidden:hover {
+  cursor: pointer;
+}
+
+#pw-revealed:hover {
+  cursor: pointer;
 }
 
 .signin-submit-button  {
@@ -162,6 +212,7 @@
   font-size: 30px;
   font-weight: bolder;
   padding: 12px;
+  position: relative;
 }
 
 .signup-form-section-top-desc {
@@ -170,6 +221,15 @@
   font-size: 14px;
   margin-bottom: 12px;
   border-bottom: 1px solid rgb(221, 223, 226);
+}
+
+#x {
+  content: url(https://image.flaticon.com/icons/png/512/1828/1828778.png);
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .sf-label-fullname {
@@ -324,4 +384,12 @@
 .sf-button:hover {
   background-color: rgb(108,160,95);
   cursor: pointer;
+}
+
+.enabled {
+  display: block !important;
+}
+
+.disabled {
+  display: none !important;
 }

@@ -68,6 +68,7 @@ export default class SigninForm extends React.Component {
     });
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.exitSignupForm = this.exitSignupForm.bind(this);
   }
 
   handleSubmit(e) {
@@ -90,12 +91,20 @@ export default class SigninForm extends React.Component {
     return (e) => { this.setState({ [field]: e.currentTarget.value }); };
   }
 
+  exitSignupForm() {
+    document.getElementById("signup-form-div").classList.remove('enabled');
+    document.getElementById("signup-form").classList.remove('enabled');
+  }
+
   render() {
     return (
       <form id="signup-form" className="sf" onSubmit={this.handleSubmit}>
         <section className="signup-form-section-top">
           <p className="signup-form-section-top-title">Sign Up</p>
           <p className="signup-form-section-top-desc">It's quick and easy.</p>
+          <a id="signup-form-exit">
+            <div onClick={this.exitSignupForm} id="x"></div>
+          </a>
         </section>
         <section>
           <section className="sf-label-fullname">
@@ -152,7 +161,7 @@ export default class SigninForm extends React.Component {
         </section>
         <section id="sf-section-disclaimer">
           <p className="sf-section-disclaimer-title">DISCLAIMER: </p>
-          <p className="sf-section-disclaimer-desc">This is a TEST website, do NOT use sensitive information.</p>
+          <p className="sf-section-disclaimer-desc">This is a MOCK website, do NOT use sensitive information.</p>
         </section>
         <div id="sf-submit-button-container">
           <input type="submit" value="Sign Up" className="sf-button" />
