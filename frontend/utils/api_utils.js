@@ -31,3 +31,19 @@ export const fetchUser = (userId) => (
     url: `/api/users/${userId}`
   })
 );
+
+// Fetch all User
+export const fetchUsers = () => (
+  $.ajax({
+    method: "GET",
+    url: "api/users"
+  })
+);
+
+// Fetch all Post
+export const fetchPosts = () => (
+  $.ajax({
+    method: "GET",
+    url: '/api/posts'
+  })
+);

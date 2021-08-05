@@ -106,12 +106,12 @@ export default class SigninForm extends React.Component {
 
   render() {
     let errors = {};
-    if (this.props.errors.errors) {
-      if (this.props.errors.errors.user) {
-        if (this.props.errors.errors.user.includes('Email has already been taken')) {
+    if (this.props.errors) {
+      if (this.props.errors.user) {
+        if (this.props.errors.user.includes('Email has already been taken')) {
           errors.email_error = true;
         }
-        if (this.props.errors.errors.user.includes('Password is too short (minimum is 6 characters)')) {
+        if (this.props.errors.user.includes('Password is too short (minimum is 6 characters)')) {
           errors.password = true;
         }
       }

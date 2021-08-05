@@ -16,6 +16,7 @@ export default class SigninPage extends React.Component {
         <div id="signup-form-div">
           <SignupFormContainer />
         </div>
+        <div id="footer"></div>
       </section>
     );
   }

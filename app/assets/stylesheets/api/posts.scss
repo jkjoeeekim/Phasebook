@@ -1,3 +1,75 @@
 // Place all the styles related to the api::posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#post-section-user-controls {
+  width:680px;
+  height: 120px;
+  margin: 0 auto;
+  box-shadow: 5px 5px 20px 10px rgb(226,228,231);
+  padding: 11px;
+  border-radius: 10px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+
+  input {
+    padding: 10px;
+    font-size: 18px;
+    padding-left: 15px;
+    border-radius: 50px;
+    border: 0;
+    background: rgb(240, 242, 245);
+    align-self: center;
+    width: 95.5%;
+  };
+
+  input:hover {
+    background: rgb(220, 226, 231);
+  }
+
+  .createLine {
+    border-bottom: 1px solid black;
+    margin-top: 13px;
+    margin-bottom: 7px;
+  };
+
+  button {
+    width: 30%;
+    height: 40px;
+    align-self: center;
+    color: rgb(96,98,102);
+    font-size: 16px;
+    font-weight: 600;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: .5px;
+  };
+
+  button:hover {
+    background: rgb(240, 242, 245);
+  }
+}
+
+#post-section-all-posts {
+  display: flex;
+  flex-direction: column;
+  width: 680px;
+  margin: 0 auto;
+
+  .posts {
+    margin-top: 13px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+
+    .user-links {
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+}

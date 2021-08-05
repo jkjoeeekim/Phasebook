@@ -1,7 +1,13 @@
 class Api::UsersController < ApplicationController
   # Create a new user
+  def index
+    @users = User.all
+    render "api/users/index"
+  end
+  
   def create
     @user = User.new(user_params)
+    @friends = @user.friends
     if @user.save
       login!(@user)
       render "api/posts/show"

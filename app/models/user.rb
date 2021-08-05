@@ -50,6 +50,11 @@ class User < ApplicationRecord
     foreign_key: :author_id,
     class_name: :Post
 
+  has_many :profile_posts,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :Post
+
   class << self
     def find_by_credentials(email, password)
       user = User.find_by(email: email.downcase)

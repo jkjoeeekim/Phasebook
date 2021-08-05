@@ -49,7 +49,7 @@ export default class SigninForm extends React.Component {
 
   render() {
     let state = this.state;
-    if (this.props.errors.errors) {
+    if (this.props.errors.session) {
       return <Redirect to='/login' prevState={this.state} login={this.props.login} errors={this.props.errors} currentUser={this.props.currentUser} />;
     }
     return (
