@@ -692,7 +692,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "login-form-label-email login-labels"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        className: this.props.errors ? "login-inputs-errored" : "login-inputs",
+        className: this.props.errors.session ? "login-inputs-errored" : "login-inputs",
         id: "login-input-email",
         type: "text",
         placeholder: "Email",
@@ -701,7 +701,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, errors), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "login-form-label-pw login-labels"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        className: this.props.errors ? "login-inputs-errored" : "login-inputs",
+        className: this.props.errors.session ? "login-inputs-errored" : "login-inputs",
         id: "login-input-pw",
         type: state.reveal ? "text" : "password",
         placeholder: "Password",
@@ -1294,14 +1294,14 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
           if (this.props.errors.user.includes('Password is too short (minimum is 6 characters)')) {
             errors.password = true;
           }
-        }
 
-        var keys = Object.keys(this.state);
-        keys.forEach(function (key) {
-          if (_this3.state[key].length === 0) {
-            errors[key] = true;
-          }
-        });
+          var keys = Object.keys(this.state);
+          keys.forEach(function (key) {
+            if (_this3.state[key].length === 0) {
+              errors[key] = true;
+            }
+          });
+        }
       } else {
         errors = "";
       }

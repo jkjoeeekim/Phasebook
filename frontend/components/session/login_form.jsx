@@ -63,13 +63,13 @@ export default class LoginForm extends React.Component {
     return (
       <form id="login-form" onSubmit={this.handleSubmit}>
         <label className="login-form-label-email login-labels">
-          <input className={this.props.errors ? "login-inputs-errored" : "login-inputs"} id="login-input-email" type="text" placeholder="Email" value={state.email} onChange={this.updateField('email')} />
+          <input className={this.props.errors.session ? "login-inputs-errored" : "login-inputs"} id="login-input-email" type="text" placeholder="Email" value={state.email} onChange={this.updateField('email')} />
         </label>
         <ul>
           {errors}
         </ul>
         <label className="login-form-label-pw login-labels">
-          <input className={this.props.errors ? "login-inputs-errored" : "login-inputs"} id="login-input-pw" type={state.reveal ? "text" : "password"} placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
+          <input className={this.props.errors.session ? "login-inputs-errored" : "login-inputs"} id="login-input-pw" type={state.reveal ? "text" : "password"} placeholder="Password" value={this.state.password} onChange={this.updateField('password')} />
           {
             state.password.length > 0 ?
               <div>

@@ -114,13 +114,13 @@ export default class SigninForm extends React.Component {
         if (this.props.errors.user.includes('Password is too short (minimum is 6 characters)')) {
           errors.password = true;
         }
+        let keys = Object.keys(this.state);
+        keys.forEach((key) => {
+          if (this.state[key].length === 0) {
+            errors[key] = true;
+          }
+        });
       }
-      let keys = Object.keys(this.state);
-      keys.forEach((key) => {
-        if (this.state[key].length === 0) {
-          errors[key] = true;
-        }
-      });
     } else {
       errors = "";
     }
@@ -140,7 +140,6 @@ export default class SigninForm extends React.Component {
               <input id={errors.first_name ? "signup-inputs-errored" : ""} className="sf-input-firstname" type="text" placeholder="First name" value={this.state.first_name} onChange={this.updateField('first_name')} />
             </label>
             <p id={errors.first_name ? "enabled" : ""} className="sf-form-errors sf-form-error-fname">What is your name?</p>
-
             <label className="sf-labels sf-label-lastname">
               <input id={errors.last_name ? "signup-inputs-errored" : ""} className="sf-input-lastname" type="text" placeholder="Last name" value={this.state.last_name} onChange={this.updateField('last_name')} />
             </label>
