@@ -9,16 +9,16 @@
 Friendship.destroy_all
 User.destroy_all
 
-user1 = User.create({first_name: 'Joe', last_name: 'Kim', password:'111111', email: 'Joe@Kim.com', birthday: '1990/10/10', gender: "male"})
-user2 = User.create({first_name: 'Bill', last_name: 'Lee', password:'111111', email: 'Bill@Lee.com', birthday: '2000/01/01', gender: "male"})
-user3 = User.create({first_name: 'Bobby', last_name: 'Bob', password:'111111', email: 'Bobby@Bob.com', birthday: '2005/07/25', gender: "male"})
-user4 = User.create({first_name: 'Paul', last_name: 'Conner', password:'111111', email: 'Paul@Conner.com', birthday: '1995/12/06', gender: "male"})
-user5 = User.create({first_name: 'James', last_name: 'Chang', password:'111111', email: 'James@Chang.com', birthday: '2010/03/13', gender: "male"})
-user6 = User.create({first_name: 'Jenni', last_name: 'Widjaja', password:'111111', email: 'Joe@Kim.com', birthday: '1990/10/10', gender: "female"})
-user7 = User.create({first_name: 'Valerie', last_name: 'Fu', password:'111111', email: 'Bill@Kim.com', birthday: '2000/01/01', gender: "female"})
-user8 = User.create({first_name: 'Annie', last_name: 'Burns', password:'111111', email: 'Bob@Kim.com', birthday: '2005/07/25', gender: "female"})
-user9 = User.create({first_name: 'Candice', last_name: 'Tran', password:'111111', email: 'Paul@Kim.com', birthday: '1995/12/06', gender: "female"})
-user10 = User.create({first_name: 'Christy', last_name: 'Won', password:'111111', email: 'James@Kim.com', birthday: '2010/03/13', gender: "female"})
+user1 = User.create({first_name: 'Joe', last_name: 'Kim', password:'111111', email: 'joe@kim.com', birthday: '1990/10/10', gender: "male"})
+user2 = User.create({first_name: 'Bill', last_name: 'Lee', password:'111111', email: 'bill@lee.com', birthday: '2000/01/01', gender: "male"})
+user3 = User.create({first_name: 'Bobby', last_name: 'Bob', password:'111111', email: 'bobby@bob.com', birthday: '2005/07/25', gender: "male"})
+user4 = User.create({first_name: 'Paul', last_name: 'Conner', password:'111111', email: 'paul@conner.com', birthday: '1995/12/06', gender: "male"})
+user5 = User.create({first_name: 'James', last_name: 'Chang', password:'111111', email: 'james@chang.com', birthday: '2010/03/13', gender: "male"})
+user6 = User.create({first_name: 'Jenni', last_name: 'Widjaja', password:'111111', email: 'jenny@widjaja.com', birthday: '1990/10/10', gender: "female"})
+user7 = User.create({first_name: 'Valerie', last_name: 'Fu', password:'111111', email: 'valerie@fu.com', birthday: '2000/01/01', gender: "female"})
+user8 = User.create({first_name: 'Annie', last_name: 'Burns', password:'111111', email: 'anne@burns.com', birthday: '2005/07/25', gender: "female"})
+user9 = User.create({first_name: 'Candice', last_name: 'Tran', password:'111111', email: 'candice@tran.com', birthday: '1995/12/06', gender: "female"})
+user10 = User.create({first_name: 'Christy', last_name: 'Won', password:'111111', email: 'christy@won.com', birthday: '2010/03/13', gender: "female"})
 
 fship1 = Friendship.create({user_id: 1, friend_id: 3})
 fship2 = Friendship.create({user_id: 1, friend_id: 5})

@@ -27,16 +27,17 @@ export default class SigninForm extends React.Component {
       year: this.date.getFullYear(),
     };
 
-    this.state = {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      birthMonth: this.currentDate.month,
-      birthDate: this.currentDate.day,
-      birthYear: this.currentDate.year,
-      gender: '',
-    };
+    this.state = this.props.state ?
+      this.props.state : {
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        birthMonth: this.currentDate.month,
+        birthDate: this.currentDate.day,
+        birthYear: this.currentDate.year,
+        gender: '',
+      };
 
     // Map over the array of allMonths, returning <select> elements
     this.months = this.allMonths.map((month, idx) => {
@@ -73,17 +74,24 @@ export default class SigninForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let user = Object.assign({}, this.state, { birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}` });
-    this.setState({
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      birthMonth: this.currentDate.month,
-      birthDate: this.currentDate.day,
-      birthYear: this.currentDate.year,
-      gender: '',
-    });
+    let user = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email.toLowerCase(),
+      password: this.state.password,
+      birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`,
+      gender: this.state.gender,
+    };
+    // this.setState({
+    //   first_name: '',
+    //   last_name: '',
+    //   email: '',
+    //   password: '',
+    //   birthMonth: this.currentDate.month,
+    //   birthDate: this.currentDate.day,
+    //   birthYear: this.currentDate.year,
+    //   gender: '',
+    // });
     this.props.createNewUser(user);
   }
 
@@ -97,6 +105,26 @@ export default class SigninForm extends React.Component {
   }
 
   render() {
+    let errors = {};
+    if (this.props.errors.errors) {
+      if (this.props.errors.errors.user) {
+        if (this.props.errors.errors.user.includes('Email has already been taken')) {
+          errors.email_error = true;
+        }
+        if (this.props.errors.errors.user.includes('Password is too short (minimum is 6 characters)')) {
+          errors.password = true;
+        }
+      }
+      let keys = Object.keys(this.state);
+      keys.forEach((key) => {
+        if (this.state[key].length === 0) {
+          errors[key] = true;
+        }
+      });
+    } else {
+      errors = "";
+    }
+
     return (
       <form id="signup-form" className="sf" onSubmit={this.handleSubmit}>
         <section className="signup-form-section-top">
@@ -108,35 +136,42 @@ export default class SigninForm extends React.Component {
         </section>
         <section>
           <section className="sf-label-fullname">
-            <label className="sf-label-firstname">
-              <input className="sf-input-firstname" type="text" placeholder="First name" value={this.state.first_name} onChange={this.updateField('first_name')} />
+            <label className="sf-labels sf-label-firstname">
+              <input id={errors.first_name ? "signup-inputs-errored" : ""} className="sf-input-firstname" type="text" placeholder="First name" value={this.state.first_name} onChange={this.updateField('first_name')} />
             </label>
-            <label className="sf-label-lastname">
-              <input className="sf-input-lastname" type="text" placeholder="Last name" value={this.state.last_name} onChange={this.updateField('last_name')} />
+            <p id={errors.first_name ? "enabled" : ""} className="sf-form-errors sf-form-error-fname">What is your name?</p>
+
+            <label className="sf-labels sf-label-lastname">
+              <input id={errors.last_name ? "signup-inputs-errored" : ""} className="sf-input-lastname" type="text" placeholder="Last name" value={this.state.last_name} onChange={this.updateField('last_name')} />
             </label>
+            <p id={errors.last_name ? "enabled" : ""} className="sf-form-errors sf-form-error-lname">What is your name?</p>
           </section>
-          <label className="sf-label-email">
-            <input className="sf-input-email" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
+          <label className="sf-labels sf-label-email">
+            <input id={errors.email ? "signup-inputs-errored" : ""} className="sf-input-email" type="text" placeholder="Email" value={this.state.email} onChange={this.updateField('email')} />
           </label>
-          <label className="sf-label-pw">
-            <input className="sf-input-pw" type="password" placeholder="New password" value={this.state.password} onChange={this.updateField('password')} />
+          <p id={errors.email ? "enabled" : ""} className="sf-form-errors sf-form-error-email">What is your email?</p>
+          <p id={errors.email_error ? "enabled" : ""} className="sf-form-errors sf-form-error-email2">Email has already been registered.</p>
+          <label className="sf-labels sf-label-pw">
+            <input id={errors.password ? "signup-inputs-errored" : ""} className="sf-input-pw" type="password" placeholder="New password" value={this.state.password} onChange={this.updateField('password')} />
           </label>
+          <p id={errors.password ? "enabled" : ""} className="sf-form-errors sf-form-error-pw">Enter a valid password (minimum 6 characters).</p>
         </section>
         <section id="sf-section-birthdate">
           <p className="sf-birthdate-title">Birthday</p>
           <section id="sf-section-birthdate-selections">
-            <label className="sf-label-bday-month">
-              <select className="sf-select-bday-month sf-selects" defaultValue={this.state.birthMonth} onChange={this.updateField('birthMonth')}>
+            <label className="sf-labels sf-label-bday-month">
+              <select id={errors.birthday ? "signup-inputs-errored" : ""} className="sf-select-bday-month sf-selects" defaultValue={this.state.birthMonth} onChange={this.updateField('birthMonth')}>
                 {this.months}
               </select>
             </label>
+            <p id={errors.birthday ? "enabled" : ""} className="sf-form-errors sf-form-error-bday">What is your birthday?</p>
             <label className="sf-label-bday-day">
-              <select className="sf-select-bday-day sf-selects" defaultValue={this.state.birthDate} onChange={this.updateField('birthDate')}>
+              <select id={errors.birthday ? "signup-inputs-errored" : ""} className="sf-select-bday-day sf-selects" defaultValue={this.state.birthDate} onChange={this.updateField('birthDate')}>
                 {this.days}
               </select>
             </label>
             <label className="sf-label-bday-year">
-              <select className="sf-select-bday-year sf-selects" defaultValue={this.state.birthYear} onChange={this.updateField('birthYear')}>
+              <select id={errors.birthday ? "signup-inputs-errored" : ""} className="sf-select-bday-year sf-selects" defaultValue={this.state.birthYear} onChange={this.updateField('birthYear')}>
                 {this.years}
               </select>
             </label>
@@ -145,15 +180,16 @@ export default class SigninForm extends React.Component {
         <section id="sf-section-gender">
           <p className="sf-gender-title">Gender</p>
           <section id="sf-section-gender-selections">
-            <label className="sf-label-gender-female sf-gender-labels">
+            <label id={errors.gender ? "signup-inputs-errored" : ""} className="sf-labels sf-label-gender-female sf-gender-labels">
               <p className="sf-label-gender-titles">Female</p>
               <input className="sf-input-gender-female sf-input-genders" type="radio" name="gender" value="female" onChange={this.updateField('gender')} />
             </label>
-            <label className="sf-label-gender-male sf-gender-labels">
+            <p id={errors.gender ? "enabled" : ""} className="sf-form-errors sf-form-error-gender">What is your gender?</p>
+            <label id={errors.gender ? "signup-inputs-errored" : ""} className="sf-label-gender-male sf-gender-labels">
               <p className="sf-label-gender-titles">Male</p>
               <input className="sf-input-gender-male sf-input-genders" type="radio" name="gender" value="male" onChange={this.updateField('gender')} />
             </label>
-            <label className="sf-label-gender-custom sf-gender-labels">
+            <label id={errors.gender ? "signup-inputs-errored" : ""} className="sf-label-gender-custom sf-gender-labels">
               <p className="sf-label-gender-titles">Custom</p>
               <input className="sf-input-gender-custom sf-input-genders" type="radio" name="gender" value="other" onChange={this.updateField('gender')} />
             </label>
