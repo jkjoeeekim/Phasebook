@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './post';
+import { Link } from 'react-router-dom';
 
 export default class PostIndex extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class PostIndex extends React.Component {
   render() {
     let allPosts = [];
     let user;
+    let navBar;
     let users = this.props.users;
     if (Object.values(this.props.posts).length > 1) {
       Object.values(this.props.posts).forEach((post, idx) => {
@@ -41,15 +43,28 @@ export default class PostIndex extends React.Component {
           <button>Photo</button>
         </section>
       );
+      navBar = (
+        <section id="navbar">
+          <section className="user-profile-section">
+            <Link id="user-profile" to="/">
+              <img className="picture"></img>
+              <p>{this.props.user.firstName}</p>
+            </Link>
+          </section>
+          <button onClick={this.logoutUser}>Log Out</button>
+        </section>
+      );
     }
 
     return (
       <div>
-        <button onClick={this.logoutUser}>Log Out</button>
+        {navBar}
+        <div className="spacer"></div>
         {user}
         <section id="post-section-all-posts">
           {allPosts}
         </section>
+        <div className="spacer"></div>
       </div>
     );
   }
