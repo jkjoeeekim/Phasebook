@@ -21,10 +21,57 @@ user8 = User.create({first_name: 'Annie', last_name: 'Burns', password:'111111',
 user9 = User.create({first_name: 'Candice', last_name: 'Tran', password:'111111', email: 'candice@tran.com', birthday: '1995/12/06', gender: "female"})
 user10 = User.create({first_name: 'Christy', last_name: 'Won', password:'111111', email: 'christy@won.com', birthday: '2010/03/13', gender: "female"})
 
+# user1 friendships
 fship1 = Friendship.create({user_id: user1.id, friend_id: user3.id})
 fship2 = Friendship.create({user_id: user1.id, friend_id: user5.id})
 fship3 = Friendship.create({user_id: user1.id, friend_id: user7.id})
 fship4 = Friendship.create({user_id: user1.id, friend_id: user9.id})
+
+# user2 friendships
+fship17 = Friendship.create({user_id: user2.id, friend_id: user3.id})
+fship9 = Friendship.create({user_id: user2.id, friend_id: user4.id})
+fship10 = Friendship.create({user_id: user2.id, friend_id: user6.id})
+fship11 = Friendship.create({user_id: user2.id, friend_id: user8.id})
+fship12 = Friendship.create({user_id: user2.id, friend_id: user10.id})
+
+# user3 friendships
+fship5 = Friendship.create({user_id: user3.id, friend_id: user1.id})
+fship18 = Friendship.create({user_id: user3.id, friend_id: user2.id})
+fship19 = Friendship.create({user_id: user3.id, friend_id: user4.id})
+fship20 = Friendship.create({user_id: user3.id, friend_id: user5.id})
+fship21 = Friendship.create({user_id: user3.id, friend_id: user6.id})
+fship22 = Friendship.create({user_id: user3.id, friend_id: user7.id})
+fship23 = Friendship.create({user_id: user3.id, friend_id: user8.id})
+fship24 = Friendship.create({user_id: user3.id, friend_id: user9.id})
+fship25 = Friendship.create({user_id: user3.id, friend_id: user10.id})
+
+# user4 friendships
+fship13 = Friendship.create({user_id: user4.id, friend_id: user2.id})
+fship26 = Friendship.create({user_id: user4.id, friend_id: user3.id})
+
+# user5 friendships
+fship6 = Friendship.create({user_id: user5.id, friend_id: user1.id})
+fship27 = Friendship.create({user_id: user5.id, friend_id: user3.id})
+
+# user6 friendships
+fship14 = Friendship.create({user_id: user6.id, friend_id: user2.id})
+fship28 = Friendship.create({user_id: user6.id, friend_id: user3.id})
+
+# user7 friendships
+fship7 = Friendship.create({user_id: user7.id, friend_id: user1.id})
+fship29 = Friendship.create({user_id: user7.id, friend_id: user3.id})
+
+# user8 friendships
+fship15 = Friendship.create({user_id: user8.id, friend_id: user2.id})
+fship30 = Friendship.create({user_id: user8.id, friend_id: user3.id})
+
+# user9 friendships
+fship8 = Friendship.create({user_id: user9.id, friend_id: user1.id})
+fship31 = Friendship.create({user_id: user9.id, friend_id: user3.id})
+
+# user10 friendships
+fship16 = Friendship.create({user_id: user10.id, friend_id: user2.id})
+fship32 = Friendship.create({user_id: user10.id, friend_id: user3.id})
 
 post1 = Post.create({
   body: "Picture of my vacation!",
@@ -43,17 +90,19 @@ post3 = Post.create({
 
 post4 = Post.create({
   body: "Happy Birthday~~",
-  author_id: user4.id
+  author_id: user4.id,
+  user_id: user1.id
 })
 
 post5 = Post.create({
-  body: "Who watched the Olympics last night?? GO U.S.A.!!",
+  body: "Who watched the Olympics last night?? GO KOREA!!",
   author_id: user5.id
 })
 
 post6 = Post.create({
   body: "Check out this chill lofi stream! https://www.youtube.com/watch?v=5qap5aO4i9A",
-  author_id: user6.id
+  author_id: user6.id,
+  user_id: user6.id
 })
 
 post7 = Post.create({
@@ -74,6 +123,11 @@ post9 = Post.create({
 post10 = Post.create({
   body: "Should I get a Tesla or a Mercedes",
   author_id: user10.id
+})
+
+post11 = Post.create({
+  body: "Hi there, welcome to Fazebook~! 😃🎉🎉",
+  author_id: user3.id
 })
 
 # post11 = Post.create({

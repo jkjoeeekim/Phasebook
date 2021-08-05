@@ -1,5 +1,8 @@
 import React from 'react';
 import Post from './post';
+import PostRightAside from './post_right_aside';
+import PostLeftAside from './post_left_aside';
+import PostNavBar from './post_nav_bar';
 import { Link } from 'react-router-dom';
 
 export default class PostIndex extends React.Component {
@@ -8,15 +11,16 @@ export default class PostIndex extends React.Component {
 
     this.state = {
       posts: this.props.posts,
-      users: this.props.users
+      users: this.props.users,
     };
 
     this.logoutUser = this.logoutUser.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ users: this.props.fetchUsers() });
-    this.setState({ posts: this.props.fetchPosts() });
+    let props = this.props;
+    this.setState({ users: props.fetchUsers() });
+    this.setState({ posts: props.fetchPosts() });
   }
 
   logoutUser() {
@@ -26,13 +30,16 @@ export default class PostIndex extends React.Component {
   render() {
     let allPosts = [];
     let user;
-    let navBar;
+    let friends = [];
     let users = this.props.users;
     if (Object.values(this.props.posts).length > 1) {
-      Object.values(this.props.posts).forEach((post, idx) => {
-        allPosts.push(
-          <Post post={post} key={idx} idx={idx} user={users[post.authorId]} />
-        );
+      let posts = Object.values(this.props.posts).reverse();
+      posts.forEach((post, idx) => {
+        if (this.props.friends.includes(post.authorId)) {
+          allPosts.push(
+            <Post post={post} key={idx} idx={idx} user={users[post.authorId]} />
+          );
+        }
       });
     }
     if (this.props.user) {
@@ -43,22 +50,18 @@ export default class PostIndex extends React.Component {
           <button>Photo</button>
         </section>
       );
-      navBar = (
-        <section id="navbar">
-          <section className="user-profile-section">
-            <Link id="user-profile" to="/">
-              <img className="picture"></img>
-              <p>{this.props.user.firstName}</p>
-            </Link>
-          </section>
-          <button onClick={this.logoutUser}>Log Out</button>
-        </section>
-      );
+    }
+    if (this.props.friends && Object.keys(this.props.users).length > 1) {
+      if (this.props.friends.length < 1) return;
+      this.props.friends.forEach((userId, idx) => {
+        friends.push(<div key={idx} class_name="friends">{this.props.users[userId].firstName} {this.props.users[userId].lastName}</div>);
+      });
     }
 
     return (
       <div>
-        {navBar}
+        <PostNavBar user={this.props.user} logout={this.props.logout} />
+        <PostRightAside users={this.props.users} friends={this.props.friends} />
         <div className="spacer"></div>
         {user}
         <section id="post-section-all-posts">

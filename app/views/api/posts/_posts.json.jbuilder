@@ -7,5 +7,5 @@ json.set! posts do
     json.user_id post.user_id
     json.picture_id post.picture_id
   end
-
 end
+json.friends friends

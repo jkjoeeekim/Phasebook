@@ -47,3 +47,11 @@ export const fetchPosts = () => (
     url: '/api/posts'
   })
 );
+
+// Fetch array of Friends for userId
+export const fetchFriends = (userId) => (
+  $.ajax({
+    method: "GET",
+    url: `/api/users/${userId}`
+  })
+)

@@ -18,4 +18,16 @@ class Post < ApplicationRecord
     primary_key: :id,
     foreign_key: :author_id,
     class_name: :User
+  
+  belongs_to :post,
+    primary_key: :id,
+    foreign_key: :post_id,
+    class_name: :Post,
+    optional: true
+
+  belongs_to :userprofile,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :User,
+    optional: true
 end

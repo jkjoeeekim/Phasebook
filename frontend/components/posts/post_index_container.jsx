@@ -9,7 +9,8 @@ const mSTP = (state) => ({
   userId: state.session.currentUser,
   user: state.entities.users[state.session.currentUser],
   posts: state.entities.posts,
-  users: state.entities.users
+  users: state.entities.users,
+  friends: state.session.friends,
 });
 
 const mDTP = (dispatch) => ({

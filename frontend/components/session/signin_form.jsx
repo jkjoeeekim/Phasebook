@@ -36,7 +36,7 @@ export default class SigninForm extends React.Component {
   demoLogin(e) {
     e.preventDefault();
     this.props.login({
-      email: 'Joe@Kim.com',
+      email: 'bobby@bob.com',
       password: '111111'
     });
   }

@@ -1,6 +1,6 @@
 class Api::PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.all.select{ |post| !post.userprofile }
     render "api/posts/index"
   end
 
