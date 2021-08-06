@@ -31,7 +31,7 @@ export default class PostIndex extends React.Component {
   render() {
     let allPosts = [];
     let user;
-    let friends = [];
+
     let users = this.props.users;
     if (Object.values(this.props.posts).length > 1) {
       let posts = Object.values(this.props.posts).reverse();
@@ -52,12 +52,7 @@ export default class PostIndex extends React.Component {
         </section>
       );
     }
-    if (this.props.friends && Object.keys(this.props.users).length > 1) {
-      if (this.props.friends.length < 1) return;
-      this.props.friends.forEach((userId, idx) => {
-        friends.push(<div key={idx} className="friends">{this.props.users[userId].firstName} {this.props.users[userId].lastName}</div>);
-      });
-    }
+
     return (
       <div>
         <PostNavBar user={this.props.user} logout={this.props.logout} />

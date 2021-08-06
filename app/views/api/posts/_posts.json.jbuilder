@@ -1,3 +1,4 @@
+user.picture_url = url_for(user.photo)
 json.extract! user, :id, :first_name, :last_name, :email, :picture_url
 json.set! posts do
   json.array! posts do |post|

@@ -35,7 +35,7 @@ export default class Post extends React.Component {
   }
 
   componentDidMount() {
-    this.updateProfilePics();
+    // this.updateProfilePics();
   }
 
   updateProfilePics() {
@@ -51,10 +51,11 @@ export default class Post extends React.Component {
   }
 
   render() {
+    if (!this.props.user || !this.props.currentUser) return null;
     let post = this.props.post;
     let user = this.props.user ? `${this.props.user.firstName} ${this.props.user.lastName}` : "";
     let date = {};
-    let img = (<img className="picture" id={`picture${this.props.idx}`}></img>);
+    let img = (<img src={this.props.user.pictureUrl} className="picture" id={`picture${this.props.idx}`}></img>);
     if (post) {
       let fullDate = post.createdAt.split("T")[0];
       let fullTime = post.createdAt.split("T")[1];
@@ -63,6 +64,12 @@ export default class Post extends React.Component {
       date.year = fullDate.split("-")[0];
       date.hour = fullTime.split(":")[0];
       date.minutes = fullTime.split(":")[1];
+      if (date.hour > 12) {
+        date.hour = date.hour - 12;
+        date.status = "PM";
+      } else {
+        date.status = "AM";
+      }
     }
 
     if (document.getElementById(`comment-section-picture-${this.props.idx}`)) {
@@ -80,7 +87,7 @@ export default class Post extends React.Component {
           {img}
           <section className="name-and-date">
             <Link to="/" className="links">{user}</Link>
-            <Link to="/" className="created-ats">{date.month} {date.day} at {date.hour}:{date.minutes}</Link>
+            <Link to="/" className="created-ats">{date.month} {date.day} at {date.hour}:{date.minutes} {date.status}</Link>
           </section>
         </section>
         <section className="post-details">
@@ -91,7 +98,7 @@ export default class Post extends React.Component {
           <p className="comments">Comment</p>
         </section>
         <section className="new-comment">
-          <img className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
+          <img src={this.props.currentUser.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
           <input className="input-field" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
         </section>
       </section>
