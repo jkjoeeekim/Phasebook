@@ -268,7 +268,9 @@ var Post = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       body: '',
-      author_id: null
+      authorId: null,
+      currentUserPic: null,
+      pictureUrl: null
     };
     _this.months = {
       "01": "January",
@@ -296,11 +298,41 @@ var Post = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateProfilePics();
+    }
+  }, {
+    key: "updateProfilePics",
+    value: function updateProfilePics() {
+      if (this.props.user) {
+        if (!this.props.user.pictureUrl) {
+          this.setState({
+            pictureUrl: "data:image/png;base64,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"
+          });
+          this.setState({
+            currentUserPic: this.props.currentUser.pictureUrl
+          });
+        } else {
+          this.setState({
+            pictureUrl: this.props.user.pictureUrl
+          });
+          this.setState({
+            currentUserPic: this.props.currentUser.pictureUrl
+          });
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var post = this.props.post;
       var user = this.props.user ? "".concat(this.props.user.firstName, " ").concat(this.props.user.lastName) : "";
       var date = {};
+      var img = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: "picture",
+        id: "picture".concat(this.props.idx)
+      });
 
       if (post) {
         var fullDate = post.createdAt.split("T")[0];
@@ -312,13 +344,19 @@ var Post = /*#__PURE__*/function (_React$Component) {
         date.minutes = fullTime.split(":")[1];
       }
 
+      if (document.getElementById("comment-section-picture-".concat(this.props.idx))) {
+        document.getElementById("comment-section-picture-".concat(this.props.idx)).style.content = "url(".concat(this.state.currentUserPic, ")");
+      }
+
+      if (document.getElementById("picture".concat(this.props.idx))) {
+        document.getElementById("picture".concat(this.props.idx)).style.content = "url(".concat(this.state.pictureUrl, ")");
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "posts"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "user-details"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        className: "picture"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+      }, img, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "name-and-date"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
         to: "/",
@@ -339,7 +377,8 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }, "Comment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "new-comment"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        className: "picture"
+        className: "picture",
+        id: "comment-section-picture-".concat(this.props.idx)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         className: "input-field",
         type: "text",
@@ -455,7 +494,8 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
               post: post,
               key: idx,
               idx: idx,
-              user: users[post.authorId]
+              user: users[post.authorId],
+              currentUser: _this2.props.user
             }));
           }
         });
@@ -479,7 +519,7 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
         this.props.friends.forEach(function (userId, idx) {
           friends.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             key: idx,
-            class_name: "friends"
+            className: "friends"
           }, _this2.props.users[userId].firstName, " ", _this2.props.users[userId].lastName));
         });
       }
@@ -635,7 +675,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ PostNavBar)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -666,24 +707,45 @@ var PostNavBar = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(PostNavBar);
 
-  function PostNavBar() {
+  function PostNavBar(props) {
+    var _this;
+
     _classCallCheck(this, PostNavBar);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.logoutUser = _this.logoutUser.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(PostNavBar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (!this.props.user) return;
+
+      if (this.props.user.pictureUrl) {
+        document.getElementById("nav-bar-picture").style.content = "url(".concat(this.props.user.pictureUrl, ")");
+      }
+    }
+  }, {
+    key: "logoutUser",
+    value: function logoutUser() {
+      this.props.logout();
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Redirect, {
+        to: "/"
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         id: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "user-profile-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         id: "user-profile",
         to: "/"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        className: "picture"
+        id: "nav-bar-picture"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, this.props.user.firstName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: this.props.logout
       }, "Log Out"));
@@ -738,29 +800,75 @@ var PostRightAside = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(PostRightAside);
 
-  function PostRightAside() {
+  function PostRightAside(props) {
+    var _this;
+
     _classCallCheck(this, PostRightAside);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.state = {
+      picturesCreated: false
+    };
+    return _this;
   }
 
   _createClass(PostRightAside, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updatePictures();
+    }
+  }, {
+    key: "updatePictures",
+    value: function updatePictures() {
+      var _this2 = this;
+
+      if (this.state.picturesCreated) {
+        return;
+      } else {
+        this.props.friends.forEach(function (userId, idx) {
+          if (!document.getElementById("contacts-pic-".concat(idx))) return;
+          document.getElementById("contacts-pic-".concat(idx)).style.content = "url(".concat(_this2.props.users[userId].pictureUrl, ")");
+
+          _this2.setState({
+            picturesCreated: true
+          });
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       var friends = [];
 
-      if (this.props.friends && Object.keys(this.props.users).length > 1) {
+      if (this.props.friends && Object.keys(this.props.users).length > 1 && friends.length === 0) {
         this.props.friends.forEach(function (userId, idx) {
+          var idx2 = idx * idx + 99999;
+          var idx3 = idx * idx * idx + 9999999;
           friends.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            key: idx3,
+            className: "contact-details"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             key: idx,
-            class_name: "friends"
-          }, _this.props.users[userId].firstName, " ", _this.props.users[userId].lastName));
+            id: "contacts-pic-".concat(idx),
+            className: "pictures"
+          }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            key: idx2,
+            className: "friend-names"
+          }, _this3.props.users[userId].firstName, " ", _this3.props.users[userId].lastName)));
+
+          _this3.updatePictures();
         });
       }
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, friends);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        id: "post-right-aside"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "contacts-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "title"
+      }, "Contacts"), friends));
     }
   }]);
 
@@ -1792,7 +1900,6 @@ __webpack_require__.r(__webpack_exports__);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SESSION_ERRORS:
-      debugger;
       return action.errors;
 
     default:
@@ -38752,6 +38859,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
       }
     };
+    delete window.currentUser;
   }
 
   var store = (0,_store_store__WEBPACK_IMPORTED_MODULE_3__.default)(preloadedState);
