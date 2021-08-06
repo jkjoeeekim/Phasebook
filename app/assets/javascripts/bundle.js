@@ -360,8 +360,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {
-      this.updateProfilePics();
+    value: function componentDidMount() {// this.updateProfilePics();
     }
   }, {
     key: "updateProfilePics",
@@ -387,10 +386,12 @@ var Post = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      if (!this.props.user || !this.props.currentUser) return null;
       var post = this.props.post;
       var user = this.props.user ? "".concat(this.props.user.firstName, " ").concat(this.props.user.lastName) : "";
       var date = {};
       var img = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        src: this.props.user.pictureUrl,
         className: "picture",
         id: "picture".concat(this.props.idx)
       });
@@ -403,6 +404,13 @@ var Post = /*#__PURE__*/function (_React$Component) {
         date.year = fullDate.split("-")[0];
         date.hour = fullTime.split(":")[0];
         date.minutes = fullTime.split(":")[1];
+
+        if (date.hour > 12) {
+          date.hour = date.hour - 12;
+          date.status = "PM";
+        } else {
+          date.status = "AM";
+        }
       }
 
       if (document.getElementById("comment-section-picture-".concat(this.props.idx))) {
@@ -425,7 +433,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
         to: "/",
         className: "created-ats"
-      }, date.month, " ", date.day, " at ", date.hour, ":", date.minutes))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+      }, date.month, " ", date.day, " at ", date.hour, ":", date.minutes, " ", date.status))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "post-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "bodys"
@@ -438,6 +446,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }, "Comment")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "new-comment"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        src: this.props.currentUser.pictureUrl,
         className: "picture",
         id: "comment-section-picture-".concat(this.props.idx)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -546,7 +555,6 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
 
       var allPosts = [];
       var user;
-      var friends = [];
       var users = this.props.users;
 
       if (Object.values(this.props.posts).length > 1) {
@@ -575,16 +583,6 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "createLine"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, "Photo"));
-      }
-
-      if (this.props.friends && Object.keys(this.props.users).length > 1) {
-        if (this.props.friends.length < 1) return;
-        this.props.friends.forEach(function (userId, idx) {
-          friends.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-            key: idx,
-            className: "friends"
-          }, _this2.props.users[userId].firstName, " ", _this2.props.users[userId].lastName));
-        });
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post_nav_bar__WEBPACK_IMPORTED_MODULE_5__.default, {
@@ -867,45 +865,16 @@ var PostRightAside = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(PostRightAside);
 
-  function PostRightAside(props) {
-    var _this;
-
+  function PostRightAside() {
     _classCallCheck(this, PostRightAside);
 
-    _this = _super.call(this, props);
-    _this.state = {
-      picturesCreated: false
-    };
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(PostRightAside, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.updatePictures();
-    }
-  }, {
-    key: "updatePictures",
-    value: function updatePictures() {
-      var _this2 = this;
-
-      if (this.state.picturesCreated) {
-        return;
-      } else {
-        this.props.friends.forEach(function (userId, idx) {
-          if (!document.getElementById("contacts-pic-".concat(idx))) return;
-          document.getElementById("contacts-pic-".concat(idx)).style.content = "url(".concat(_this2.props.users[userId].pictureUrl, ")");
-
-          _this2.setState({
-            picturesCreated: true
-          });
-        });
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this = this;
 
       var friends = [];
 
@@ -919,13 +888,12 @@ var PostRightAside = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             key: idx,
             id: "contacts-pic-".concat(idx),
+            src: _this.props.users[userId].pictureUrl,
             className: "pictures"
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             key: idx2,
             className: "friend-names"
-          }, _this3.props.users[userId].firstName, " ", _this3.props.users[userId].lastName)));
-
-          _this3.updatePictures();
+          }, _this.props.users[userId].firstName, " ", _this.props.users[userId].lastName))); // this.updatePictures();
         });
       }
 
@@ -1988,7 +1956,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
 
+
+var _nullPost = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -2002,6 +1973,9 @@ __webpack_require__.r(__webpack_exports__);
         nextState[post.id] = post;
       });
       return nextState;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__.LOGOUT_CURRENT_USER:
+      return _nullPost;
 
     default:
       return state;
