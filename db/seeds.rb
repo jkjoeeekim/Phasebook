@@ -179,7 +179,6 @@ post3 = Post.create({
 post4 = Post.create({
   body: "Happy Birthday~~",
   author_id: user4.id,
-  user_id: user1.id
 })
 
 post5 = Post.create({
@@ -189,8 +188,7 @@ post5 = Post.create({
 
 post6 = Post.create({
   body: "Check out this chill lofi stream! https://www.youtube.com/watch?v=5qap5aO4i9A",
-  author_id: user6.id,
-  user_id: user6.id
+  author_id: user6.id
 })
 
 post7 = Post.create({
