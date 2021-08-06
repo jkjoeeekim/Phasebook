@@ -37,7 +37,7 @@ export default class PostIndex extends React.Component {
       posts.forEach((post, idx) => {
         if (this.props.friends.includes(post.authorId)) {
           allPosts.push(
-            <Post post={post} key={idx} idx={idx} user={users[post.authorId]} />
+            <Post post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
           );
         }
       });
@@ -54,10 +54,9 @@ export default class PostIndex extends React.Component {
     if (this.props.friends && Object.keys(this.props.users).length > 1) {
       if (this.props.friends.length < 1) return;
       this.props.friends.forEach((userId, idx) => {
-        friends.push(<div key={idx} class_name="friends">{this.props.users[userId].firstName} {this.props.users[userId].lastName}</div>);
+        friends.push(<div key={idx} className="friends">{this.props.users[userId].firstName} {this.props.users[userId].lastName}</div>);
       });
     }
-
     return (
       <div>
         <PostNavBar user={this.props.user} logout={this.props.logout} />
