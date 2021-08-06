@@ -2,6 +2,7 @@ import React from 'react';
 import Post from './post';
 import PostRightAside from './post_right_aside';
 import PostLeftAside from './post_left_aside';
+import NewPostForm from './new_post_form';
 import PostNavBar from './post_nav_bar';
 import { Link } from 'react-router-dom';
 
@@ -62,6 +63,8 @@ export default class PostIndex extends React.Component {
         <PostNavBar user={this.props.user} logout={this.props.logout} />
         <PostRightAside users={this.props.users} friends={this.props.friends} />
         <div className="spacer"></div>
+        <div id="dimmer"></div>
+        <NewPostForm id="new-post-form" />
         {user}
         <section id="post-section-all-posts">
           {allPosts}

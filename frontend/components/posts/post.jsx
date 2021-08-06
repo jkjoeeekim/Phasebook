@@ -61,7 +61,7 @@ export default class Post extends React.Component {
       date.month = this.months[fullDate.split("-")[1]];
       date.day = fullDate.split("-")[2];
       date.year = fullDate.split("-")[0];
-      date.hour = fullTime.split(":")[0].split("0").pop();
+      date.hour = fullTime.split(":")[0];
       date.minutes = fullTime.split(":")[1];
     }
 

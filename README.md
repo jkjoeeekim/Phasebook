@@ -1,24 +1,22 @@
-# README
+Deployed at https://fazebook.herokuapp.com/
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* ***Styling for different size viewports have not been implemented yet. Some content may be offset depending on your viewport size.***
 
-Things you may want to cover:
+# Background:
+- This is Fazebook, a clone of Facebook.
 
-* Ruby version
 
-* System dependencies
+# Wireframe:
+## Before:
+![Alt text](./img/wireframe2.png)
+## Version 0.001:
+![Alt text](./img/version_010.png)
+## Current Version:
+![Alt text](./img/version_021.png)
 
-* Configuration
+# Technologies, Libraries, APIs:
+## This project will be implemented with the following technologies:
+  - `Webpack` to bundle and transpile the source JavaScript code.
+  - `Google Fonts API` for fonts: `Kalam` and `Roboto Mono`
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Implementation timeline:
