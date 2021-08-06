@@ -5,8 +5,8 @@ Deployed at https://fazebook.herokuapp.com/
 # Background:
 - This is Fazebook, a clone of Facebook.
 
-* *** Refer to the WIKI for more details. ***
-* *** https://github.com/jkjoeeekim/Phasebook/wiki ***
+* ***Refer to the WIKI for more details.***
+* ***https://github.com/jkjoeeekim/Phasebook/wiki***
 
 # Wireframe:
 ## Before:
