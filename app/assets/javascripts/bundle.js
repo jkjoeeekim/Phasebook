@@ -267,7 +267,26 @@ var NewPostForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NewPostForm, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Create Post"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, "Post"));
+      var user = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        src: this.props.user.pictureUrl,
+        className: "pictures"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "name"
+      }, this.props.user.firstName, " ", this.props.user.lastName));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+        id: "new-post-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "form-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "title"
+      }, "Create Post")), user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
+        className: "post-textarea",
+        placeholder: "What's on your mind, ".concat(this.props.user.firstName)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "post-button"
+      }, "Post"));
     }
   }]);
 
@@ -529,6 +548,7 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
       users: _this.props.users
     };
     _this.logoutUser = _this.logoutUser.bind(_assertThisInitialized(_this));
+    _this.displayPostForm = _this.displayPostForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -542,6 +562,21 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
       this.setState({
         posts: props.fetchPosts()
       });
+    }
+  }, {
+    key: "displayPostForm",
+    value: function displayPostForm(e) {
+      e.preventDefault();
+      document.getElementById("new-post-form-wrapper").classList.add('enabled');
+      document.getElementById("empty-space").onclick = this.hidePostForm;
+      document.getElementById("new-post-form").classList.add('enabled');
+    }
+  }, {
+    key: "hidePostForm",
+    value: function hidePostForm(e) {
+      e.preventDefault();
+      document.getElementById("new-post-form-wrapper").classList.remove('enabled');
+      document.getElementById("new-post-form").classList.remove('enabled');
     }
   }, {
     key: "logoutUser",
@@ -576,13 +611,15 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
         user = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
           id: "post-section-user-controls"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+          onClick: this.displayPostForm,
           className: "input-create-post",
           type: "text",
-          defaultValue: "What's on your mind, ".concat(this.props.user.firstName, "?"),
-          disabled: true
+          defaultValue: "What's on your mind, ".concat(this.props.user.firstName, "?")
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "createLine"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, "Photo"));
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          onClick: this.displayPostForm
+        }, "Photo"));
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post_nav_bar__WEBPACK_IMPORTED_MODULE_5__.default, {
@@ -594,10 +631,12 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "spacer"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        id: "dimmer"
+        id: "new-post-form-wrapper"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: "empty-space"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_new_post_form__WEBPACK_IMPORTED_MODULE_4__.default, {
-        id: "new-post-form"
-      }), user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        user: this.props.user
+      })), user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         id: "post-section-all-posts"
       }, allPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "spacer"
@@ -893,7 +932,7 @@ var PostRightAside = /*#__PURE__*/function (_React$Component) {
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             key: idx2,
             className: "friend-names"
-          }, _this.props.users[userId].firstName, " ", _this.props.users[userId].lastName))); // this.updatePictures();
+          }, _this.props.users[userId].firstName, " ", _this.props.users[userId].lastName)));
         });
       }
 

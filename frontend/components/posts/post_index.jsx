@@ -16,12 +16,26 @@ export default class PostIndex extends React.Component {
     };
 
     this.logoutUser = this.logoutUser.bind(this);
+    this.displayPostForm = this.displayPostForm.bind(this);
   }
 
   componentDidMount() {
     let props = this.props;
     this.setState({ users: props.fetchUsers() });
     this.setState({ posts: props.fetchPosts() });
+  }
+
+  displayPostForm(e) {
+    e.preventDefault();
+    document.getElementById("new-post-form-wrapper").classList.add('enabled');
+    document.getElementById("empty-space").onclick = this.hidePostForm;
+    document.getElementById("new-post-form").classList.add('enabled');
+  }
+
+  hidePostForm(e) {
+    e.preventDefault();
+    document.getElementById("new-post-form-wrapper").classList.remove('enabled');
+    document.getElementById("new-post-form").classList.remove('enabled');
   }
 
   logoutUser() {
@@ -46,9 +60,9 @@ export default class PostIndex extends React.Component {
     if (this.props.user) {
       user = (
         <section id="post-section-user-controls" >
-          <input className="input-create-post" type="text" defaultValue={`What's on your mind, ${this.props.user.firstName}?`} disabled></input>
+          <input onClick={this.displayPostForm} className="input-create-post" type="text" defaultValue={`What's on your mind, ${this.props.user.firstName}?`} ></input>
           <div className="createLine"></div>
-          <button>Photo</button>
+          <button onClick={this.displayPostForm} >Photo</button>
         </section>
       );
     }
@@ -58,8 +72,10 @@ export default class PostIndex extends React.Component {
         <PostNavBar user={this.props.user} logout={this.props.logout} />
         <PostRightAside users={this.props.users} friends={this.props.friends} />
         <div className="spacer"></div>
-        <div id="dimmer"></div>
-        <NewPostForm id="new-post-form" />
+        <div id="new-post-form-wrapper">
+          <div id="empty-space"></div>
+          <NewPostForm user={this.props.user} />
+        </div>
         {user}
         <section id="post-section-all-posts">
           {allPosts}

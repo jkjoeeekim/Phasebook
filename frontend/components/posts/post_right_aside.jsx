@@ -17,7 +17,6 @@ export default class PostRightAside extends React.Component {
             </div>
           </div>
         );
-        // this.updatePictures();
       });
     }
 
