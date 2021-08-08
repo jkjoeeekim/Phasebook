@@ -14,7 +14,12 @@ const singlePost = (post) => ({
   post
 });
 
-export const fetchPosts = () => (dispatch) => (
-  APIUtils.fetchPosts()
+export const fetchPosts = () => (dispatch) => {
+  return (APIUtils.fetchPosts()
+    .then((posts) => dispatch(allPosts(posts))));
+};
+
+export const postPost = (post) => (dispatch) => (
+  APIUtils.postPost(post)
     .then((posts) => dispatch(allPosts(posts)))
 );

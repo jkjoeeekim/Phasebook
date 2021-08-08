@@ -2,7 +2,7 @@ import React from 'react';
 import LoginFormContainer from '../session/login_form_container';
 import SignupFormContainer from '../session/signup_form_container';
 
-export default class SigninPage extends React.Component {
+export default class LoginPage extends React.Component {
   render() {
     return (
       <section id="login-page-section">

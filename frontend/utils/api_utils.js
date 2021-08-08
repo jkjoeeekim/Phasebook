@@ -48,6 +48,15 @@ export const fetchPosts = () => (
   })
 );
 
+// Create a Post
+export const postPost = (post) => (
+  $.ajax({
+    method: "POST",
+    url: '/api/posts',
+    data: { post }
+  })
+);
+
 // Fetch array of Friends for userId
 export const fetchFriends = (userId) => (
   $.ajax({

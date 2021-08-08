@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       session: {
         currentUser: window.currentUser.id,
-        friends: Object.values(window.currentUser.friends).map((friend) => { return friend.id; }),
+        friends: Object.values(window.currentUser.friends).map((friend) => { return friend.id; })
       }
     };
     delete window.currentUser;
