@@ -23,7 +23,9 @@
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "file-loader": "^6.2.0"
+  },
   "engines": {
     "node": "10.13.0",
     "npm": "6.4.1"

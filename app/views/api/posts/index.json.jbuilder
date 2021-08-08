@@ -1,1 +1,2 @@
-json.partial! "api/posts/allPosts", posts: @posts, post: @post
+json.partial! "api/posts/allPosts", posts: @posts
+# json.partial! "api/posts/allComments", comments: @comments

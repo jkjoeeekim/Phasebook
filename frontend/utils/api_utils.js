@@ -64,3 +64,11 @@ export const fetchFriends = (userId) => (
     url: `/api/users/${userId}`
   })
 )
+
+// Fetch comments
+export const fetchComments = () => (
+  $.ajax({
+    method: "GET",
+    url: '/api/comments'
+  })
+)

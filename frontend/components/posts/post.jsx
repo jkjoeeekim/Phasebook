@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Comment from '../comments/comment';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -27,8 +28,11 @@ export default class Post extends React.Component {
 
     this.img = "";
     this.selfImg = "";
+    this.commentImg = "";
 
     this.updateBody = this.updateBody.bind(this);
+    this.focusInput = this.focusInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateBody(e) {
@@ -39,17 +43,34 @@ export default class Post extends React.Component {
     this.setState({ mounted: true });
   }
 
+  focusInput() {
+    document.getElementById(`input-field-${this.props.idx}`).focus();
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.postPost({ body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id });
+    this.setState({ body: '' });asdf
+  }
+
   render() {
-    if (!this.props.user || !this.props.currentUser) return null;
+    if (!this.props.user || !this.props.currentUser || !this.props.comments) return null;
     let post = this.props.post;
     let user = this.props.user ? `${this.props.user.firstName} ${this.props.user.lastName}` : "";
     let date = {};
+    let allComments = [];
 
     if (!document.getElementById(`picture${this.props.idx}`)) {
       this.img = (
         <img src={this.props.user.pictureUrl} className="picture" id={`picture${this.props.idx}`}></img>
       );
     }
+
+    this.props.comments.forEach((comment, idx) => {
+      allComments.push(
+        <Comment idx={idx} key={idx} user={this.props.users[this.props.posts[comment].authorId]} comment={this.props.posts[comment]} />
+      );
+    });
 
     if (!document.getElementById(`comment-section-picture-${this.props.idx}`)) {
       this.selfImg = (
@@ -74,11 +95,7 @@ export default class Post extends React.Component {
       } else {
         date.status = "AM";
       }
-      console.log(date.hour);
     }
-
-
-
 
     return (
       <section className="posts">
@@ -93,13 +110,14 @@ export default class Post extends React.Component {
           <p className="bodys">{post.body}</p>
         </section>
         <section className="likes-and-comments">
-          <p className="likes">Like</p>
-          <p className="comments">Comment</p>
+          <button className="likes">Like</button>
+          <button onClick={this.focusInput} className="comments">Comment</button>
         </section>
-        <section className="new-comment">
+        {allComments}
+        <form className="new-comment" onSubmit={this.handleSubmit}>
           {this.selfImg}
-          <input className="input-field" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
-        </section>
+          <input id={`input-field-${this.props.idx}`} className="input-fields" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
+        </form>
       </section>
     );
   }

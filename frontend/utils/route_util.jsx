@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, withRouter, Redirect, useParams } from 'react-router-dom';
 import PostIndexContainer from '../components/posts/post_index_container';
 import LoginPage from '../components/session/login_page';
-import UserProfilePage from '../components/user/user_profile_page';
+import UserProfilePageContainer from '../components/user/user_profile_page_container';
 
 const Auth = ({ component: Component, path, loggedIn, exact }) => (
   loggedIn ? (
@@ -19,7 +19,7 @@ const Auth2 = ({ component: Component, path, loggedIn, exact }) => {
   if (loggedIn) {
     if (!!parseInt(location.hash.split("/")[1])) {
       comp = (
-        <Route path="/:id" exact render={(props) => (<UserProfilePage {...props} />)} />
+        <Route path="/:id" exact render={(props) => (<UserProfilePageContainer {...props} />)} />
       );
     } else {
       comp = (

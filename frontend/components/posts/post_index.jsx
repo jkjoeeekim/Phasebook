@@ -3,7 +3,7 @@ import Post from './post';
 import PostRightAside from './post_right_aside';
 import PostLeftAside from './post_left_aside';
 import NewPostForm from './new_post_form';
-import PostNavBar from './post_nav_bar';
+import TopNavBar from '../navbar/top_nav_bar';
 import { Link } from 'react-router-dom';
 
 export default class PostIndex extends React.Component {
@@ -19,18 +19,14 @@ export default class PostIndex extends React.Component {
   }
 
   componentDidMount() {
-    // debugger;
-    console.log('mounted');
+    this.props.fetchComments();
     this.props.fetchPosts();
     this.props.fetchUsers();
   }
 
   componentDidUpdate() {
-    // debugger;
     if (!this.state.updated) {
-      // this.props.fetchPosts();
       this.props.fetchPosts();
-      // this.props.fetchUsers();
       this.setState({ updated: true });
     }
   }
@@ -52,7 +48,6 @@ export default class PostIndex extends React.Component {
   }
 
   render() {
-    console.log(this.state.updated);
     let allPosts = [];
     let user;
 
@@ -60,13 +55,21 @@ export default class PostIndex extends React.Component {
     if (Object.values(this.props.posts).length > 1 && Object.values(this.props.users).length > 2) {
       let posts = Object.values(this.props.posts).reverse();
       posts.forEach((post, idx) => {
-        if (this.props.friends.includes(post.authorId)) {
+        if (this.props.friends.includes(post.authorId) && !post.postId) {
+          let postComments = [];
+          if (this.props.comments[post.id]) {
+            postComments = this.props.comments[post.id];
+          }
           allPosts.push(
-            <Post post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <Post comments={postComments} posts={this.props.posts} users={this.props.users} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
           );
-        } else if (this.props.user.id === post.authorId) {
+        } else if (this.props.user.id === post.authorId && !post.postId) {
+          let postComments = [];
+          if (this.props.comments[post.id]) {
+            postComments = this.props.comments[post.id];
+          }
           allPosts.push(
-            <Post post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <Post comments={postComments} posts={this.props.posts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
           );
         }
       });
@@ -88,7 +91,7 @@ export default class PostIndex extends React.Component {
 
     return (
       <div>
-        <PostNavBar user={this.props.user} fetchUsers={this.props.fetchUsers} fetchPosts={this.props.fetchPosts} logout={this.props.logout} />
+        <TopNavBar user={this.props.user} fetchUsers={this.props.fetchUsers} fetchPosts={this.props.fetchPosts} logout={this.props.logout} />
         <PostRightAside users={this.props.users} friends={this.props.friends} />
         <div className="spacer"></div>
         <div id="new-post-form-wrapper">
