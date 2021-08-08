@@ -295,9 +295,8 @@ var NewPostForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.postPost(this.state); // debugger;
-
-      document.getElementById("new-post-form-wrapper").classList.remove('enabled');
+      this.props.postPost(this.state);
+      window.location.reload();
     }
   }, {
     key: "render",
