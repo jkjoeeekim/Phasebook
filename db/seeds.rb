@@ -74,7 +74,7 @@ user6 = User.create({
   first_name: 'Jenni', 
   last_name: 'Widjaja', 
   password:'111111', 
-  email: 'jenny@widjaja.com', 
+  email: 'jenni@widjaja.com', 
   birthday: '1990/10/10', 
   gender: "female",
   picture_url: "",

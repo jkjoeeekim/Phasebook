@@ -1,5 +1,6 @@
 class Api::PostsController < ApplicationController
   def index
+    # select all posts that don't belongs_to userprofile
     @posts = Post.all.select{ |post| !post.userprofile }
     render "api/posts/index"
   end
@@ -7,7 +8,9 @@ class Api::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      render "api/posts/show"
+      # select all posts that don't belongs_to userprofile
+      @posts = Post.all.select{ |post| !post.userprofile }
+      render "api/posts/index"
     else
       render json: @post.errors.full_messages
     end
@@ -23,7 +26,7 @@ class Api::PostsController < ApplicationController
   end
 
   private
-  def posts_params
+  def post_params
     params.require(:post).permit(:body, :author_id, :post_id, :user_id, :picture_id)
   end
 end

@@ -3,7 +3,7 @@ import PostIndex from './post_index';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { fetchUser, fetchUsers } from '../../actions/user_actions';
-import { fetchPosts } from '../../actions/post_actions';
+import { fetchPosts, postPost } from '../../actions/post_actions';
 
 const mSTP = (state) => ({
   userId: state.session.currentUser,
@@ -18,6 +18,7 @@ const mDTP = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsers()),
   logout: () => dispatch(logout()),
   fetchPosts: () => dispatch(fetchPosts()),
+  postPost: (post) => dispatch(postPost(post)),
 });
 
 export default connect(mSTP, mDTP)(PostIndex);
