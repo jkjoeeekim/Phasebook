@@ -3,7 +3,7 @@ import PostIndex from './post_index';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { fetchUser, fetchUsers } from '../../actions/user_actions';
-import { fetchPosts, postPost, fetchComments } from '../../actions/post_actions';
+import { fetchPosts, postPost, deletePost } from '../../actions/post_actions';
 
 const mSTP = (state) => ({
   userId: state.session.currentUser,
@@ -11,7 +11,6 @@ const mSTP = (state) => ({
   posts: state.entities.posts,
   users: state.entities.users,
   friends: state.session.friends,
-  comments: state.entities.comments,
 });
 
 const mDTP = (dispatch) => ({
@@ -20,7 +19,7 @@ const mDTP = (dispatch) => ({
   logout: () => dispatch(logout()),
   fetchPosts: () => dispatch(fetchPosts()),
   postPost: (post) => dispatch(postPost(post)),
-  fetchComments: () => dispatch(fetchComments()),
+  deletePost: (postId) => dispatch(deletePost(postId)),
 });
 
 export default connect(mSTP, mDTP)(PostIndex);

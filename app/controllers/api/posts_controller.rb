@@ -10,7 +10,7 @@ class Api::PostsController < ApplicationController
     if @post.save
       # select all posts that don't belongs_to userprofile
       @posts = Post.all.select{ |post| !post.userprofile }
-      render "api/posts/index"
+      render "api/posts/new"
     else
       render json: @post.errors.full_messages
     end
@@ -21,8 +21,18 @@ class Api::PostsController < ApplicationController
     render "api/posts/show"
   end
 
-  def destroy
+  def update
+    
+  end
 
+  def destroy
+    @post = Post.find_by(id: params[:id])
+    # debugger
+    @post.delete
+    # debugger
+    @post.save
+    # debugger
+    render "api/posts/delete"
   end
 
   private

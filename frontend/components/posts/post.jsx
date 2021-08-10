@@ -8,7 +8,9 @@ export default class Post extends React.Component {
 
     this.state = {
       mounted: false,
-      body: ''
+      body: '',
+      comments: '',
+      posts: '',
     };
 
     this.months = {
@@ -29,6 +31,8 @@ export default class Post extends React.Component {
     this.img = "";
     this.selfImg = "";
     this.commentImg = "";
+    this.comments;
+    this.posts;
 
     this.updateBody = this.updateBody.bind(this);
     this.focusInput = this.focusInput.bind(this);
@@ -40,43 +44,59 @@ export default class Post extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ mounted: true });
+    this.setState({ body: '' });
   }
 
   focusInput() {
     document.getElementById(`input-field-${this.props.idx}`).focus();
   }
+  focusInputAfterSubmit() {
+    if (document.getElementById(`input-field-${this.props.idx + 1}`)) {
+      document.getElementById(`input-field-${this.props.idx + 1}`).focus();
+    }
+  }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.postPost({ body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id });
-    this.setState({ body: '' });asdf
+    this.focusInputAfterSubmit();
+    this.setState({ body: "" });
   }
 
   render() {
-    if (!this.props.user || !this.props.currentUser || !this.props.comments) return null;
+    if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
     let post = this.props.post;
     let user = this.props.user ? `${this.props.user.firstName} ${this.props.user.lastName}` : "";
     let date = {};
     let allComments = [];
+    let deleteButton = '';
+    this.comments = this.props.comments;
+    this.posts = this.props.posts;
 
-    if (!document.getElementById(`picture${this.props.idx}`)) {
+    // debugger;
+    if (!document.getElementById(`picture${(this.props.idx)}`)) {
       this.img = (
-        <img src={this.props.user.pictureUrl} className="picture" id={`picture${this.props.idx}`}></img>
+        <img src={this.props.user.pictureUrl} className="picture" id={`picture${(this.props.idx)}`}></img>
       );
     }
-
-    this.props.comments.forEach((comment, idx) => {
+    this.comments.forEach((comment, idx) => {
+      // if (this.posts[comment]) {
       allComments.push(
-        <Comment idx={idx} key={idx} user={this.props.users[this.props.posts[comment].authorId]} comment={this.props.posts[comment]} />
+        <Comment idx={idx} key={idx} user={this.props.users[this.posts[comment].authorId]} currentUser={this.props.currentUser} comment={this.props.posts[comment]} deletePost={this.props.deletePost} />
       );
+      // }
     });
+    let img = (
+      <img src={this.props.user.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
+    );
+    let imgCurrent = (
+      <img src={this.props.currentUser.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
+    );
 
-    if (!document.getElementById(`comment-section-picture-${this.props.idx}`)) {
-      this.selfImg = (
-        <img src={this.props.currentUser.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
-      );
-    }
+    // if (!document.getElementById(`comment-section-picture-${this.props.idx}`)) {
+    //   this.selfImg = (
+    //   );
+    // }
 
     if (post) {
       let fullDate = post.createdAt.split("T")[0];
@@ -86,6 +106,9 @@ export default class Post extends React.Component {
       date.year = fullDate.split("-")[0];
       date.hour = fullTime.split(":")[0];
       date.minutes = fullTime.split(":")[1];
+      if (date.day < 10) {
+        date.day = date.day.split("0");
+      }
       if (date.hour > 12) {
         date.hour = date.hour - 12;
         date.status = "PM";
@@ -97,25 +120,32 @@ export default class Post extends React.Component {
       }
     }
 
+    if (this.props.user.id === this.props.currentUser.id) {
+      deleteButton = (
+        <button onClick={() => { this.props.deletePost(this.props.post.id); }}>Delete</button>
+      );
+    }
+
     return (
       <section className="posts">
         <section className="user-details">
-          {this.img}
+          {img}
           <section className="name-and-date">
             <Link to="/" className="links">{user}</Link>
             <Link to="/" className="created-ats">{date.month} {date.day} at {date.hour}:{date.minutes} {date.status}</Link>
           </section>
+          {deleteButton}
         </section>
         <section className="post-details">
           <p className="bodys">{post.body}</p>
         </section>
         <section className="likes-and-comments">
           <button className="likes">Like</button>
-          <button onClick={this.focusInput} className="comments">Comment</button>
+          <button onClick={this.focusInput} className="comments-button">Comment</button>
         </section>
-        {allComments}
+        {allComments.reverse()}
         <form className="new-comment" onSubmit={this.handleSubmit}>
-          {this.selfImg}
+          {imgCurrent}
           <input id={`input-field-${this.props.idx}`} className="input-fields" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
         </form>
       </section>

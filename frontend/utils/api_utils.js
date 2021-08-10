@@ -57,18 +57,17 @@ export const postPost = (post) => (
   })
 );
 
+export const deletePost = (postId) => (
+  $.ajax({
+    method: "DELETE",
+    url: `/api/posts/${postId}`
+  })
+);
+
 // Fetch array of Friends for userId
 export const fetchFriends = (userId) => (
   $.ajax({
     method: "GET",
     url: `/api/users/${userId}`
   })
-)
-
-// Fetch comments
-export const fetchComments = () => (
-  $.ajax({
-    method: "GET",
-    url: '/api/comments'
-  })
-)
+);

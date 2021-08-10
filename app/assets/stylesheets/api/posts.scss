@@ -69,11 +69,13 @@
   background-color: rgba(252, 252, 253, 0.8);
   display: none;
   z-index: 10;
-
+  overflow: hidden;
+  
   #empty-space {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
   }
 
   #new-post-form {
@@ -309,7 +311,6 @@
 
     .post-details {
       margin-top: 18px;
-      margin-left: -7px;
       padding-left: 7px;
       border-bottom: 1px solid rgb(206,208,212);
       padding-bottom: 18px;
@@ -324,7 +325,6 @@
       flex-direction: row;
       justify-content: center;
       margin-top: 5px;
-      margin-left: -6px;
       padding-bottom: 5px;
       border-bottom: 1px solid rgb(206,208,212);
       
@@ -338,7 +338,7 @@
         border: none;
       }
       
-      .comments {
+      .comments-button {
         background-color: white;
         width: 50%;
         text-align:center;
@@ -353,7 +353,7 @@
         cursor: pointer;
       }
 
-      .comments:hover {
+      .comments-button:hover {
         background: rgb(240, 242, 245);
         cursor: pointer;
       }

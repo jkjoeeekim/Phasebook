@@ -20,8 +20,9 @@ export default class NewPostForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    document.getElementById("new-post-form-wrapper").classList.remove('enabled');
     this.props.postPost(this.state);
-    window.location.reload();
+    this.setState({ body: '' });
   }
 
   render() {

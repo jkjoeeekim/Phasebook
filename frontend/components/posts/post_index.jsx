@@ -11,7 +11,8 @@ export default class PostIndex extends React.Component {
     super(props);
 
     this.state = {
-      updated: false
+      updated: false,
+      commentAdded: 0,
     };
 
     this.logoutUser = this.logoutUser.bind(this);
@@ -19,7 +20,6 @@ export default class PostIndex extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchComments();
     this.props.fetchPosts();
     this.props.fetchUsers();
   }
@@ -49,27 +49,30 @@ export default class PostIndex extends React.Component {
 
   render() {
     let allPosts = [];
+    let allComments = {};
+
     let user;
 
     let users = this.props.users;
     if (Object.values(this.props.posts).length > 1 && Object.values(this.props.users).length > 2) {
       let posts = Object.values(this.props.posts).reverse();
       posts.forEach((post, idx) => {
+        allComments[post.postId] ||= [];
+        allComments[post.id] ||= [];
+        if (!!post.postId) {
+          allComments[post.postId].push(post.id);
+        }
+      });
+      posts.forEach((post, idx) => {
         if (this.props.friends.includes(post.authorId) && !post.postId) {
-          let postComments = [];
-          if (this.props.comments[post.id]) {
-            postComments = this.props.comments[post.id];
-          }
+          let postComments = allComments[post.id];
           allPosts.push(
-            <Post comments={postComments} posts={this.props.posts} users={this.props.users} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <Post comments={postComments} posts={this.props.posts} deletePost={this.props.deletePost} users={this.props.users} fetchPosts={this.props.fetchPosts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
           );
         } else if (this.props.user.id === post.authorId && !post.postId) {
-          let postComments = [];
-          if (this.props.comments[post.id]) {
-            postComments = this.props.comments[post.id];
-          }
+          let postComments = allComments[post.id];
           allPosts.push(
-            <Post comments={postComments} posts={this.props.posts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <Post comments={postComments} posts={this.props.posts} deletePost={this.props.deletePost} users={this.props.users} fetchPosts={this.props.fetchPosts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
           );
         }
       });
@@ -83,7 +86,7 @@ export default class PostIndex extends React.Component {
           </section>
           <div className="createLine"></div>
           <section>
-            <button onClick={this.displayPostForm}>Photo</button>
+            <button onClick={this.displayPostForm}>Post</button>
           </section>
         </section>
       );

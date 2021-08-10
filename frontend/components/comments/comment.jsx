@@ -5,26 +5,29 @@ export default class Comment extends React.Component {
   constructor(props) {
     super(props);
 
-    this.pic = '';
+    this.state = {
+      pic: "",
+    };
+  }
+
+  componentDidMount() {
   }
 
   render() {
-    if (!this.props.comment) return null;
-    if (!document.getElementById(`comment-picture-${this.props.idx}`)) {
-      this.pic = (
-        <img src={this.props.user.pictureUrl} className="picture" id={`comment-picture-${this.props.idx}`}></img>
-      );
-    }
+    if (!this.props.comment || !this.props.user) return null;
 
+    let pic = (
+      <img src={this.props.user.pictureUrl} className="picture" id={`comment-picture-${this.props.idx}`}></img>
+    );
     let date = {
       timeAgo: 0,
       suffix: ""
     };
     let post = this.props.comment;
+    let deleteButton = '';
 
     if (post) {
       let today = new Date();
-      // debugger;
       let todayMinutes = today.getMinutes();
       let todayHour = today.getHours();
       let todayDay = today.getDate();
@@ -53,10 +56,16 @@ export default class Comment extends React.Component {
       }
     }
 
+    if (this.props.user.id === this.props.currentUser.id) {
+      deleteButton = (
+        <button onClick={() => { this.props.deletePost(this.props.comment.id); }}>Delete</button>
+      );
+    }
+
     return (
       <div id={`comment-id-${this.props.idx}`} className='comments' key={this.props.idx}>
         <section className='picture-section'>
-          {this.pic}
+          {pic}
         </section>
         <section className="section">
           <section className="description-section">
@@ -67,6 +76,7 @@ export default class Comment extends React.Component {
             <Link to="/" className="created-ats">{date.timeAgo}{date.suffix}</Link>
           </section>
         </section>
+        {deleteButton}
       </div>
     );
   }
