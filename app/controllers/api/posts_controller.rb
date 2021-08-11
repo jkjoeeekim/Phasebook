@@ -9,7 +9,7 @@ class Api::PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       # select all posts that don't belongs_to userprofile
-      @posts = Post.all.select{ |post| !post.userprofile }
+      @posts = Post.all
       render "api/posts/new"
     else
       render json: @post.errors.full_messages
@@ -27,11 +27,8 @@ class Api::PostsController < ApplicationController
 
   def destroy
     @post = Post.find_by(id: params[:id])
-    # debugger
     @post.delete
-    # debugger
     @post.save
-    # debugger
     render "api/posts/delete"
   end
 

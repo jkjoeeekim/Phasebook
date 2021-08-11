@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from './post';
+import PostContainer from './post_container';
 import PostRightAside from './post_right_aside';
 import PostLeftAside from './post_left_aside';
 import NewPostForm from './new_post_form';
@@ -12,7 +12,6 @@ export default class PostIndex extends React.Component {
 
     this.state = {
       updated: false,
-      commentAdded: 0,
     };
 
     this.logoutUser = this.logoutUser.bind(this);
@@ -20,6 +19,11 @@ export default class PostIndex extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchPosts();
+    this.props.fetchUsers();
+  }
+
+  componentWillUnmount() {
     this.props.fetchPosts();
     this.props.fetchUsers();
   }
@@ -48,6 +52,7 @@ export default class PostIndex extends React.Component {
   }
 
   render() {
+    // debugger;
     let allPosts = [];
     let allComments = {};
 
@@ -64,15 +69,27 @@ export default class PostIndex extends React.Component {
         }
       });
       posts.forEach((post, idx) => {
-        if (this.props.friends.includes(post.authorId) && !post.postId) {
+        if (this.props.friends.includes(post.authorId) && !post.postId && !post.userId) {
           let postComments = allComments[post.id];
           allPosts.push(
-            <Post comments={postComments} posts={this.props.posts} deletePost={this.props.deletePost} users={this.props.users} fetchPosts={this.props.fetchPosts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <PostContainer comments={postComments}
+              post={post}
+              key={idx}
+              idx={idx}
+              user={users[post.authorId]}
+              currentUser={this.props.user}
+            />
           );
-        } else if (this.props.user.id === post.authorId && !post.postId) {
+        } else if (this.props.user.id === post.authorId && !post.postId && !post.userId) {
           let postComments = allComments[post.id];
           allPosts.push(
-            <Post comments={postComments} posts={this.props.posts} deletePost={this.props.deletePost} users={this.props.users} fetchPosts={this.props.fetchPosts} postPost={this.props.postPost} post={post} key={idx} idx={idx} user={users[post.authorId]} currentUser={this.props.user} />
+            <PostContainer comments={postComments}
+              post={post}
+              key={idx}
+              idx={idx}
+              user={users[post.authorId]}
+              currentUser={this.props.user}
+            />
           );
         }
       });
@@ -103,7 +120,9 @@ export default class PostIndex extends React.Component {
         </div>
         {user}
         <section id="post-section-all-posts">
-          {allPosts}
+          {allPosts.map(post => {
+            return post;
+          })}
         </section>
         <div className="spacer"></div>
       </div>

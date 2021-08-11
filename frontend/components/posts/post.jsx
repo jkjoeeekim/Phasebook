@@ -7,7 +7,6 @@ export default class Post extends React.Component {
     super(props);
 
     this.state = {
-      mounted: false,
       body: '',
       comments: '',
       posts: '',
@@ -28,12 +27,9 @@ export default class Post extends React.Component {
       "12": "December",
     };
 
-    this.img = "";
-    this.selfImg = "";
-    this.commentImg = "";
-    this.comments;
-    this.posts;
+    this.commentsLength;
 
+    this.toggleComments = this.toggleComments.bind(this);
     this.updateBody = this.updateBody.bind(this);
     this.focusInput = this.focusInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,13 +39,18 @@ export default class Post extends React.Component {
     this.setState({ body: e.currentTarget.value });
   }
 
-  componentDidMount() {
-    this.setState({ body: '' });
+  toggleComments() {
+    if (this.props.ui) {
+      this.props.closeComments(this.props.post.id);
+    } else {
+      this.props.openComments(this.props.post.id);
+    }
   }
 
-  focusInput() {
-    document.getElementById(`input-field-${this.props.idx}`).focus();
+  focusInput(idx) {
+    document.getElementById(`input-field-${idx}`).focus();
   }
+
   focusInputAfterSubmit() {
     if (document.getElementById(`input-field-${this.props.idx + 1}`)) {
       document.getElementById(`input-field-${this.props.idx + 1}`).focus();
@@ -57,35 +58,26 @@ export default class Post extends React.Component {
   }
 
   handleSubmit(e) {
+    // debugger;
     e.preventDefault();
     this.props.postPost({ body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id });
-    this.focusInputAfterSubmit();
-    this.setState({ body: "" });
+    this.setState({ body: '' });
+    if (this.state.revealComments) {
+      this.setState({ revealComments: true });
+    }
   }
 
   render() {
+    // debugger;
     if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
     let post = this.props.post;
     let user = this.props.user ? `${this.props.user.firstName} ${this.props.user.lastName}` : "";
     let date = {};
     let allComments = [];
     let deleteButton = '';
-    this.comments = this.props.comments;
-    this.posts = this.props.posts;
-
-    // debugger;
-    if (!document.getElementById(`picture${(this.props.idx)}`)) {
-      this.img = (
-        <img src={this.props.user.pictureUrl} className="picture" id={`picture${(this.props.idx)}`}></img>
-      );
-    }
-    this.comments.forEach((comment, idx) => {
-      // if (this.posts[comment]) {
-      allComments.push(
-        <Comment idx={idx} key={idx} user={this.props.users[this.posts[comment].authorId]} currentUser={this.props.currentUser} comment={this.props.posts[comment]} deletePost={this.props.deletePost} />
-      );
-      // }
-    });
+    let comments = this.props.comments;
+    let numComments = '';
+    let posts = this.props.posts;
     let img = (
       <img src={this.props.user.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
     );
@@ -93,10 +85,62 @@ export default class Post extends React.Component {
       <img src={this.props.currentUser.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
     );
 
-    // if (!document.getElementById(`comment-section-picture-${this.props.idx}`)) {
-    //   this.selfImg = (
-    //   );
-    // }
+
+    if (comments.length === 1) {
+
+      numComments = (
+        <button className='comments-counts' onClick={this.toggleComments} >{comments.length} Comment</button>
+      );
+      comments.forEach((comment, idx) => {
+        allComments.unshift(
+          <Comment idx={idx}
+            key={idx} 
+            user={this.props.users[posts[comment].authorId]} 
+            currentUser={this.props.currentUser} 
+            comment={this.props.posts[comment]} 
+            deletePost={this.props.deletePost} 
+          />
+        );
+      });
+
+    } else if (comments.length > 1) {
+
+      numComments = (
+        <button className='comments-counts' onClick={this.toggleComments}>
+          {comments.length} Comments
+        </button>
+      );
+      // console.log('in render ' + this.props.post.id + this.state.revealComments);
+      // console.log('in render ' + comments);
+      // console.log('in render ' + allComments.reverse());
+
+      if (!!this.props.ui) {
+        comments.forEach((comment, idx) => {
+          allComments.unshift(
+            <Comment idx={idx} 
+              key={idx} 
+              user={this.props.users[posts[comment].authorId]} 
+              currentUser={this.props.currentUser} 
+              comment={this.props.posts[comment]} 
+              deletePost={this.props.deletePost} 
+            />
+          );
+        });
+        // console.log('in render' + comments);
+        // console.log('in render' + allComments.reverse());
+      } else {
+        allComments.unshift(
+          <Comment idx={0} 
+            key={0} 
+            user={this.props.users[posts[comments[0]].authorId]} 
+            currentUser={this.props.currentUser} 
+            comment={this.props.posts[comments[0]]} 
+            deletePost={this.props.deletePost} 
+          />
+        );
+      }
+    }
+    this.commentsLength = allComments.length;
 
     if (post) {
       let fullDate = post.createdAt.split("T")[0];
@@ -139,14 +183,21 @@ export default class Post extends React.Component {
         <section className="post-details">
           <p className="bodys">{post.body}</p>
         </section>
+        <section className="count-likes-comments">
+          <p>Likes</p>
+          {numComments}
+        </section>
         <section className="likes-and-comments">
           <button className="likes">Like</button>
-          <button onClick={this.focusInput} className="comments-button">Comment</button>
+          <button onClick={() => this.focusInput(this.props.idx)} className="comments-button">Comment</button>
         </section>
-        {allComments.reverse()}
+        {allComments.map(comment => {
+          return comment;
+        })}
         <form className="new-comment" onSubmit={this.handleSubmit}>
           {imgCurrent}
           <input id={`input-field-${this.props.idx}`} className="input-fields" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
+          <input type='submit' value=""></input>
         </form>
       </section>
     );

@@ -1,6 +1,37 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./frontend/actions/comment_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/comment_actions.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "OPEN_COMMENTS": () => (/* binding */ OPEN_COMMENTS),
+/* harmony export */   "CLOSE_COMMENTS": () => (/* binding */ CLOSE_COMMENTS),
+/* harmony export */   "openComments": () => (/* binding */ openComments),
+/* harmony export */   "closeComments": () => (/* binding */ closeComments)
+/* harmony export */ });
+var OPEN_COMMENTS = 'OPEN_COMMENTS';
+var CLOSE_COMMENTS = 'CLOSE_COMMENTS';
+var openComments = function openComments(postId) {
+  return {
+    type: OPEN_COMMENTS,
+    postId: postId
+  };
+};
+var closeComments = function closeComments(postId) {
+  return {
+    type: CLOSE_COMMENTS,
+    postId: postId
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/post_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/post_actions.js ***!
@@ -597,7 +628,8 @@ var NewPostForm = /*#__PURE__*/function (_React$Component) {
         id: "new-post-textarea",
         className: "post-textarea",
         onChange: this.updateBody,
-        placeholder: "What's on your mind, ".concat(this.props.user.firstName)
+        placeholder: "What's on your mind, ".concat(this.props.user.firstName),
+        value: this.state.body
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "form-button-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -665,7 +697,6 @@ var Post = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      mounted: false,
       body: '',
       comments: '',
       posts: ''
@@ -684,11 +715,8 @@ var Post = /*#__PURE__*/function (_React$Component) {
       "11": "November",
       "12": "December"
     };
-    _this.img = "";
-    _this.selfImg = "";
-    _this.commentImg = "";
-    _this.comments;
-    _this.posts;
+    _this.commentsLength;
+    _this.toggleComments = _this.toggleComments.bind(_assertThisInitialized(_this));
     _this.updateBody = _this.updateBody.bind(_assertThisInitialized(_this));
     _this.focusInput = _this.focusInput.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -703,16 +731,18 @@ var Post = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.setState({
-        body: ''
-      });
+    key: "toggleComments",
+    value: function toggleComments() {
+      if (this.props.ui) {
+        this.props.closeComments(this.props.post.id);
+      } else {
+        this.props.openComments(this.props.post.id);
+      }
     }
   }, {
     key: "focusInput",
-    value: function focusInput() {
-      document.getElementById("input-field-".concat(this.props.idx)).focus();
+    value: function focusInput(idx) {
+      document.getElementById("input-field-".concat(idx)).focus();
     }
   }, {
     key: "focusInputAfterSubmit",
@@ -724,50 +754,38 @@ var Post = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      // debugger;
       e.preventDefault();
       this.props.postPost({
         body: this.state.body,
         author_id: this.props.currentUser.id,
         post_id: this.props.post.id
       });
-      this.focusInputAfterSubmit();
       this.setState({
-        body: ""
+        body: ''
       });
+
+      if (this.state.revealComments) {
+        this.setState({
+          revealComments: true
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
+      // debugger;
       if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
       var post = this.props.post;
       var user = this.props.user ? "".concat(this.props.user.firstName, " ").concat(this.props.user.lastName) : "";
       var date = {};
       var allComments = [];
       var deleteButton = '';
-      this.comments = this.props.comments;
-      this.posts = this.props.posts; // debugger;
-
-      if (!document.getElementById("picture".concat(this.props.idx))) {
-        this.img = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: this.props.user.pictureUrl,
-          className: "picture",
-          id: "picture".concat(this.props.idx)
-        });
-      }
-
-      this.comments.forEach(function (comment, idx) {
-        // if (this.posts[comment]) {
-        allComments.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
-          idx: idx,
-          key: idx,
-          user: _this2.props.users[_this2.posts[comment].authorId],
-          currentUser: _this2.props.currentUser,
-          comment: _this2.props.posts[comment],
-          deletePost: _this2.props.deletePost
-        })); // }
-      });
+      var comments = this.props.comments;
+      var numComments = '';
+      var posts = this.props.posts;
       var img = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: this.props.user.pictureUrl,
         className: "picture",
@@ -777,10 +795,56 @@ var Post = /*#__PURE__*/function (_React$Component) {
         src: this.props.currentUser.pictureUrl,
         className: "picture",
         id: "comment-section-picture-".concat(this.props.idx)
-      }); // if (!document.getElementById(`comment-section-picture-${this.props.idx}`)) {
-      //   this.selfImg = (
-      //   );
-      // }
+      });
+
+      if (comments.length === 1) {
+        numComments = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          className: "comments-counts",
+          onClick: this.toggleComments
+        }, comments.length, " Comment");
+        comments.forEach(function (comment, idx) {
+          allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
+            idx: idx,
+            key: idx,
+            user: _this2.props.users[posts[comment].authorId],
+            currentUser: _this2.props.currentUser,
+            comment: _this2.props.posts[comment],
+            deletePost: _this2.props.deletePost
+          }));
+        });
+      } else if (comments.length > 1) {
+        numComments = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          className: "comments-counts",
+          onClick: this.toggleComments
+        }, comments.length, " Comments"); // console.log('in render ' + this.props.post.id + this.state.revealComments);
+        // console.log('in render ' + comments);
+        // console.log('in render ' + allComments.reverse());
+
+        if (!!this.props.ui) {
+          comments.forEach(function (comment, idx) {
+            allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
+              idx: idx,
+              key: idx,
+              user: _this2.props.users[posts[comment].authorId],
+              currentUser: _this2.props.currentUser,
+              comment: _this2.props.posts[comment],
+              deletePost: _this2.props.deletePost
+            }));
+          }); // console.log('in render' + comments);
+          // console.log('in render' + allComments.reverse());
+        } else {
+          allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
+            idx: 0,
+            key: 0,
+            user: this.props.users[posts[comments[0]].authorId],
+            currentUser: this.props.currentUser,
+            comment: this.props.posts[comments[0]],
+            deletePost: this.props.deletePost
+          }));
+        }
+      }
+
+      this.commentsLength = allComments.length;
 
       if (post) {
         var fullDate = post.createdAt.split("T")[0];
@@ -831,13 +895,19 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "bodys"
       }, post.body)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "count-likes-comments"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Likes"), numComments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "likes-and-comments"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "likes"
       }, "Like"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        onClick: this.focusInput,
+        onClick: function onClick() {
+          return _this2.focusInput(_this2.props.idx);
+        },
         className: "comments-button"
-      }, "Comment")), allComments.reverse(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      }, "Comment")), allComments.map(function (comment) {
+        return comment;
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         className: "new-comment",
         onSubmit: this.handleSubmit
       }, imgCurrent, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -847,6 +917,9 @@ var Post = /*#__PURE__*/function (_React$Component) {
         placeholder: "Write a comment...",
         value: this.state.body,
         onChange: this.updateBody
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "submit",
+        value: ""
       })));
     }
   }]);
@@ -855,6 +928,59 @@ var Post = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 
+
+/***/ }),
+
+/***/ "./frontend/components/posts/post_container.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/posts/post_container.jsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./post */ "./frontend/components/posts/post.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
+
+
+
+
+
+
+var mSTP = function mSTP(state, ownProps) {
+  return {
+    posts: state.entities.posts,
+    users: state.entities.users,
+    ui: state.ui[ownProps.post.id]
+  };
+};
+
+var mDTP = function mDTP(dispatch) {
+  return {
+    postPost: function postPost(post) {
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.postPost)(post));
+    },
+    deletePost: function deletePost(postId) {
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.deletePost)(postId));
+    },
+    openComments: function openComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.openComments)(postId));
+    },
+    closeComments: function closeComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.closeComments)(postId));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(_post__WEBPACK_IMPORTED_MODULE_0__.default));
 
 /***/ }),
 
@@ -870,7 +996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ PostIndex)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./post */ "./frontend/components/posts/post.jsx");
+/* harmony import */ var _post_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./post_container */ "./frontend/components/posts/post_container.jsx");
 /* harmony import */ var _post_right_aside__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./post_right_aside */ "./frontend/components/posts/post_right_aside.jsx");
 /* harmony import */ var _post_left_aside__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./post_left_aside */ "./frontend/components/posts/post_left_aside.jsx");
 /* harmony import */ var _new_post_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./new_post_form */ "./frontend/components/posts/new_post_form.jsx");
@@ -917,8 +1043,7 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      updated: false,
-      commentAdded: 0
+      updated: false
     };
     _this.logoutUser = _this.logoutUser.bind(_assertThisInitialized(_this));
     _this.displayPostForm = _this.displayPostForm.bind(_assertThisInitialized(_this));
@@ -928,6 +1053,12 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
   _createClass(PostIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.props.fetchPosts();
+      this.props.fetchUsers();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
       this.props.fetchPosts();
       this.props.fetchUsers();
     }
@@ -965,6 +1096,7 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      // debugger;
       var allPosts = [];
       var allComments = {};
       var user;
@@ -983,30 +1115,20 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
           }
         });
         posts.forEach(function (post, idx) {
-          if (_this2.props.friends.includes(post.authorId) && !post.postId) {
+          if (_this2.props.friends.includes(post.authorId) && !post.postId && !post.userId) {
             var postComments = allComments[post.id];
-            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post__WEBPACK_IMPORTED_MODULE_1__.default, {
+            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post_container__WEBPACK_IMPORTED_MODULE_1__.default, {
               comments: postComments,
-              posts: _this2.props.posts,
-              deletePost: _this2.props.deletePost,
-              users: _this2.props.users,
-              fetchPosts: _this2.props.fetchPosts,
-              postPost: _this2.props.postPost,
               post: post,
               key: idx,
               idx: idx,
               user: users[post.authorId],
               currentUser: _this2.props.user
             }));
-          } else if (_this2.props.user.id === post.authorId && !post.postId) {
+          } else if (_this2.props.user.id === post.authorId && !post.postId && !post.userId) {
             var _postComments = allComments[post.id];
-            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post__WEBPACK_IMPORTED_MODULE_1__.default, {
+            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_post_container__WEBPACK_IMPORTED_MODULE_1__.default, {
               comments: _postComments,
-              posts: _this2.props.posts,
-              deletePost: _this2.props.deletePost,
-              users: _this2.props.users,
-              fetchPosts: _this2.props.fetchPosts,
-              postPost: _this2.props.postPost,
               post: post,
               key: idx,
               idx: idx,
@@ -1054,7 +1176,9 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
         postPost: this.props.postPost
       })), user, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         id: "post-section-all-posts"
-      }, allPosts), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, allPosts.map(function (post) {
+        return post;
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "spacer"
       }));
     }
@@ -1078,12 +1202,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _post_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./post_index */ "./frontend/components/posts/post_index.jsx");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _post_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./post_index */ "./frontend/components/posts/post_index.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
 
 
 
@@ -1104,27 +1228,33 @@ var mSTP = function mSTP(state) {
 var mDTP = function mDTP(dispatch) {
   return {
     fetchUser: function fetchUser() {
-      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__.fetchUser)());
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)());
     },
     fetchUsers: function fetchUsers() {
-      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__.fetchUsers)());
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)());
     },
     logout: function logout() {
-      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.logout)());
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.logout)());
     },
     fetchPosts: function fetchPosts() {
-      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_5__.fetchPosts)());
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.fetchPosts)());
     },
     postPost: function postPost(post) {
-      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_5__.postPost)(post));
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.postPost)(post));
     },
     deletePost: function deletePost(postId) {
-      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_5__.deletePost)(postId));
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.deletePost)(postId));
+    },
+    openComments: function openComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.openComments)(postId));
+    },
+    closeComments: function closeComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.closeComments)(postId));
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mSTP, mDTP)(_post_index__WEBPACK_IMPORTED_MODULE_1__.default));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(_post_index__WEBPACK_IMPORTED_MODULE_0__.default));
 
 /***/ }),
 
@@ -2316,6 +2446,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _navbar_top_nav_bar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../navbar/top_nav_bar */ "./frontend/components/navbar/top_nav_bar.jsx");
+/* harmony import */ var _posts_post_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../posts/post_container */ "./frontend/components/posts/post_container.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2341,6 +2472,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var UserProfilePage = /*#__PURE__*/function (_React$Component) {
   _inherits(UserProfilePage, _React$Component);
 
@@ -2353,14 +2485,84 @@ var UserProfilePage = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(UserProfilePage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchUsers();
+      this.props.fetchPosts();
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
+      if (!this.props.posts || !this.props.users) return null;
+      var allPosts = [];
+      var allComments = {};
+      var user;
+      var users = this.props.users;
+
+      if (Object.values(this.props.posts).length > 1 && Object.values(this.props.users).length > 2) {
+        var posts = Object.values(this.props.posts).reverse();
+        posts.forEach(function (post, idx) {
+          var _post$postId, _post$id;
+
+          allComments[_post$postId = post.postId] || (allComments[_post$postId] = []);
+          allComments[_post$id = post.id] || (allComments[_post$id] = []);
+
+          if (!!post.postId) {
+            allComments[post.postId].push(post.id);
+          }
+        });
+        debugger;
+        posts.forEach(function (post, idx) {
+          if (_this.props.friends.includes(post.authorId) && !post.postId && !!post.userId) {
+            var postComments = allComments[post.id];
+            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_posts_post_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+              comments: postComments,
+              post: post,
+              key: idx,
+              idx: idx,
+              user: users[post.authorId],
+              currentUser: _this.props.user
+            }));
+          } else if (_this.props.user.id === post.authorId && !post.postId && !!post.userId) {
+            var _postComments = allComments[post.id];
+            allPosts.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_posts_post_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+              comments: _postComments,
+              post: post,
+              key: idx,
+              idx: idx,
+              user: users[post.authorId],
+              currentUser: _this.props.user
+            }));
+          }
+        });
+      }
+
+      if (this.props.user) {
+        user = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+          id: "post-section-user-controls"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+          className: "user-section"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          src: this.props.user.pictureUrl,
+          className: "pictures"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          onClick: this.displayPostForm,
+          className: "button-create-post"
+        }, "What's on your mind, ", this.props.user.firstName, "?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "createLine"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          onClick: this.displayPostForm
+        }, "Post")));
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_navbar_top_nav_bar__WEBPACK_IMPORTED_MODULE_1__.default, {
-        user: this.props.currentUser,
+        user: this.props.user,
         logout: this.props.logout
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         id: "user-profile-title"
-      }, "Profile page for ", this.props.currentUser.firstName));
+      }, "Profile page for ", this.props.user.firstName), allPosts);
     }
   }]);
 
@@ -2382,28 +2584,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _user_profile_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user_profile_page */ "./frontend/components/user/user_profile_page.jsx");
+/* harmony import */ var _user_profile_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user_profile_page */ "./frontend/components/user/user_profile_page.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_post_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/post_actions */ "./frontend/actions/post_actions.js");
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
+
+
 
 
 
 
 var mSTP = function mSTP(state, ownParams) {
+  // debugger;
   return {
-    currentUser: state.entities.users[ownParams.match.params.id]
+    user: state.entities.users[state.session.currentUser],
+    profileUser: state.entities.users[ownParams.match.params.id],
+    users: state.entities.users,
+    posts: state.entities.posts,
+    friends: state.session.friends
   };
 };
 
 var mDTP = function mDTP(dispatch) {
   return {
+    fetchUser: function fetchUser() {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)());
+    },
+    fetchUsers: function fetchUsers() {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)());
+    },
     logout: function logout() {
-      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__.logout)());
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.logout)());
+    },
+    fetchPosts: function fetchPosts() {
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.fetchPosts)());
+    },
+    postPost: function postPost(post) {
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.postPost)(post));
+    },
+    deletePost: function deletePost(postId) {
+      return dispatch((0,_actions_post_actions__WEBPACK_IMPORTED_MODULE_4__.deletePost)(postId));
+    },
+    openComments: function openComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.openComments)(postId));
+    },
+    closeComments: function closeComments(postId) {
+      return dispatch((0,_actions_comment_actions__WEBPACK_IMPORTED_MODULE_5__.closeComments)(postId));
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mSTP, mDTP)(_user_profile_page__WEBPACK_IMPORTED_MODULE_2__.default));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(_user_profile_page__WEBPACK_IMPORTED_MODULE_0__.default));
 
 /***/ }),
 
@@ -2519,18 +2753,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _session_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./session_reducer */ "./frontend/reducers/session_reducer.js");
 /* harmony import */ var _entities_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entities_reducer */ "./frontend/reducers/entities_reducer.js");
 /* harmony import */ var _error_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./error_reducer */ "./frontend/reducers/error_reducer.js");
+/* harmony import */ var _ui_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui_reducer */ "./frontend/reducers/ui_reducer.js");
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_4__.combineReducers)({
   entities: _entities_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
-  errors: _error_reducer__WEBPACK_IMPORTED_MODULE_2__.default
+  errors: _error_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
+  ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_3__.default
 }));
 
 /***/ }),
@@ -2572,6 +2809,41 @@ var _nullSession = {
       return Object.assign({}, state, {
         friends: action.friends
       });
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
+/***/ "./frontend/reducers/ui_reducer.js":
+/*!*****************************************!*\
+  !*** ./frontend/reducers/ui_reducer.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/comment_actions */ "./frontend/actions/comment_actions.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__.OPEN_COMMENTS:
+      nextState[action.postId] = true;
+      return nextState;
+
+    case _actions_comment_actions__WEBPACK_IMPORTED_MODULE_0__.CLOSE_COMMENTS:
+      nextState[action.postId] = false;
+      return nextState;
 
     default:
       return state;

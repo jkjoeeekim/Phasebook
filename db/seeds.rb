@@ -239,6 +239,12 @@ post11 = Post.create({
   author_id: user3.id
 })
 
+post12 = Post.create({
+  body: "Hi there, welcome to Fazebook~! Bobby's page 😃🎉🎉",
+  author_id: user3.id,
+  user_id: user3.id
+})
+
 # post11 = Post.create({
 #   body: "Picture of my vacation!",
 #   author_id: 20

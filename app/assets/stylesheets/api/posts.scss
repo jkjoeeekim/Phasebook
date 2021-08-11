@@ -312,7 +312,6 @@
     .post-details {
       margin-top: 18px;
       padding-left: 7px;
-      border-bottom: 1px solid rgb(206,208,212);
       padding-bottom: 18px;
 
       .bodys {
@@ -320,12 +319,25 @@
       }
     }
 
+    .count-likes-comments {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 13px 0px 13px 0px;
+      font-weight: 300;
+
+      .comments-counts {
+        font-size: 16px;
+      }
+    }
+
     .likes-and-comments {
       display: flex;
       flex-direction: row;
       justify-content: center;
-      margin-top: 5px;
+      padding-top: 5px;
       padding-bottom: 5px;
+      border-top: 1px solid rgb(206,208,212);
       border-bottom: 1px solid rgb(206,208,212);
       
       .likes {
