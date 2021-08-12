@@ -2278,24 +2278,13 @@ var SigninForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var user = {
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        email: this.state.email.toLowerCase(),
-        password: this.state.password,
-        birthday: "".concat(this.state.birthYear, "/").concat(this.allMonths.indexOf(this.state.birthMonth) + 1, "/").concat(this.state.birthDate),
-        gender: this.state.gender
-      }; // this.setState({
-      //   first_name: '',
-      //   last_name: '',
-      //   email: '',
-      //   password: '',
-      //   birthMonth: this.currentDate.month,
-      //   birthDate: this.currentDate.day,
-      //   birthYear: this.currentDate.year,
-      //   gender: '',
-      // });
-
+      var formData = new FormData();
+      formData.append('user[first_name]', this.state.first_name);
+      formData.append('user[last_name]', this.state.last_name);
+      formData.append('user[email]', this.state.email.toLowerCase());
+      formData.append('user[password]', this.state.password);
+      formData.append('user[birthday]', "".concat(this.state.birthYear, "/").concat(this.allMonths.indexOf(this.state.birthMonth) + 1, "/").concat(this.state.birthDate));
+      formData.append('user[gender]', this.state.gender);
       this.props.createNewUser(user);
     }
   }, {

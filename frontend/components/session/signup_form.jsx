@@ -74,24 +74,14 @@ export default class SigninForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let user = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email.toLowerCase(),
-      password: this.state.password,
-      birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`,
-      gender: this.state.gender,
-    };
-    // this.setState({
-    //   first_name: '',
-    //   last_name: '',
-    //   email: '',
-    //   password: '',
-    //   birthMonth: this.currentDate.month,
-    //   birthDate: this.currentDate.day,
-    //   birthYear: this.currentDate.year,
-    //   gender: '',
-    // });
+    const formData = new FormData();
+    formData.append('user[first_name]', this.state.first_name)
+    formData.append('user[last_name]', this.state.last_name)
+    formData.append('user[email]', this.state.email.toLowerCase())
+    formData.append('user[password]', this.state.password)
+    formData.append('user[birthday]', `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`)
+    formData.append('user[gender]', this.state.gender)
+    
     this.props.createNewUser(user);
   }
 
