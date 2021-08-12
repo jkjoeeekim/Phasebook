@@ -11,6 +11,17 @@ Friendship.destroy_all
 Post.destroy_all
 User.destroy_all
 
+m1 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m1.jpg')
+m2 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m2.jpg')
+m3 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m3.jpg')
+m4 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m4.jpg')
+m5 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m5.jpg')
+f1 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f1.jpg')
+f2 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/default3.jpg')
+f3 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f3.jpg')
+f4 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f4.jpg')
+f5 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f5.jpg')
+
 user1 = User.create({
   first_name: 'Joe', 
   last_name: 'Kim', 
@@ -111,17 +122,6 @@ user10 = User.create({
 })
 
 # add profile pictures to the users
-m1 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m1.jpg')
-m2 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m2.jpg')
-m3 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m3.jpg')
-m4 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m4.jpg')
-m5 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/m5.jpg')
-f1 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f1.jpg')
-f2 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/default3.jpg')
-f3 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f3.jpg')
-f4 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f4.jpg')
-f5 = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/f5.jpg')
-
 user1.photo.attach(io: m1, filename: 'm1.jpg')
 user2.photo.attach(io: m2, filename: 'm2.jpg')
 user3.photo.attach(io: m3, filename: 'm3.jpg')
