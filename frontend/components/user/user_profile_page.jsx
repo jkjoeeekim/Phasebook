@@ -1,15 +1,35 @@
 import React from 'react';
 import TopNavBar from '../navbar/top_nav_bar';
 import PostContainer from '../posts/post_container';
+import NewPostForm from '../posts/new_post_form';
 
 export default class UserProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.displayPostForm = this.displayPostForm.bind(this);
+    this.hidePostForm = this.hidePostForm.bind(this);
+  }
+
+  displayPostForm(e) {
+    e.preventDefault();
+    document.getElementById("new-post-form-wrapper").classList.add('enabled');
+    document.getElementById("new-post-textarea").focus();
+    document.getElementById("empty-space").onclick = this.hidePostForm;
+  }
+
+  hidePostForm(e) {
+    e.preventDefault();
+    document.getElementById("new-post-form-wrapper").classList.remove('enabled');
+  }
+
   componentDidMount() {
     this.props.fetchUsers();
     this.props.fetchPosts();
   }
 
   render() {
-    if (!this.props.posts || !this.props.users) return null;
+    if (!this.props.posts || !this.props.users || !this.props.user || !this.props.profileUser) return null;
 
     let allPosts = [];
     let allComments = {};
@@ -17,6 +37,7 @@ export default class UserProfilePage extends React.Component {
     let user;
 
     let users = this.props.users;
+    let currentUser = this.props.user;
     if (Object.values(this.props.posts).length > 1 && Object.values(this.props.users).length > 2) {
       let posts = Object.values(this.props.posts).reverse();
       posts.forEach((post, idx) => {
@@ -26,9 +47,8 @@ export default class UserProfilePage extends React.Component {
           allComments[post.postId].push(post.id);
         }
       });
-      debugger;
       posts.forEach((post, idx) => {
-        if (this.props.friends.includes(post.authorId) && !post.postId && !!post.userId) {
+        if (this.props.profileUser.id === post.userId && !post.postId) {
           let postComments = allComments[post.id];
           allPosts.push(
             <PostContainer comments={postComments}
@@ -36,29 +56,34 @@ export default class UserProfilePage extends React.Component {
               key={idx}
               idx={idx}
               user={users[post.authorId]}
-              currentUser={this.props.user}
-            />
-          );
-        } else if (this.props.user.id === post.authorId && !post.postId && !!post.userId) {
-          let postComments = allComments[post.id];
-          allPosts.push(
-            <PostContainer comments={postComments}
-              post={post}
-              key={idx}
-              idx={idx}
-              user={users[post.authorId]}
-              currentUser={this.props.user}
+              currentUser={currentUser}
             />
           );
         }
       });
     }
-    if (this.props.user) {
+    let placeholder;
+    if (this.props.user.id === this.props.profileUser.id) {
+      placeholder = `What's on your mind?`;
       user = (
         <section id="post-section-user-controls" >
           <section className="user-section">
             <img src={this.props.user.pictureUrl} className="pictures"></img>
-            <button onClick={this.displayPostForm} className="button-create-post">What's on your mind, {this.props.user.firstName}?</button>
+            <button onClick={this.displayPostForm} className="button-create-post">What's on your mind?</button>
+          </section>
+          <div className="createLine"></div>
+          <section>
+            <button onClick={this.displayPostForm}>Post</button>
+          </section>
+        </section>
+      );
+    } else {
+      placeholder = `Write something to ${this.props.profileUser.firstName}`;
+      user = (
+        <section id="post-section-user-controls" >
+          <section className="user-section">
+            <img src={this.props.user.pictureUrl} className="pictures"></img>
+            <button onClick={this.displayPostForm} className="button-create-post">Write something to {this.props.profileUser.firstName}</button>
           </section>
           <div className="createLine"></div>
           <section>
@@ -71,8 +96,23 @@ export default class UserProfilePage extends React.Component {
     return (
       <div>
         <TopNavBar user={this.props.user} logout={this.props.logout} />
-        <p id="user-profile-title">Profile page for {this.props.user.firstName}</p>
-        {allPosts}
+        <div id="new-post-form-wrapper">
+          <div id="empty-space"></div>
+          <NewPostForm user={this.props.user} placeholdermsg={placeholder} postPost={this.props.postPost} />
+        </div>
+        <section id="user-profile-section-top">
+          <section className="user-section">
+            <img src={this.props.profileUser.pictureUrl} className="profile-pictures"></img>
+            <p>{this.props.profileUser.firstName} {this.props.profileUser.lastName}</p>
+          </section>
+          <section className="friend-section">
+            <button className="friend-button">add friend</button>
+          </section>
+        </section>
+        {user}
+        <section id="profile-section-all-posts">
+          {allPosts}
+        </section>
       </div>
     );
   }

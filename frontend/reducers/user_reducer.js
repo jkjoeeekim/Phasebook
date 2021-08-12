@@ -8,9 +8,11 @@ export default (state = {}, action) => {
   let nextState = Object.assign({}, state);
   switch (action.type) {
     case RECEIVE_USERS:
-      action.users.forEach((user) => {
+      // debugger;
+      Object.values(action.users)[0].forEach((user) => {
         nextState[user.id] = user;
       });
+      // debugger;
       return nextState;
     case RECEIVE_CURRENT_USER:
       nextState[action.currentUser.id] = action.currentUser;

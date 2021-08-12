@@ -13,4 +13,10 @@ json.set! posts do
   end
 end
 
+json.likes do
+  json.array! likes do |post|
+    json.id post.id
+  end
+end
+
 json.friends friends

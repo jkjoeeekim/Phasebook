@@ -10,6 +10,7 @@ const mSTP = (state) => ({
   user: state.entities.users[state.session.currentUser],
   posts: state.entities.posts,
   users: state.entities.users,
+  likes: state.entities.likes,
   friends: state.session.friends,
 });
 

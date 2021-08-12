@@ -40,7 +40,7 @@ export default class NewPostForm extends React.Component {
         </section>
         {user}
         <section className="form-text-section">
-          <textarea id="new-post-textarea" className="post-textarea" onChange={this.updateBody} placeholder={`What's on your mind, ${this.props.user.firstName}`} value={this.state.body}></textarea>
+          <textarea id="new-post-textarea" className="post-textarea" onChange={this.updateBody} placeholder={this.props.placeholdermsg} value={this.state.body}></textarea>
         </section>
         <section className="form-button-section">
           <button className="post-button">Post</button>

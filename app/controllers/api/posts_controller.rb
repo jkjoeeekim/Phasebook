@@ -1,7 +1,8 @@
 class Api::PostsController < ApplicationController
   def index
     # select all posts that don't belongs_to userprofile
-    @posts = Post.all.select{ |post| !post.userprofile }
+    @posts = Post.all
+    @likes = Like.all
     render "api/posts/index"
   end
 

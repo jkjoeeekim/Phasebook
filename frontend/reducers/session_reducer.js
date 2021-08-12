@@ -11,7 +11,7 @@ export default (state = _nullSession, action) => {
     case RECEIVE_CURRENT_USER:
       return Object.assign({}, {
         currentUser: action.currentUser.id,
-        friends: action.currentUser.friends
+        friends: action.currentUser.friends,
       });
     case LOGOUT_CURRENT_USER:
       return _nullSession;

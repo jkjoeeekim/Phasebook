@@ -71,3 +71,20 @@ export const fetchFriends = (userId) => (
     url: `/api/users/${userId}`
   })
 );
+
+// Create a Like
+export const postLike = (like) => (
+  $.ajax({
+    method: "POST",
+    url: '/api/likes',
+    data: { like }
+  })
+);
+
+// Delete a Like
+export const deleteLike = (likeId) => (
+  $.ajax({
+    method: "DELETE",
+    url: `/api/likes/${likeId}`
+  })
+);

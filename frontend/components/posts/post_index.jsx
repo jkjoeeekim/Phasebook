@@ -116,7 +116,7 @@ export default class PostIndex extends React.Component {
         <div className="spacer"></div>
         <div id="new-post-form-wrapper">
           <div id="empty-space"></div>
-          <NewPostForm user={this.props.user} postPost={this.props.postPost} />
+          <NewPostForm user={this.props.user} placeholdermsg={`What's on your mind ${this.props.user.firstName}?`} postPost={this.props.postPost} />
         </div>
         {user}
         <section id="post-section-all-posts">

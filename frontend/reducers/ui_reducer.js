@@ -1,16 +1,8 @@
-import { OPEN_COMMENTS, CLOSE_COMMENTS } from '../actions/comment_actions';
+import { combineReducers } from 'redux';
+import UICommentReducer from './ui_comment_reducer';
+import UILikeReducer from './ui_like_reducer';
 
-export default (state = {}, action) => {
-  Object.freeze(state);
-  let nextState = Object.assign({}, state);
-  switch (action.type) {
-    case OPEN_COMMENTS:
-      nextState[action.postId] = true;
-      return nextState;
-    case CLOSE_COMMENTS:
-      nextState[action.postId] = false;
-      return nextState;
-    default:
-      return state;
-  }
-};
+export default combineReducers({
+  comments: UICommentReducer,
+  likes: UILikeReducer,
+});

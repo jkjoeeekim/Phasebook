@@ -28,11 +28,13 @@ export default class Post extends React.Component {
     };
 
     this.commentsLength;
+    this.liked = this.props.liked;
 
     this.toggleComments = this.toggleComments.bind(this);
     this.updateBody = this.updateBody.bind(this);
     this.focusInput = this.focusInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleLike = this.toggleLike.bind(this);
   }
 
   updateBody(e) {
@@ -67,6 +69,29 @@ export default class Post extends React.Component {
     }
   }
 
+  toggleLike() {
+    // debugger;
+    if (this.props.liked) {
+      console.log('liked');
+      // debugger;
+      let user = this.props.currentUser;
+      this.props.likes[this.props.post.id].forEach((like) => {
+        // debugger;
+        if (like.userId === user.id) {
+          // debugger;
+          this.props.deleteLike(like.id);
+        }
+      });
+      this.setState({ liked: false });
+    } else {
+      this.props.postLike({
+        user_id: this.props.currentUser.id,
+        post_id: this.props.post.id
+      });
+      this.setState({ liked: true });
+    }
+  }
+
   render() {
     // debugger;
     if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
@@ -76,6 +101,8 @@ export default class Post extends React.Component {
     let allComments = [];
     let deleteButton = '';
     let comments = this.props.comments;
+    let likes = '';
+    let likeButtonText = 'Like';
     let numComments = '';
     let posts = this.props.posts;
     let img = (
@@ -94,11 +121,11 @@ export default class Post extends React.Component {
       comments.forEach((comment, idx) => {
         allComments.unshift(
           <Comment idx={idx}
-            key={idx} 
-            user={this.props.users[posts[comment].authorId]} 
-            currentUser={this.props.currentUser} 
-            comment={this.props.posts[comment]} 
-            deletePost={this.props.deletePost} 
+            key={idx}
+            user={this.props.users[posts[comment].authorId]}
+            currentUser={this.props.currentUser}
+            comment={this.props.posts[comment]}
+            deletePost={this.props.deletePost}
           />
         );
       });
@@ -117,12 +144,12 @@ export default class Post extends React.Component {
       if (!!this.props.ui) {
         comments.forEach((comment, idx) => {
           allComments.unshift(
-            <Comment idx={idx} 
-              key={idx} 
-              user={this.props.users[posts[comment].authorId]} 
-              currentUser={this.props.currentUser} 
-              comment={this.props.posts[comment]} 
-              deletePost={this.props.deletePost} 
+            <Comment idx={idx}
+              key={idx}
+              user={this.props.users[posts[comment].authorId]}
+              currentUser={this.props.currentUser}
+              comment={this.props.posts[comment]}
+              deletePost={this.props.deletePost}
             />
           );
         });
@@ -130,17 +157,31 @@ export default class Post extends React.Component {
         // console.log('in render' + allComments.reverse());
       } else {
         allComments.unshift(
-          <Comment idx={0} 
-            key={0} 
-            user={this.props.users[posts[comments[0]].authorId]} 
-            currentUser={this.props.currentUser} 
-            comment={this.props.posts[comments[0]]} 
-            deletePost={this.props.deletePost} 
+          <Comment idx={0}
+            key={0}
+            user={this.props.users[posts[comments[0]].authorId]}
+            currentUser={this.props.currentUser}
+            comment={this.props.posts[comments[0]]}
+            deletePost={this.props.deletePost}
           />
         );
       }
     }
     this.commentsLength = allComments.length;
+
+    let postLikes = this.props.likers.length;
+    if (!!this.props.liked) {
+      likeButtonText = 'Liked';
+      if (postLikes === 1) {
+        likes = 'You like this';
+      } else if (postLikes > 1) {
+        likes = `You and ${postLikes - 1} others`;
+      }
+    } else {
+      if (postLikes > 0) {
+        likes = postLikes;
+      }
+    }
 
     if (post) {
       let fullDate = post.createdAt.split("T")[0];
@@ -184,12 +225,16 @@ export default class Post extends React.Component {
           <p className="bodys">{post.body}</p>
         </section>
         <section className="count-likes-comments">
-          <p>Likes</p>
+          <p>{likes}</p>
           {numComments}
         </section>
         <section className="likes-and-comments">
-          <button className="likes">Like</button>
-          <button onClick={() => this.focusInput(this.props.idx)} className="comments-button">Comment</button>
+          <button onClick={this.toggleLike}
+            className="likes"
+          >{likeButtonText}</button>
+          <button onClick={() => this.focusInput(this.props.idx)}
+            className="comments-button"
+          >Comment</button>
         </section>
         {allComments.map(comment => {
           return comment;

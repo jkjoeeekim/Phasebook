@@ -14,6 +14,15 @@
 class Post < ApplicationRecord
   validates :body, :author_id, presence: true
 
+  has_many :likes,
+    primary_key: :id,
+    foreign_key: :post_id,
+    class_name: :Like
+
+  has_many :users_likes,
+    through: :likes,
+    source: :user
+
   belongs_to :author,
     primary_key: :id,
     foreign_key: :author_id,
@@ -30,4 +39,5 @@ class Post < ApplicationRecord
     foreign_key: :user_id,
     class_name: :User,
     optional: true
+
 end

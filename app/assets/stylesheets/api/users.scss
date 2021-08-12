@@ -2,8 +2,309 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#user-profile-title {
-  width: 10%;
+#user-profile-section-top {
+  width: 940px;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .user-section {
+    .profile-pictures {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+    }
+  }
+
+  .friend-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .friend-button {
+
+    }
+  }
+}
+
+.spacer {
+  height: 80px;
+}
+
+#new-post-form-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(252, 252, 253, 0.8);
+  display: none;
+  z-index: 10;
+  overflow: hidden;
+  
+  #empty-space {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #new-post-form {
+    height: 430px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 5px 5px 20px 10px rgb(207, 207, 207);
+    border-radius: 8px;
+    background-color: white;
+    z-index: 20;
+
+    .form-header-section {
+      border-bottom: 1px solid rgb(229,229,229);
+      position: relative;
+
+      .title {
+        font-size: 20px;
+        font-weight: 700;
+        width: 165px;
+        margin: 0 auto;
+        padding: 19px;
+        color: rgb(51,51,51);
+      }
+    }
+
+    .user-container {
+      display: flex;
+      flex-direction: row;
+      padding: 20px 15px 15px 15px;
+      position: relative;
+      
+      .pictures {
+        width: 39px;
+        height: 39px;
+        border-radius: 50px;
+        border: 1px solid rgb(187,190,194);
+      }
+
+      .name {
+        padding-left: 13px;
+        padding-top: 9px;
+        font-size: 15px;
+        font-weight: 600;
+        color: rgb(51,51,51);
+      }
+    }
+
+    .form-text-section {
+      padding-left: 15px;
+      padding-right: 15px;
+
+      .post-textarea {
+        resize: none;
+        align-self: center;
+        font-family: 'Inter', sans-serif;
+        height: 222px;
+        width: 466px;
+        margin: 0 auto;
+        font-size: 25px;
+        color: rgb(5,5,5);
+        border: none;
+      }
+  
+      .post-textarea:focus {
+        outline: none !important;
+      }
+    }
+
+    .form-button-section {
+      margin-top: 10px;
+
+      .post-button {
+        padding: 10px;
+        margin: 13px;
+        width: 476px;
+        height: 33px;
+        margin-left: 12px;
+        border-radius: 8px;
+        background-color: rgb(23,113,230);
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        border: none;
+      }
+
+      .post-button:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+#profile-section-all-posts {
+  display: flex;
+  flex-direction: column;
+  width: 680px;
+  margin: 0 auto;
+
+  .posts {
+    margin-top: 13px;
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    padding-bottom: 9px;
+    box-shadow: 5px 5px 20px 10px rgb(216,217,220);
+
+    .user-details {
+      display: flex;
+      flex-direction: row;
+
+      .picture {
+        height: 37px;
+        width: 37px;
+        border-radius: 50px;
+        border: 1px solid rgb(187,190,194);
+      };
+
+      .name-and-date {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        .links {
+          font-size: 14.5px;
+          letter-spacing: 0.5px;
+          font-weight: 600;
+          color: black;
+          text-decoration: none;
+          margin-left: 11px;
+          margin-bottom: 5px;
+          margin-top: 3px;
+        };
+     
+        .links:hover {
+          text-decoration: underline;
+        }
+    
+        .created-ats {
+          font-size: 12px;
+          margin-left: 11px;
+          font-weight: 300;
+          text-decoration: none;
+          color: rgb(120,120,120);
+        };
+
+        .created-ats:hover {
+          text-decoration: underline;
+        }
+      }
+    };
+
+    .post-details {
+      margin-top: 18px;
+      padding-left: 7px;
+      padding-bottom: 18px;
+
+      .bodys {
+        font-size: 26px;
+      }
+    }
+
+    .count-likes-comments {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 13px 0px 13px 0px;
+      font-weight: 300;
+
+      .comments-counts {
+        font-size: 16px;
+      }
+    }
+
+    .likes-and-comments {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-top: 1px solid rgb(206,208,212);
+      border-bottom: 1px solid rgb(206,208,212);
+      
+      .likes {
+        background-color: white;
+        width: 50%;
+        text-align:center;
+        padding: 10px;
+        color: rgb(101,103,140);
+        border-radius: 6px;
+        border: none;
+      }
+      
+      .comments-button {
+        background-color: white;
+        width: 50%;
+        text-align:center;
+        padding: 10px;
+        color: rgb(101,103,140);
+        border-radius: 6px;
+        border: none;
+      }
+
+      .likes:hover {
+        background: rgb(240, 242, 245);
+        cursor: pointer;
+      }
+
+      .comments-button:hover {
+        background: rgb(240, 242, 245);
+        cursor: pointer;
+      }
+    };
+
+    .comments {
+
+      .comment-bodies {
+
+      }
+    }
+
+    .new-comment {
+      display: flex;
+      flex-direction: row;
+
+      .picture {
+        height: 34px;
+        width: 34px;
+        border-radius: 50px;
+        margin-top: 9px;
+        margin-left: -5px;
+        border: 1px solid rgb(187,190,194);
+      };
+
+      .input-fields {
+        background-color: rgb(240, 242, 245);
+        border: none;
+        width: 97.5%;
+        margin-top: 9px;
+        padding: 10px;
+        border-radius: 50px;
+        padding-left: 13px;
+        margin-left: 6px;
+        font-size: 15px;
+      }
+
+      .input-fields:focus {
+        outline: none;
+      }
+    }
+  }
 }

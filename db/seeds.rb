@@ -285,3 +285,8 @@ post12 = Post.create({
 #   body: "Picture of my vacation!"
 #   author_id: 20
 # })
+
+like1 = Like.create({
+  post_id: post11.id,
+  user_id: user1.id
+})

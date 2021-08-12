@@ -2,6 +2,7 @@ class Api::UsersController < ApplicationController
   # Create a new user
   def index
     @users = User.all
+    @user = current_user
     render "api/users/index"
   end
   
