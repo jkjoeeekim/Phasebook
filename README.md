@@ -17,10 +17,10 @@ Deployed at https://fazebook.herokuapp.com/
 
 # Facebook landing page precisely styled
 <img src="./app/assets/images/login1.png" alt="Signin Page"
-	title="Signin Page" width="600" />
+	title="Signin Page" width="40%" />
 <img src="./app/assets/images/login2.png" alt="Signup Page"
-	title="Signup Page" width="600" />
+	title="Signup Page" width="40%" />
 <img src="./app/assets/images/login3.png" alt="Error"
-	title="Error" width="600" />
+	title="Error" width="40%" />
 <img src="./app/assets/images/login4.png" alt="Error" 
-  title="Error" width="600" />
+  title="Error" width="40%" />
