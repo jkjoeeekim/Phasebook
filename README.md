@@ -16,7 +16,11 @@ Deployed at https://fazebook.herokuapp.com/
   - `Google Fonts API` for font-family: `Inter`.
 
 # Facebook landing page precisely styled
-![Signin Page](./app/assets/images/login1.png)
-![Signup Page](./app/assets/images/login2.png)
-![Display Errors](./app/assets/images/login3.png)
-![Display Errors](./app/assets/images/login4.png)
+<img src="./app/assets/images/login1.png" alt="Signin Page"
+	title="Signin Page" width="600" />
+<img src="./app/assets/images/login2.png" alt="Signup Page"
+	title="Signup Page" width="600" />
+<img src="./app/assets/images/login3.png" alt="Error"
+	title="Error" width="600" />
+<img src="./app/assets/images/login4.png" alt="Error" 
+  title="Error" width="600" />
