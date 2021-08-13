@@ -543,7 +543,7 @@ var Comment = /*#__PURE__*/function (_React$Component) {
             _this2.props.deletePost(_this2.props.comment.id);
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_close_png__WEBPACK_IMPORTED_MODULE_1__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/close.png",
           className: "delete-icon"
         }));
       }
@@ -596,12 +596,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ TopNavBar)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _app_assets_images_fazebook_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app/assets/images/fazebook.png */ "./app/assets/images/fazebook.png");
-/* harmony import */ var _app_assets_images_notification_active_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app/assets/images/notification_active.png */ "./app/assets/images/notification_active.png");
-/* harmony import */ var _app_assets_images_notification_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app/assets/images/notification.png */ "./app/assets/images/notification.png");
-/* harmony import */ var _app_assets_images_logout_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../app/assets/images/logout.png */ "./app/assets/images/logout.png");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -623,9 +620,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
 
 
 
@@ -658,7 +652,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
     value: function logoutUser() {
       this.props.logout();
       window.location.reload();
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Redirect, {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Redirect, {
         to: "/"
       });
     }
@@ -710,7 +704,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
       if (userIds.length > 0) {
         userIds.forEach(function (userId, idx) {
           if (_this2.props.users[userId]) {
-            notifications.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+            notifications.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
               to: "/".concat(userId),
               className: "link",
               key: idx
@@ -736,7 +730,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "logout-button"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        src: _app_assets_images_logout_png__WEBPACK_IMPORTED_MODULE_4__.default,
+        src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/logout.png",
         className: "logout-icon"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "desc-section"
@@ -749,7 +743,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
           onClick: this.toggleNotifications,
           id: "notification-button"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_notification_active_png__WEBPACK_IMPORTED_MODULE_2__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/notificationactive.png",
           className: "picture"
         }));
       } else {
@@ -757,7 +751,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
           onClick: this.toggleNotifications,
           id: "notification-button"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_notification_png__WEBPACK_IMPORTED_MODULE_3__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/notification.png",
           className: "picture_nonactive"
         }));
         noNotifications = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -771,11 +765,11 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
         id: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "navbar-icon-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/",
         id: "navbar-icon-button"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        src: _app_assets_images_fazebook_png__WEBPACK_IMPORTED_MODULE_1__.default,
+        src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/fazebook.png",
         id: "navbar-icon"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         id: "navbar-icon-title"
@@ -790,7 +784,7 @@ var TopNavBar = /*#__PURE__*/function (_React$Component) {
         onChange: this.updateQuery
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "user-profile-section"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         id: "user-profile",
         to: "/".concat(this.props.user.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
@@ -988,13 +982,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Post)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _comments_comment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../comments/comment */ "./frontend/components/comments/comment.jsx");
-/* harmony import */ var _app_assets_images_like_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app/assets/images/like.png */ "./app/assets/images/like.png");
-/* harmony import */ var _app_assets_images_liked_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app/assets/images/liked.png */ "./app/assets/images/liked.png");
-/* harmony import */ var _app_assets_images_liked_circle_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../app/assets/images/liked_circle.png */ "./app/assets/images/liked_circle.png");
-/* harmony import */ var _app_assets_images_comment_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app/assets/images/comment.png */ "./app/assets/images/comment.png");
-/* harmony import */ var _app_assets_images_close_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app/assets/images/close.png */ "./app/assets/images/close.png");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1016,11 +1005,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
 
 
 
@@ -1158,7 +1142,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
         },
         className: "comments-button"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        src: _app_assets_images_comment_png__WEBPACK_IMPORTED_MODULE_5__.default,
+        src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/comment.png",
         className: "comment-picture"
       }), "Comment");
       var numComments = '';
@@ -1230,7 +1214,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
           onClick: this.toggleLike,
           className: "likes blue"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_liked_png__WEBPACK_IMPORTED_MODULE_3__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/liked.png",
           className: "like-icon"
         }), "Liked");
 
@@ -1248,7 +1232,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
           onClick: this.toggleLike,
           className: "likes"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_like_png__WEBPACK_IMPORTED_MODULE_2__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/like.png",
           className: "like-icon"
         }), "Like");
       }
@@ -1284,7 +1268,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
           },
           className: "delete-button-section"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: _app_assets_images_close_png__WEBPACK_IMPORTED_MODULE_6__.default,
+          src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/close.png",
           className: "delete-x-icon"
         }));
       }
@@ -1292,7 +1276,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
       var numLikes = likes === '' ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "num-likes-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        src: _app_assets_images_liked_circle_png__WEBPACK_IMPORTED_MODULE_4__.default,
+        src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/likedcircle.png",
         className: "liked-circle-icon"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, likes));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -1303,10 +1287,10 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "user-section"
       }, img, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "name-and-date"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         to: "/".concat(this.props.user.id),
         className: "links"
-      }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+      }, user), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         to: "/",
         className: "created-ats"
       }, date.month, " ", date.day, " at ", date.hour, ":", date.minutes, " ", date.status))), deleteButton), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -4460,21 +4444,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./app/assets/images/comment.png":
-/*!***************************************!*\
-  !*** ./app/assets/images/comment.png ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "48102a42fa55ae499f1baeca2439ddb9.png");
-
-/***/ }),
-
 /***/ "./app/assets/images/fazebook.png":
 /*!****************************************!*\
   !*** ./app/assets/images/fazebook.png ***!
@@ -4487,96 +4456,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "90eda35a747f27dd36caa0d88d499cec.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/like.png":
-/*!************************************!*\
-  !*** ./app/assets/images/like.png ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "64c18a419d4ca4aa59c8366d410fd415.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/liked.png":
-/*!*************************************!*\
-  !*** ./app/assets/images/liked.png ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "d9459f4736bc7e47ffdf99c769ac48b8.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/liked_circle.png":
-/*!********************************************!*\
-  !*** ./app/assets/images/liked_circle.png ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "0efb46b9695d9f7b204a35187913ea60.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/logout.png":
-/*!**************************************!*\
-  !*** ./app/assets/images/logout.png ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "3acf988d194d812391af983873ca4f6b.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/notification.png":
-/*!********************************************!*\
-  !*** ./app/assets/images/notification.png ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "73695ad469fec0d49825d25a209b3f3e.png");
-
-/***/ }),
-
-/***/ "./app/assets/images/notification_active.png":
-/*!***************************************************!*\
-  !*** ./app/assets/images/notification_active.png ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "a00beaaf9a49a8867a0d7fd88e9d642e.png");
 
 /***/ }),
 

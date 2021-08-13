@@ -60,7 +60,7 @@ export default class Comment extends React.Component {
     if (this.props.user.id === this.props.currentUser.id) {
       deleteButton = (
         <button className="delete-button" onClick={() => { this.props.deletePost(this.props.comment.id); }}>
-          <img src={close} className="delete-icon"></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/close.png' className="delete-icon"></img>
         </button>
       );
     }

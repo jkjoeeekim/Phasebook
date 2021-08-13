@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import fazebook from '../../../app/assets/images/fazebook.png';
-import notificationactive from '../../../app/assets/images/notificationactive.png';
-import notification from '../../../app/assets/images/notification.png';
-import logout from '../../../app/assets/images/logout.png';
 
 export default class TopNavBar extends React.Component {
   constructor(props) {
@@ -84,7 +81,7 @@ export default class TopNavBar extends React.Component {
     let logoutButton = (
       <section onClick={this.props.logout} id='logout-section'>
         <button className="logout-button">
-          <img src={logout} className="logout-icon"></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/logout.png' className="logout-icon"></img>
         </button>
         <section className='desc-section'>
           <p className="desc">Log Out</p>
@@ -94,13 +91,13 @@ export default class TopNavBar extends React.Component {
     if (notifications.length > 0) {
       notificationButton = (
         <button onClick={this.toggleNotifications} id="notification-button">
-          <img src={notificationactive} className="picture"></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/notificationactive.png' className="picture"></img>
         </button>
       );
     } else {
       notificationButton = (
         <button onClick={this.toggleNotifications} id="notification-button">
-          <img src={notification} className="picture_nonactive"></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/notification.png' className="picture_nonactive"></img>
         </button>
       );
       noNotifications = (
@@ -114,7 +111,7 @@ export default class TopNavBar extends React.Component {
       <section id="navbar">
         <section className="navbar-icon-section">
           <Link to="/" id="navbar-icon-button">
-            <img src={fazebook} id="navbar-icon"></img>
+            <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/fazebook.png' id="navbar-icon"></img>
             <p id="navbar-icon-title">fazebook</p>
           </Link>
           <form onSubmit={this.handleSubmit} id="navbar-search-form">

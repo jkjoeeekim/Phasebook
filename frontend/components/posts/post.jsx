@@ -1,11 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Comment from '../comments/comment';
-import like from '../../../app/assets/images/like.png';
-import liked from '../../../app/assets/images/liked.png';
-import likedcircle from '../../../app/assets/images/likedcircle.png';
-import comment from '../../../app/assets/images/comment.png';
-import close from '../../../app/assets/images/close.png';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -104,7 +99,7 @@ export default class Post extends React.Component {
     let commentButton = (
       <button onClick={() => this.focusInput(this.props.idx)}
         className="comments-button">
-        <img src={comment} className="comment-picture"></img>
+        <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/comment.png' className="comment-picture"></img>
         Comment
       </button>
     );
@@ -175,7 +170,7 @@ export default class Post extends React.Component {
     if (!!this.props.liked) {
       likeButton = (
         <button onClick={this.toggleLike} className="likes blue">
-          <img src={liked} className='like-icon'></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/liked.png' className='like-icon'></img>
           Liked
         </button>
       );
@@ -190,7 +185,7 @@ export default class Post extends React.Component {
       }
       likeButton = (
         <button onClick={this.toggleLike} className="likes">
-          <img src={like} className='like-icon'></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/like.png' className='like-icon'></img>
           Like
         </button>
       );
@@ -221,7 +216,7 @@ export default class Post extends React.Component {
     if (this.props.user.id === this.props.currentUser.id) {
       deleteButton = (
         <button onClick={() => { this.props.deletePost(this.props.post.id); }} className="delete-button-section">
-          <img src={close} className="delete-x-icon"></img>
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/close.png' className="delete-x-icon"></img>
         </button>
       );
     }
@@ -230,7 +225,7 @@ export default class Post extends React.Component {
       ""
     ) : (
       <section className="num-likes-section">
-        <img src={likedcircle} className="liked-circle-icon"></img>
+        <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/likedcircle.png' className="liked-circle-icon"></img>
         <p>
           {likes}
         </p>
