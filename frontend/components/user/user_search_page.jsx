@@ -65,6 +65,8 @@ export default class UserSearchPage extends React.Component {
         classitem = 'friends';
       } else if (friendStatus === 'Add Friend') {
         classitem = 'add';
+      } else if (friendStatus === 'Awaiting Response...') {
+        classitem = 'waiting'
       }
       if (props.search.includes(user.id)) {
         resultUsers.push(

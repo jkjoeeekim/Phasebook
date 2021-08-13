@@ -8,17 +8,15 @@ Deployed at https://fazebook.herokuapp.com/
 * ***Refer to the WIKI for more details:***
 ***https://github.com/jkjoeeekim/Phasebook/wiki***
 
-# Wireframe:
-## Before:
-![Alt text](./img/wireframe2.png)
-## Version 0.001:
-![Alt text](./img/version_010.png)
-## Current Version:
-![Alt text](./img/version_021.png)
-
 # Technologies, Libraries, APIs:
-## This project will be implemented with the following technologies:
+## This project uses following technologies:
+  - Built using `React` to manage front-end routing.
+  - Built on a `Rails` framework to manage back-end API routing.
   - `Webpack` to bundle and transpile the source JavaScript code.
-  - `Google Fonts API` for fonts: `Kalam` and `Roboto Mono`
+  - `Google Fonts API` for font-family: `Inter`.
 
-# Implementation timeline:
+# Facebook landing page precisely styled
+![Signin Page](./app/assets/images/a9.png)
+![Signup Page](./app/assets/images/a10.png)
+![Display Errors](./app/assets/images/a11.png)
+![Display Errors](./app/assets/images/a12.png)

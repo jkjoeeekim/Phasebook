@@ -1451,23 +1451,19 @@ var PostIndex = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(PostIndex, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchPosts();
-      this.props.fetchUsers();
-      this.props.requestFriendships(this.props.user.id);
-    }
-  }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.props.fetchPosts();
       this.props.fetchUsers();
+      this.props.requestFriendships(this.props.user.id);
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       if (!this.state.updated) {
         this.props.fetchPosts();
+        this.props.fetchUsers();
+        this.props.requestFriendships(this.props.user.id);
         this.setState({
           updated: true
         });
@@ -3347,6 +3343,8 @@ var UserSearchPage = /*#__PURE__*/function (_React$Component) {
           classitem = 'friends';
         } else if (friendStatus === 'Add Friend') {
           classitem = 'add';
+        } else if (friendStatus === 'Awaiting Response...') {
+          classitem = 'waiting';
         }
 
         if (props.search.includes(user.id)) {

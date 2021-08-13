@@ -18,20 +18,17 @@ export default class PostIndex extends React.Component {
     this.displayPostForm = this.displayPostForm.bind(this);
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     this.props.fetchPosts();
     this.props.fetchUsers();
     this.props.requestFriendships(this.props.user.id);
   }
 
-  componentWillUnmount() {
-    this.props.fetchPosts();
-    this.props.fetchUsers();
-  }
-
   componentDidUpdate() {
     if (!this.state.updated) {
       this.props.fetchPosts();
+      this.props.fetchUsers();
+      this.props.requestFriendships(this.props.user.id);
       this.setState({ updated: true });
     }
   }
