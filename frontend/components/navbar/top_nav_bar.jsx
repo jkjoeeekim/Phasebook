@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import fazebook from '../../../app/assets/images/fazebook.png';
-import notification_active from '../../../app/assets/images/notification_active.png';
+import notificationactive from '../../../app/assets/images/notificationactive.png';
 import notification from '../../../app/assets/images/notification.png';
 import logout from '../../../app/assets/images/logout.png';
 
@@ -94,7 +94,7 @@ export default class TopNavBar extends React.Component {
     if (notifications.length > 0) {
       notificationButton = (
         <button onClick={this.toggleNotifications} id="notification-button">
-          <img src={notification_active} className="picture"></img>
+          <img src={notificationactive} className="picture"></img>
         </button>
       );
     } else {

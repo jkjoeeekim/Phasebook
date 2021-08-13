@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Comment from '../comments/comment';
 import like from '../../../app/assets/images/like.png';
 import liked from '../../../app/assets/images/liked.png';
-import liked_circle from '../../../app/assets/images/liked_circle.png';
+import likedcircle from '../../../app/assets/images/likedcircle.png';
 import comment from '../../../app/assets/images/comment.png';
 import close from '../../../app/assets/images/close.png';
 
@@ -230,7 +230,7 @@ export default class Post extends React.Component {
       ""
     ) : (
       <section className="num-likes-section">
-        <img src={liked_circle} className="liked-circle-icon"></img>
+        <img src={likedcircle} className="liked-circle-icon"></img>
         <p>
           {likes}
         </p>
