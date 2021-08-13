@@ -115,7 +115,9 @@ export default class Post extends React.Component {
     if (comments.length === 1) {
 
       numComments = (
-        <button className='comments-counts' onClick={this.toggleComments} >{comments.length} Comment</button>
+        <button className='comments-counts' onClick={this.toggleComments}>
+          {comments.length} Comment
+        </button>
       );
       comments.forEach((comment, idx) => {
         allComments.unshift(

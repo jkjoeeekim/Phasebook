@@ -20,6 +20,24 @@
     width: 1000px;
     margin: 0 auto;
     
+    .friend-button {
+      border: none;
+      padding: 6px 15px 6px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .add {
+      background-color: rgb(24,119,242);
+      color: white;
+    }
+
+    .add:hover {
+      cursor: pointer;
+    }
+
     .title {
       font-size: 28px;
       font-weight: 800;

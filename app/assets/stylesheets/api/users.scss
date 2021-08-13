@@ -131,7 +131,7 @@
   box-shadow: 5px 5px 20px 10px rgb(226,228,231);
 
   .user-picture-and-name {
-    width: 940px;
+    width: 775px;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
@@ -158,14 +158,35 @@
     }
   }
 
-
   .friend-section {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
     .friend-button {
+      border: none;
+      padding: 7px 15px 7px 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
 
+    .sent {
+
+    }
+
+    .friends {
+      background-color: rgb(216,218,223);
+    }
+    
+    .add {
+      background-color: rgb(24,119,242);
+      color: white;
+    }
+
+    .add:hover {
+      cursor: pointer;
     }
   }
 }
@@ -391,8 +412,15 @@
         }
       }
       
+
       .comments-counts {
         font-size: 16px;
+        background: white;
+        border: none;
+      }
+
+      .comments-counts:hover {
+        cursor: pointer;
       }
     }
 

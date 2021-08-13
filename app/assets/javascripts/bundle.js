@@ -3079,11 +3079,20 @@ var UserProfilePage = /*#__PURE__*/function (_React$Component) {
       }
 
       var friendRequestButton;
+      var classitem;
+
+      if (this.friendStatus === 'Request Sent') {
+        classitem = 'sent';
+      } else if (this.friendStatus === 'Friends') {
+        classitem = 'friends';
+      } else if (this.friendStatus === 'Add Friend') {
+        classitem = 'add';
+      }
 
       if (this.props.user.id !== this.props.profileUser.id) {
         friendRequestButton = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
           onClick: this.handleFriendRequest,
-          className: "friend-button"
+          className: "friend-button ".concat(classitem)
         }, this.friendStatus);
       } else {
         friendRequestButton = '';
@@ -3317,7 +3326,6 @@ var UserSearchPage = /*#__PURE__*/function (_React$Component) {
       var resultUsers = [];
       var recommendedUsers = [];
       var props = this.props;
-      var stat;
       allUsers.forEach(function (user, idx) {
         var friendStatus = "Friend Request";
 
@@ -3329,6 +3337,16 @@ var UserSearchPage = /*#__PURE__*/function (_React$Component) {
           friendStatus = 'Awaiting Response...';
         } else {
           friendStatus = 'Add Friend';
+        }
+
+        var classitem;
+
+        if (friendStatus === 'Request Sent') {
+          classitem = 'sent';
+        } else if (friendStatus === 'Friends') {
+          classitem = 'friends';
+        } else if (friendStatus === 'Add Friend') {
+          classitem = 'add';
         }
 
         if (props.search.includes(user.id)) {
@@ -3352,7 +3370,7 @@ var UserSearchPage = /*#__PURE__*/function (_React$Component) {
             onClick: function onClick() {
               return _this2.handleFriendRequest(user.id, friendStatus);
             },
-            className: "friend-button"
+            className: "friend-button ".concat(classitem)
           }, friendStatus))));
         } else if (!props.friends.includes(user.id) && user.id !== props.user.id) {
           recommendedUsers.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -3375,7 +3393,7 @@ var UserSearchPage = /*#__PURE__*/function (_React$Component) {
             onClick: function onClick() {
               return _this2.handleFriendRequest(user.id, friendStatus);
             },
-            className: "friend-button"
+            className: "friend-button ".concat(classitem)
           }, friendStatus))));
         }
       });

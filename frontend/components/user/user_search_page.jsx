@@ -44,7 +44,7 @@ export default class UserSearchPage extends React.Component {
     let resultUsers = [];
     let recommendedUsers = [];
     let props = this.props;
-    let stat;
+
 
     allUsers.forEach((user, idx) => {
       let friendStatus = "Friend Request";
@@ -57,6 +57,15 @@ export default class UserSearchPage extends React.Component {
       } else {
         friendStatus = 'Add Friend';
       }
+
+      let classitem;
+      if (friendStatus === 'Request Sent') {
+        classitem = 'sent';
+      } else if (friendStatus === 'Friends') {
+        classitem = 'friends';
+      } else if (friendStatus === 'Add Friend') {
+        classitem = 'add';
+      }
       if (props.search.includes(user.id)) {
         resultUsers.push(
           <section id={`result-user-${idx}`} className="users" key={idx}>
@@ -68,7 +77,7 @@ export default class UserSearchPage extends React.Component {
             </section>
             <section className="request-section">
               <button onClick={() => this.handleFriendRequest(user.id, friendStatus)}
-                className="friend-button"
+                className={`friend-button ${classitem}`}
               >{friendStatus}
               </button>
             </section>
@@ -85,7 +94,7 @@ export default class UserSearchPage extends React.Component {
             </section>
             <section className="request-section">
               <button onClick={() => this.handleFriendRequest(user.id, friendStatus)}
-                className="friend-button"
+                className={`friend-button ${classitem}`}
               >{friendStatus}
               </button>
             </section>

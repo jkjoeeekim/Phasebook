@@ -140,10 +140,18 @@ export default class UserProfilePage extends React.Component {
     }
 
     let friendRequestButton;
+    let classitem;
+    if (this.friendStatus === 'Request Sent') {
+      classitem = 'sent';
+    } else if (this.friendStatus === 'Friends') {
+      classitem = 'friends';
+    } else if (this.friendStatus === 'Add Friend') {
+      classitem = 'add';
+    }
 
     if (this.props.user.id !== this.props.profileUser.id) {
       friendRequestButton = (
-        <button onClick={this.handleFriendRequest} className="friend-button">
+        <button onClick={this.handleFriendRequest} className={`friend-button ${classitem}`}>
           {this.friendStatus}
         </button>
       );
