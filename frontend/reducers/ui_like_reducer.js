@@ -11,9 +11,7 @@ export default (state = {}, action) => {
       nextState[action.like.like.postId] = true;
       return nextState;
     case REMOVE_LIKE:
-      // debugger;
       nextState[action.like.like.postId] = false;
-      // debugger;
       return nextState;
     case RECEIVE_USERS:
       Object.values(action.users)[1].map((post) => {
@@ -21,7 +19,6 @@ export default (state = {}, action) => {
       });
       return nextState;
     case RECEIVE_CURRENT_USER:
-      // debugger;
       action.currentUser.likes.map((post) => {
         nextState[post.id] = true;
       });
@@ -29,7 +26,6 @@ export default (state = {}, action) => {
     case LOGOUT_CURRENT_USER:
       return {};
     default:
-      // debugger;
       return state;
   }
 };

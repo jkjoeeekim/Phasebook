@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Comment from '../comments/comment';
+import like from '../../../app/assets/images/like.png';
+import liked from '../../../app/assets/images/liked.png';
+import liked_circle from '../../../app/assets/images/liked_circle.png';
+import comment from '../../../app/assets/images/comment.png';
+import close from '../../../app/assets/images/close.png';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -60,7 +65,6 @@ export default class Post extends React.Component {
   }
 
   handleSubmit(e) {
-    // debugger;
     e.preventDefault();
     this.props.postPost({ body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id });
     this.setState({ body: '' });
@@ -70,15 +74,10 @@ export default class Post extends React.Component {
   }
 
   toggleLike() {
-    // debugger;
     if (this.props.liked) {
-      console.log('liked');
-      // debugger;
       let user = this.props.currentUser;
       this.props.likes[this.props.post.id].forEach((like) => {
-        // debugger;
         if (like.userId === user.id) {
-          // debugger;
           this.props.deleteLike(like.id);
         }
       });
@@ -93,7 +92,6 @@ export default class Post extends React.Component {
   }
 
   render() {
-    // debugger;
     if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
     let post = this.props.post;
     let user = this.props.user ? `${this.props.user.firstName} ${this.props.user.lastName}` : "";
@@ -102,7 +100,14 @@ export default class Post extends React.Component {
     let deleteButton = '';
     let comments = this.props.comments;
     let likes = '';
-    let likeButtonText = 'Like';
+    let likeButton;
+    let commentButton = (
+      <button onClick={() => this.focusInput(this.props.idx)}
+        className="comments-button">
+        <img src={comment} className="comment-picture"></img>
+        Comment
+      </button>
+    );
     let numComments = '';
     let posts = this.props.posts;
     let img = (
@@ -111,7 +116,6 @@ export default class Post extends React.Component {
     let imgCurrent = (
       <img src={this.props.currentUser.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
     );
-
 
     if (comments.length === 1) {
 
@@ -137,9 +141,6 @@ export default class Post extends React.Component {
           {comments.length} Comments
         </button>
       );
-      // console.log('in render ' + this.props.post.id + this.state.revealComments);
-      // console.log('in render ' + comments);
-      // console.log('in render ' + allComments.reverse());
 
       if (!!this.props.ui) {
         comments.forEach((comment, idx) => {
@@ -153,8 +154,6 @@ export default class Post extends React.Component {
             />
           );
         });
-        // console.log('in render' + comments);
-        // console.log('in render' + allComments.reverse());
       } else {
         allComments.unshift(
           <Comment idx={0}
@@ -169,9 +168,17 @@ export default class Post extends React.Component {
     }
     this.commentsLength = allComments.length;
 
-    let postLikes = this.props.likers.length;
+    let postLikes = [];
+    if (this.props.likers) {
+      postLikes = this.props.likers.length;
+    }
     if (!!this.props.liked) {
-      likeButtonText = 'Liked';
+      likeButton = (
+        <button onClick={this.toggleLike} className="likes blue">
+          <img src={liked} className='like-icon'></img>
+          Liked
+        </button>
+      );
       if (postLikes === 1) {
         likes = 'You like this';
       } else if (postLikes > 1) {
@@ -181,6 +188,12 @@ export default class Post extends React.Component {
       if (postLikes > 0) {
         likes = postLikes;
       }
+      likeButton = (
+        <button onClick={this.toggleLike} className="likes">
+          <img src={like} className='like-icon'></img>
+          Like
+        </button>
+      );
     }
 
     if (post) {
@@ -207,17 +220,32 @@ export default class Post extends React.Component {
 
     if (this.props.user.id === this.props.currentUser.id) {
       deleteButton = (
-        <button onClick={() => { this.props.deletePost(this.props.post.id); }}>Delete</button>
+        <button onClick={() => { this.props.deletePost(this.props.post.id); }} className="delete-button-section">
+          <img src={close} className="delete-x-icon"></img>
+        </button>
       );
     }
+
+    let numLikes = (likes === '') ? (
+      ""
+    ) : (
+      <section className="num-likes-section">
+        <img src={liked_circle} className="liked-circle-icon"></img>
+        <p>
+          {likes}
+        </p>
+      </section>
+    );
 
     return (
       <section className="posts">
         <section className="user-details">
-          {img}
-          <section className="name-and-date">
-            <Link to="/" className="links">{user}</Link>
-            <Link to="/" className="created-ats">{date.month} {date.day} at {date.hour}:{date.minutes} {date.status}</Link>
+          <section className="user-section">
+            {img}
+            <section className="name-and-date">
+              <Link to={`/${this.props.user.id}`} className="links">{user}</Link>
+              <Link to="/" className="created-ats">{date.month} {date.day} at {date.hour}:{date.minutes} {date.status}</Link>
+            </section>
           </section>
           {deleteButton}
         </section>
@@ -225,24 +253,25 @@ export default class Post extends React.Component {
           <p className="bodys">{post.body}</p>
         </section>
         <section className="count-likes-comments">
-          <p>{likes}</p>
+          {numLikes}
           {numComments}
         </section>
         <section className="likes-and-comments">
-          <button onClick={this.toggleLike}
-            className="likes"
-          >{likeButtonText}</button>
-          <button onClick={() => this.focusInput(this.props.idx)}
-            className="comments-button"
-          >Comment</button>
+          {likeButton}
+          {commentButton}
         </section>
         {allComments.map(comment => {
           return comment;
         })}
         <form className="new-comment" onSubmit={this.handleSubmit}>
           {imgCurrent}
-          <input id={`input-field-${this.props.idx}`} className="input-fields" type="text" placeholder="Write a comment..." value={this.state.body} onChange={this.updateBody}></input>
-          <input type='submit' value=""></input>
+          <input id={`input-field-${this.props.idx}`}
+            className="input-fields"
+            type="text"
+            placeholder="Write a comment..."
+            value={this.state.body}
+            onChange={this.updateBody}
+          ></input>
         </form>
       </section>
     );

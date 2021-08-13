@@ -3,7 +3,7 @@ import PostContainer from './post_container';
 import PostRightAside from './post_right_aside';
 import PostLeftAside from './post_left_aside';
 import NewPostForm from './new_post_form';
-import TopNavBar from '../navbar/top_nav_bar';
+import TopNavBarContainer from '../navbar/top_nav_bar_container';
 import { Link } from 'react-router-dom';
 
 export default class PostIndex extends React.Component {
@@ -21,6 +21,7 @@ export default class PostIndex extends React.Component {
   componentDidMount() {
     this.props.fetchPosts();
     this.props.fetchUsers();
+    this.props.requestFriendships(this.props.user.id);
   }
 
   componentWillUnmount() {
@@ -52,7 +53,7 @@ export default class PostIndex extends React.Component {
   }
 
   render() {
-    // debugger;
+    if (!this.props.user) return null;
     let allPosts = [];
     let allComments = {};
 
@@ -102,21 +103,30 @@ export default class PostIndex extends React.Component {
             <button onClick={this.displayPostForm} className="button-create-post">What's on your mind, {this.props.user.firstName}?</button>
           </section>
           <div className="createLine"></div>
-          <section>
+          <section className="button-section">
             <button onClick={this.displayPostForm}>Post</button>
           </section>
         </section>
       );
     }
-
     return (
       <div>
-        <TopNavBar user={this.props.user} fetchUsers={this.props.fetchUsers} fetchPosts={this.props.fetchPosts} logout={this.props.logout} />
+        <TopNavBarContainer user={this.props.user}
+          fetchUsers={this.props.fetchUsers}
+          fetchPosts={this.props.fetchPosts}
+          logout={this.props.logout}
+          searchUser={this.props.searchUser}
+          history={this.props.history}
+          requests={this.props.requests}
+        />
         <PostRightAside users={this.props.users} friends={this.props.friends} />
         <div className="spacer"></div>
         <div id="new-post-form-wrapper">
           <div id="empty-space"></div>
-          <NewPostForm user={this.props.user} placeholdermsg={`What's on your mind ${this.props.user.firstName}?`} postPost={this.props.postPost} />
+          <NewPostForm user={this.props.user}
+            placeholdermsg={`What's on your mind ${this.props.user.firstName}?`}
+            postPost={this.props.postPost}
+          />
         </div>
         {user}
         <section id="post-section-all-posts">

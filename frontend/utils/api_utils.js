@@ -88,3 +88,37 @@ export const deleteLike = (likeId) => (
     url: `/api/likes/${likeId}`
   })
 );
+
+// Search a User
+export const searchUser = (userName) => (
+  $.ajax({
+    method: "GET",
+    url: `/api/search?userName=${userName}`
+  })
+);
+
+// Get all pending friend requests
+export const requestFriendships = (userId) => (
+  $.ajax({
+    method: "GET",
+    url: "/api/friendships",
+    data: { userId }
+  })
+);
+
+// Request a friendship
+export const requestFriendship = (friendship) => (
+  $.ajax({
+    method: "POST",
+    url: "/api/friendships",
+    data: { friendship }
+  })
+);
+
+// Destroy a friendship
+export const deleteFriendship = (friendshipId) => (
+  $.ajax({
+    method: "DELETE",
+    url: `/api/friendships/${friendshipId}`
+  })
+);

@@ -8,8 +8,12 @@ class Api::UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
-    @friends = @user.friends
+    @bobby_bob = User.where('email ILIKE ?', 'bobby@bob.com').ids.first
     if @user.save
+      fship1 = Friendship.create({user_id: @bobby_bob, friend_id: @user.id, active: true})
+      fship2 = Friendship.create({user_id: @user.id, friend_id: @bobby_bob, active: true})
+      all_friendships = @user.friendships.where(active: true)
+      @friends = all_friendships.map{ |friendship| friendship.friend_id }
       login!(@user)
       render "api/posts/show"
     else
@@ -19,7 +23,8 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:user_id])
-    @friends = @user.friends
+    all_friendships = @user.friendships.where(active: true)
+    @friends = all_friendships.map{ |friendship| friendship.friend_id }
     render "api/users/show"
   end
 

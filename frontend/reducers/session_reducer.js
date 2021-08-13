@@ -1,23 +1,14 @@
-import { RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER } from '../actions/session_actions';
-import { RECEIVE_FRIENDS } from '../actions/user_actions';
+import { combineReducers } from 'redux';
+import CurrentUserReducer from './current_user_reducer';
+import FriendsReducer from './friends_reducer';
+import SearchReducer from './search_reducer';
+import FriendshipsReducer from './friendships_reducer';
+import RequestsReducer from './requests_reducer';
 
-const _nullSession = {
-  currentUser: null,
-};
-
-export default (state = _nullSession, action) => {
-  Object.freeze(state);
-  switch (action.type) {
-    case RECEIVE_CURRENT_USER:
-      return Object.assign({}, {
-        currentUser: action.currentUser.id,
-        friends: action.currentUser.friends,
-      });
-    case LOGOUT_CURRENT_USER:
-      return _nullSession;
-    case RECEIVE_FRIENDS:
-      return Object.assign({}, state, { friends: action.friends });
-    default:
-      return state;
-  }
-};
+export default combineReducers({
+  currentUser: CurrentUserReducer,
+  friends: FriendsReducer,
+  search: SearchReducer,
+  friendships: FriendshipsReducer,
+  requests: RequestsReducer,
+});

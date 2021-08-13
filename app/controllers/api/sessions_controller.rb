@@ -3,7 +3,8 @@ class Api::SessionsController < ApplicationController
   def create
     @user = User.find_by_credentials(params[:user][:email], params[:user][:password])
     if @user
-      @friends = @user.friends.map{ |friend| friend.id }
+      all_friendships = @user.friendships.where(active: true)
+      @friends = all_friendships.map{ |friendship| friendship.friend_id }
       login!(@user)
       render "api/posts/show"
     else

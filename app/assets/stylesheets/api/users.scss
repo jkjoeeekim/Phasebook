@@ -2,37 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#user-profile-section-top {
-  width: 940px;
-  margin: 0 auto;
-  margin-top: 70px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  .user-section {
-    .profile-pictures {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-    }
-  }
-
-  .friend-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    .friend-button {
-
-    }
-  }
-}
-
-.spacer {
-  height: 80px;
-}
-
 #new-post-form-wrapper {
   position: absolute;
   top: 0;
@@ -149,10 +118,169 @@
   }
 }
 
+#user-profile-section-top {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 5px 5px 20px 10px rgb(226,228,231);
+
+  .user-picture-and-name {
+    width: 940px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .user-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+  
+      .profile-pictures {
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+      }
+  
+      .user-name-main {
+        font-size: 34px;
+        font-weight: 700;
+        margin-top: 120px;
+        margin-left: 30px;
+        color: rgb(7, 7, 7);
+      }
+    }
+  }
+
+
+  .friend-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .friend-button {
+
+    }
+  }
+}
+
+.spacer {
+  height: 80px;
+}
+
+#profile-section-user-controls {
+  width: 580px;
+  height: 120px;
+  margin: 0 auto;
+  margin-top: 15px;
+  box-shadow: 5px 5px 20px 10px rgb(226,228,231);
+  padding: 11px;
+  border-radius: 10px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .user-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    .pictures {
+      width: 39px;
+      height: 39px;
+      border-radius: 50px;
+      border: 1px solid rgb(187,190,194);
+    }
+  
+    .button-create-post {
+      padding: 10px;
+      font-size: 18px;
+      padding-left: 15px;
+      border-radius: 50px;
+      border: 0;
+      background: rgb(240, 242, 245);
+      font-weight: 100;
+      align-self: center;
+      text-align-last: left;
+      width: 93%;
+    };
+  }
+
+  .button-create-post:hover {
+    background: rgb(220, 226, 231);
+    cursor: pointer;
+  }
+
+  .button-create-post:focus {
+    outline: none;
+  }
+
+  .createLine {
+    border-bottom: 1px solid rgb(206,208,212);
+    margin-top: 13px;
+    margin-bottom: 7px;
+  };
+
+  .button-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  button {
+    width: 30%;
+    height: 40px;
+    align-self: center;
+    color: rgb(96,98,102);
+    font-size: 16px;
+    font-weight: 600;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: .5px;
+  };
+
+  button:hover {
+    background: rgb(240, 242, 245);
+  }
+}
+
+#no-posts-available {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+  
+    .title {
+      font-size: 22px;
+      font-weight: 800;
+      color: rgb(121, 121, 121);
+      margin-top: 25px;
+      align-self: center;
+    }
+  }
+}
+
 #profile-section-all-posts {
   display: flex;
   flex-direction: column;
-  width: 680px;
+  width: 580px;
   margin: 0 auto;
 
   .posts {
@@ -166,6 +294,12 @@
     .user-details {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
+
+      .user-section {
+        display: flex;
+        flex-direction: row;
+      }
 
       .picture {
         height: 37px;
@@ -206,6 +340,22 @@
           text-decoration: underline;
         }
       }
+
+      .delete-button-section {
+        border: none;
+        background: white;
+        margin-right: 4px;
+        margin-top: -6px;
+                
+        .delete-x-icon {
+          width: 10px;
+          height: 10px;
+        }
+      }
+
+      .delete-button-section:hover {
+        cursor: pointer;
+      }
     };
 
     .post-details {
@@ -225,6 +375,22 @@
       padding: 13px 0px 13px 0px;
       font-weight: 300;
 
+      .num-likes-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .liked-circle-icon {
+          height: 17px;
+          width: 17px;
+          border-radius: 50px;
+          box-shadow: 5px 5px 20px 10px rgb(255, 255, 255);
+          margin-left: 5px;
+          margin-right: 8px;
+          margin-bottom: -2px;
+        }
+      }
+      
       .comments-counts {
         font-size: 16px;
       }
@@ -247,6 +413,16 @@
         color: rgb(101,103,140);
         border-radius: 6px;
         border: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+
+        .like-icon {
+          width: 17px;
+          height: 17px;
+          margin-right: 15px;
+          margin-bottom: -3px;
+        }
       }
       
       .comments-button {
@@ -257,6 +433,16 @@
         color: rgb(101,103,140);
         border-radius: 6px;
         border: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+
+        .comment-picture {
+          height: 22px;
+          width: 22px;
+          margin-right: 15px;
+          margin-bottom: -7px;
+        }
       }
 
       .likes:hover {

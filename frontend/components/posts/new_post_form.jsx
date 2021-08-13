@@ -22,7 +22,11 @@ export default class NewPostForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     document.getElementById("new-post-form-wrapper").classList.remove('enabled');
-    this.props.postPost(this.state);
+    if (this.props.postingType === 'profile') {
+      this.props.postPost({ body: this.state.body, author_id: this.state.author_id, user_id: this.props.profileUserId });
+    } else {
+      this.props.postPost(this.state);
+    }
     this.setState({ body: '' });
   }
 

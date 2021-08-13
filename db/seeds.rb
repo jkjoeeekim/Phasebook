@@ -134,56 +134,57 @@ user9.photo.attach(io: f4, filename: 'f4.jpg')
 user10.photo.attach(io: f5, filename: 'f5.jpg')
 
 # user1 friendships
-fship1 = Friendship.create({user_id: user1.id, friend_id: user3.id})
-fship2 = Friendship.create({user_id: user1.id, friend_id: user5.id})
-fship3 = Friendship.create({user_id: user1.id, friend_id: user7.id})
-fship4 = Friendship.create({user_id: user1.id, friend_id: user9.id})
+fship1 = Friendship.create({user_id: user1.id, friend_id: user3.id, active: true})
+fship2 = Friendship.create({user_id: user1.id, friend_id: user5.id, active: true})
+fship3 = Friendship.create({user_id: user1.id, friend_id: user7.id, active: true})
+fship4 = Friendship.create({user_id: user1.id, friend_id: user9.id, active: true})
 
 # user2 friendships
-fship17 = Friendship.create({user_id: user2.id, friend_id: user3.id})
-fship9 = Friendship.create({user_id: user2.id, friend_id: user4.id})
-fship10 = Friendship.create({user_id: user2.id, friend_id: user6.id})
-fship11 = Friendship.create({user_id: user2.id, friend_id: user8.id})
-fship12 = Friendship.create({user_id: user2.id, friend_id: user10.id})
+fship17 = Friendship.create({user_id: user2.id, friend_id: user3.id, active: true})
+fship9 = Friendship.create({user_id: user2.id, friend_id: user4.id, active: true})
+fship10 = Friendship.create({user_id: user2.id, friend_id: user6.id, active: true})
+fship11 = Friendship.create({user_id: user2.id, friend_id: user8.id, active: true})
+fship12 = Friendship.create({user_id: user2.id, friend_id: user10.id, active: true})
 
 # user3 friendships
-fship5 = Friendship.create({user_id: user3.id, friend_id: user1.id})
-fship18 = Friendship.create({user_id: user3.id, friend_id: user2.id})
-fship19 = Friendship.create({user_id: user3.id, friend_id: user4.id})
-fship20 = Friendship.create({user_id: user3.id, friend_id: user5.id})
-fship21 = Friendship.create({user_id: user3.id, friend_id: user6.id})
-fship22 = Friendship.create({user_id: user3.id, friend_id: user7.id})
-fship23 = Friendship.create({user_id: user3.id, friend_id: user8.id})
-fship24 = Friendship.create({user_id: user3.id, friend_id: user9.id})
-fship25 = Friendship.create({user_id: user3.id, friend_id: user10.id})
+fship5 = Friendship.create({user_id: user3.id, friend_id: user1.id, active: true})
+fship18 = Friendship.create({user_id: user3.id, friend_id: user2.id, active: true})
+fship19 = Friendship.create({user_id: user3.id, friend_id: user4.id, active: true})
+fship20 = Friendship.create({user_id: user3.id, friend_id: user5.id, active: true})
+fship21 = Friendship.create({user_id: user3.id, friend_id: user6.id, active: true})
+fship22 = Friendship.create({user_id: user3.id, friend_id: user7.id, active: true})
+fship23 = Friendship.create({user_id: user3.id, friend_id: user8.id, active: true})
+fship24 = Friendship.create({user_id: user3.id, friend_id: user9.id, active: true})
+fship25 = Friendship.create({user_id: user3.id, friend_id: user10.id, active: true})
 
 # user4 friendships
-fship13 = Friendship.create({user_id: user4.id, friend_id: user2.id})
-fship26 = Friendship.create({user_id: user4.id, friend_id: user3.id})
+fship13 = Friendship.create({user_id: user4.id, friend_id: user2.id, active: true})
+fship26 = Friendship.create({user_id: user4.id, friend_id: user3.id, active: true})
 
 # user5 friendships
-fship6 = Friendship.create({user_id: user5.id, friend_id: user1.id})
-fship27 = Friendship.create({user_id: user5.id, friend_id: user3.id})
+fship6 = Friendship.create({user_id: user5.id, friend_id: user1.id, active: true})
+fship27 = Friendship.create({user_id: user5.id, friend_id: user3.id, active: true})
 
 # user6 friendships
-fship14 = Friendship.create({user_id: user6.id, friend_id: user2.id})
-fship28 = Friendship.create({user_id: user6.id, friend_id: user3.id})
+fship14 = Friendship.create({user_id: user6.id, friend_id: user2.id, active: true})
+fship28 = Friendship.create({user_id: user6.id, friend_id: user3.id, active: true})
 
 # user7 friendships
-fship7 = Friendship.create({user_id: user7.id, friend_id: user1.id})
-fship29 = Friendship.create({user_id: user7.id, friend_id: user3.id})
+fship7 = Friendship.create({user_id: user7.id, friend_id: user1.id, active: true})
+fship29 = Friendship.create({user_id: user7.id, friend_id: user3.id, active: true})
 
 # user8 friendships
-fship15 = Friendship.create({user_id: user8.id, friend_id: user2.id})
-fship30 = Friendship.create({user_id: user8.id, friend_id: user3.id})
+fship15 = Friendship.create({user_id: user8.id, friend_id: user2.id, active: true})
+fship30 = Friendship.create({user_id: user8.id, friend_id: user3.id, active: true})
 
 # user9 friendships
-fship8 = Friendship.create({user_id: user9.id, friend_id: user1.id})
-fship31 = Friendship.create({user_id: user9.id, friend_id: user3.id})
+fship8 = Friendship.create({user_id: user9.id, friend_id: user1.id, active: true})
+fship31 = Friendship.create({user_id: user9.id, friend_id: user3.id, active: true})
 
 # user10 friendships
-fship16 = Friendship.create({user_id: user10.id, friend_id: user2.id})
-fship32 = Friendship.create({user_id: user10.id, friend_id: user3.id})
+fship16 = Friendship.create({user_id: user10.id, friend_id: user2.id, active: true})
+fship32 = Friendship.create({user_id: user10.id, friend_id: user3.id, active: true})
+fship33 = Friendship.create({user_id: user10.id, friend_id: user1.id, active: false})
 
 post1 = Post.create({
   body: "Picture of my vacation!",
@@ -194,11 +195,6 @@ post2 = Post.create({
   body: "Anyone have recommendations for pasta restaurants?",
   author_id: user2.id
 });
-
-post3 = Post.create({
-  body: "Went golfing today, the weather was so hot!",
-  author_id: user3.id
-})
 
 post4 = Post.create({
   body: "Happy Birthday~~",

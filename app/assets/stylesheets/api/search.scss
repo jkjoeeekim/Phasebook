@@ -1,0 +1,111 @@
+// Place all the styles related to the api::search controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#user-search {
+
+  .empty-sections {
+    height: 125px;
+    width: 250px;
+    margin: 0 auto;
+
+    .desc {
+      font-size: 24px;
+      font-weight: 700;
+      padding-top: 30px;
+    }
+  }
+
+  #center-column {
+    width: 1000px;
+    margin: 0 auto;
+    
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+      color: rgb(39, 39, 39);
+      border-bottom: 1px solid rgb(206,208,212);
+      padding: 10px;
+    }
+
+    .users {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 1px solid rgb(206, 208, 212);
+      margin: 15px;
+      margin-top: 15px;
+      padding-bottom: 15px;
+
+      .user-info-section {
+        display: flex;
+        flex-direction: row;
+
+        .picture {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+
+        .name-sections {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-left: 15px;
+        }
+      }
+      .request-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    .users:last-of-type {
+      border-bottom: none;
+    }
+
+    #user-search-results {
+      box-shadow: 5px 5px 20px 10px rgb(216,217,220);
+      border-radius: 10px;
+      margin: 25px;
+      padding: 10px;
+      background-color: white;
+      
+      .title-section {
+
+        .sub-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: rgb(5, 5, 5);
+          padding: 10px;
+        }
+      }
+
+      .users-section {
+      }
+    }
+    
+    #user-recommended-section {
+      box-shadow: 5px 5px 20px 10px rgb(216,217,220);
+      border-radius: 10px;
+      margin: 25px;
+      padding: 10px;
+      background-color: white;
+
+      .title-section {
+
+        .sub-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: rgb(5, 5, 5);
+          padding: 10px;
+        }
+      }
+
+      .recommended-section {
+
+      }
+    }
+  }
+}

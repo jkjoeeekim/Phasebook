@@ -74,15 +74,22 @@ export default class SigninForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('user[first_name]', this.state.first_name)
-    formData.append('user[last_name]', this.state.last_name)
-    formData.append('user[email]', this.state.email.toLowerCase())
-    formData.append('user[password]', this.state.password)
-    formData.append('user[birthday]', `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`)
-    formData.append('user[gender]', this.state.gender)
-    
-    this.props.createNewUser(user);
+    // const formData = new FormData();
+    // formData.append('user[first_name]', this.state.first_name)
+    // formData.append('user[last_name]', this.state.last_name)
+    // formData.append('user[email]', this.state.email.toLowerCase())
+    // formData.append('user[password]', this.state.password)
+    // formData.append('user[birthday]', `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`)
+    // formData.append('user[gender]', this.state.gender)
+    let state = this.state;
+    this.props.createNewUser({
+      first_name: state.first_name,
+      last_name: state.last_name,
+      email: state.email,
+      password: state.password,
+      birthday: `${this.state.birthYear}/${this.allMonths.indexOf(this.state.birthMonth) + 1}/${this.state.birthDate}`,
+      gender: state.gender,
+    });
   }
 
   updateField(field) {
@@ -92,6 +99,11 @@ export default class SigninForm extends React.Component {
   exitSignupForm() {
     document.getElementById("signup-form-div").classList.remove('enabled');
     document.getElementById("signup-form").classList.remove('enabled');
+  }
+
+  componentWillUnmount() {
+    this.props.fetchUsers();
+    this.props.fetchPosts();
   }
 
   render() {

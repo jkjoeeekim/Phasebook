@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 export default class PostRightAside extends React.Component {
   render() {
     let friends = [];
-    if (this.props.friends && Object.keys(this.props.users).length > 1 && friends.length === 0) {
+    if (this.props.users.length <= 1) return null;
+    if (this.props.friends.length > 0 && Object.keys(this.props.users).length > 1 && friends.length === 0) {
       this.props.friends.forEach((userId, idx) => {
         let idx2 = (idx * idx) + 99999;
         let idx3 = (idx * idx * idx) + 9999999;

@@ -10,6 +10,7 @@ const mSTP = (state, ownProps) => ({
   likes: state.entities.likes,
   likers: state.entities.likes[ownProps.post.id],
   liked: state.ui.likes[ownProps.post.id],
+  ui: state.ui.comments[ownProps.post.id],
 });
 
 const mDTP = (dispatch) => ({

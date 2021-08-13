@@ -1,6 +1,16 @@
+require 'open-uri'
+default = open('https://fazebook-seeds.s3.us-west-1.amazonaws.com/default3.jpg')
+
+
 if !user.picture_url || user.picture_url.empty?
-  user.picture_url = url_for(user.photo)
-  user.save
+  if user.photo.attached?
+    user.picture_url = url_for(user.photo)
+    user.save
+  else
+    user.photo.attach(io: default, filename: 'default3.jpg')
+    user.picture_url = url_for(user.photo)
+    user.save
+  end
 end
 json.extract! user, :id, :first_name, :last_name, :email, :picture_url
 json.set! posts do

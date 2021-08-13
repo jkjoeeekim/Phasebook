@@ -231,6 +231,12 @@
     margin-bottom: 7px;
   };
 
+  .button-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   button {
     width: 30%;
     height: 40px;
@@ -259,13 +265,19 @@
     margin-top: 13px;
     background: white;
     border-radius: 10px;
-    padding: 12px;
+    padding: 15px;
     padding-bottom: 9px;
     box-shadow: 5px 5px 20px 10px rgb(216,217,220);
 
     .user-details {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
+
+      .user-section {
+        display: flex;
+        flex-direction: row;
+      }
 
       .picture {
         height: 37px;
@@ -306,6 +318,22 @@
           text-decoration: underline;
         }
       }
+
+      .delete-button-section {
+        border: none;
+        background: white;
+        margin-right: 4px;
+        margin-top: -6px;
+                
+        .delete-x-icon {
+          width: 10px;
+          height: 10px;
+        }
+      }
+
+      .delete-button-section:hover {
+        cursor: pointer;
+      }
     };
 
     .post-details {
@@ -324,6 +352,22 @@
       justify-content: space-between;
       padding: 13px 0px 13px 0px;
       font-weight: 300;
+
+      .num-likes-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .liked-circle-icon {
+          height: 17px;
+          width: 17px;
+          border-radius: 50px;
+          box-shadow: 5px 5px 20px 10px rgb(255, 255, 255);
+          margin-left: 5px;
+          margin-right: 8px;
+          margin-bottom: -2px;
+        }
+      }
 
       .comments-counts {
         font-size: 16px;
@@ -347,6 +391,20 @@
         color: rgb(101,103,140);
         border-radius: 6px;
         border: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+
+        .like-icon {
+          width: 17px;
+          height: 17px;
+          margin-right: 15px;
+          margin-bottom: -3px;
+        }
+      }
+
+      .blue {
+        color: rgb(30,114,233)
       }
       
       .comments-button {
@@ -357,6 +415,16 @@
         color: rgb(101,103,140);
         border-radius: 6px;
         border: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+
+        .comment-picture {
+          height: 22px;
+          width: 22px;
+          margin-right: 15px;
+          margin-bottom: -7px;
+        }
       }
 
       .likes:hover {
@@ -369,13 +437,6 @@
         cursor: pointer;
       }
     };
-
-    .comments {
-
-      .comment-bodies {
-
-      }
-    }
 
     .new-comment {
       display: flex;
