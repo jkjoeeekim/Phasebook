@@ -104,6 +104,7 @@ export default class Post extends React.Component {
       </button>
     );
     let numComments = '';
+    let viewMore = '';
     let posts = this.props.posts;
     let img = (
       <img src={this.props.user.pictureUrl} className="picture" id={`comment-section-picture-${this.props.idx}`}></img>
@@ -140,6 +141,11 @@ export default class Post extends React.Component {
       );
 
       if (!!this.props.ui) {
+        viewMore = (
+          <button className='comments-counts' onClick={this.toggleComments}>
+            Hide comments
+          </button>
+        );
         comments.forEach((comment, idx) => {
           allComments.unshift(
             <Comment idx={idx}
@@ -152,6 +158,11 @@ export default class Post extends React.Component {
           );
         });
       } else {
+        viewMore = (
+          <button className='comments-counts' onClick={this.toggleComments}>
+            View previous comments
+          </button>
+        );
         allComments.unshift(
           <Comment idx={0}
             key={0}
@@ -166,8 +177,16 @@ export default class Post extends React.Component {
     this.commentsLength = allComments.length;
 
     let postLikes = [];
+    let likerNames = [];
     if (this.props.likers) {
       postLikes = this.props.likers.length;
+      this.props.likers.forEach((liker, idx) => {
+        likerNames.push(
+          <p key={idx}>
+            {this.props.users[liker.userId].firstName} {this.props.users[liker.userId].lastName}
+          </p>
+        );
+      });
     }
     if (!!this.props.liked) {
       likeButton = (
@@ -226,11 +245,16 @@ export default class Post extends React.Component {
     let numLikes = (likes === '') ? (
       ""
     ) : (
-      <section className="num-likes-section">
-        <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/likedcircle.png' className="liked-circle-icon"></img>
-        <p>
-          {likes}
-        </p>
+      <section className="post-likes-section">
+        <section className="num-likes-section">
+          <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/likedcircle.png' className="liked-circle-icon"></img>
+          <p>
+            {likes}
+          </p>
+        </section>
+        <section className="likes-names-section">
+          {likerNames}
+        </section>
       </section>
     );
 
@@ -257,6 +281,7 @@ export default class Post extends React.Component {
           {likeButton}
           {commentButton}
         </section>
+        {viewMore}
         {allComments.map(comment => {
           return comment;
         })}

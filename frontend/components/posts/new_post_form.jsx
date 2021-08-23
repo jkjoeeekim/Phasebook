@@ -16,6 +16,7 @@ export default class NewPostForm extends React.Component {
   }
 
   updateBody(e) {
+    e.preventDefault();
     this.setState({ body: e.currentTarget.value });
   }
 

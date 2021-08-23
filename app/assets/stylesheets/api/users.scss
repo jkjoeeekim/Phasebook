@@ -416,6 +416,32 @@
           margin-bottom: -2px;
         }
       }
+
+      .num-likes-section:hover {
+        cursor: pointer;
+        text-decoration: underline;
+
+        + .likes-names-section {
+          display: block;
+        }
+      }
+      
+      .likes-names-section {
+        display: none;
+        position: absolute;
+        padding: 12px;
+        color: white;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 70%);
+        margin-left: 5px;
+        margin-top: 5px;
+
+        p {
+          margin: 3px 0px;
+          font-size: 13px;
+          letter-spacing: 0.5px;
+        }
+      }
       
 
       .comments-counts {
@@ -426,6 +452,7 @@
 
       .comments-counts:hover {
         cursor: pointer;
+        text-decoration: underline;
       }
     }
 

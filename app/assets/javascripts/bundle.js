@@ -905,6 +905,7 @@ var NewPostForm = /*#__PURE__*/function (_React$Component) {
   _createClass(NewPostForm, [{
     key: "updateBody",
     value: function updateBody(e) {
+      e.preventDefault();
       this.setState({
         body: e.currentTarget.value
       });
@@ -1146,6 +1147,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "comment-picture"
       }), "Comment");
       var numComments = '';
+      var viewMore = '';
       var posts = this.props.posts;
       var img = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: this.props.user.pictureUrl,
@@ -1180,6 +1182,10 @@ var Post = /*#__PURE__*/function (_React$Component) {
         }, comments.length, " Comments");
 
         if (!!this.props.ui) {
+          viewMore = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+            className: "comments-counts",
+            onClick: this.toggleComments
+          }, "Hide comments");
           comments.forEach(function (comment, idx) {
             allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
               idx: idx,
@@ -1191,6 +1197,10 @@ var Post = /*#__PURE__*/function (_React$Component) {
             }));
           });
         } else {
+          viewMore = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+            className: "comments-counts",
+            onClick: this.toggleComments
+          }, "View previous comments");
           allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
             idx: 0,
             key: 0,
@@ -1204,9 +1214,15 @@ var Post = /*#__PURE__*/function (_React$Component) {
 
       this.commentsLength = allComments.length;
       var postLikes = [];
+      var likerNames = [];
 
       if (this.props.likers) {
         postLikes = this.props.likers.length;
+        this.props.likers.forEach(function (liker, idx) {
+          likerNames.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+            key: idx
+          }, _this3.props.users[liker.userId].firstName, " ", _this3.props.users[liker.userId].lastName));
+        });
       }
 
       if (!!this.props.liked) {
@@ -1274,11 +1290,15 @@ var Post = /*#__PURE__*/function (_React$Component) {
       }
 
       var numLikes = likes === '' ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "post-likes-section"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "num-likes-section"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: "https://fazebook-seeds.s3.us-west-1.amazonaws.com/likedcircle.png",
         className: "liked-circle-icon"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, likes));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, likes)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "likes-names-section"
+      }, likerNames));
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "posts"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -1301,7 +1321,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "count-likes-comments"
       }, numLikes, numComments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "likes-and-comments"
-      }, likeButton, commentButton), allComments.map(function (comment) {
+      }, likeButton, commentButton), viewMore, allComments.map(function (comment) {
         return comment;
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         className: "new-comment",
@@ -3732,6 +3752,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var _nullLike = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var _action$like$like$pos;
+
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
@@ -3746,6 +3768,7 @@ var _nullLike = {};
       return nextState;
 
     case _actions_like_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_LIKE:
+      nextState[_action$like$like$pos = action.like.like.postId] || (nextState[_action$like$like$pos] = []);
       nextState[action.like.like.postId].push(action.like.like);
       return nextState;
 

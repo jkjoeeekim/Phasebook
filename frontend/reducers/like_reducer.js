@@ -15,6 +15,7 @@ export default (state = {}, action) => {
       });
       return nextState;
     case RECEIVE_LIKE:
+      nextState[action.like.like.postId] ||= [];
       nextState[action.like.like.postId].push(action.like.like);
       return nextState;
     case REMOVE_LIKE:
