@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Comment from '../comments/comment';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -30,9 +31,11 @@ export default class Post extends React.Component {
     this.commentsLength;
     this.liked = this.props.liked;
 
+    this.post = React.createRef();
+
     this.toggleComments = this.toggleComments.bind(this);
     this.updateBody = this.updateBody.bind(this);
-    this.focusInput = this.focusInput.bind(this);
+    // this.focusInput = this.focusInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleLike = this.toggleLike.bind(this);
   }
@@ -50,22 +53,27 @@ export default class Post extends React.Component {
   }
 
   focusInput(idx) {
-    document.getElementById(`input-field-${idx}`).focus();
-  }
-
-  focusInputAfterSubmit() {
-    if (document.getElementById(`input-field-${this.props.idx + 1}`)) {
-      document.getElementById(`input-field-${this.props.idx + 1}`).focus();
-    }
+    return (e) => {
+      e.preventDefault();
+      document.getElementById(`input-field-${idx}`).focus();
+    };
+    // document.getElementById(`input-field-${idx}`).focus();
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.postPost({ body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id });
+    let wnd = document.getElementById("root");
+    let that = this;
+    let currentPost = this.post.current;
+    let newPost = { body: this.state.body, author_id: this.props.currentUser.id, post_id: this.props.post.id };
     this.setState({ body: '' });
-    if (this.state.revealComments) {
-      this.setState({ revealComments: true });
-    }
+    // disableBodyScroll(wnd);
+    this.props.postPost(newPost)
+      .then(res => {
+        // enableBodyScroll(wnd);
+        currentPost.focus();
+        that.focusInput(that.props.idx)
+      });
   }
 
   toggleLike() {
@@ -86,6 +94,11 @@ export default class Post extends React.Component {
     }
   }
 
+  // componentDidMount() {
+  //   debugger;
+  //   enableBodyScroll(document.getElementById("root"));
+  // }
+
   render() {
     if (!this.props.user || !this.props.currentUser || !this.props.posts || !this.props.users) return null;
     let post = this.props.post;
@@ -97,7 +110,7 @@ export default class Post extends React.Component {
     let likes = '';
     let likeButton;
     let commentButton = (
-      <button onClick={() => this.focusInput(this.props.idx)}
+      <button onClick={this.focusInput(this.props.idx)}
         className="comments-button">
         <img src='https://fazebook-seeds.s3.us-west-1.amazonaws.com/comment.png' className="comment-picture"></img>
         Comment
@@ -294,6 +307,7 @@ export default class Post extends React.Component {
             value={this.state.body}
             onChange={this.updateBody}
           ></input>
+        <input type='submit' ref={this.post}></input>
         </form>
       </section>
     );

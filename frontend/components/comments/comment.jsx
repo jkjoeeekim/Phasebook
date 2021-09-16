@@ -1,17 +1,72 @@
 import React from 'react';
+import Moment from 'moment';
 import { Link } from 'react-router-dom';
 import close from '../../../app/assets/images/close.png';
 
 export default class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pic: "",
+  calcTimeAgo() {
+    let date = {
+      timeAgo: 0,
+      suffix: '',
     };
-  }
 
-  componentDidMount() {
+    let commentTime = new Moment(this.props.comment.createdAt).format('YYYYMMDDhhmmss');
+    let timeAgo = new Moment(commentTime, 'YYYYMMDDhhmmss').fromNow(true).split(' ');
+ 
+    date.timeAgo = timeAgo[0];
+
+    switch (timeAgo[1]) {
+      case ('seconds'):
+        date.siffix = 's';
+        break;
+      case ('second'):
+        date.timeAgo = 1;
+        date.siffix = 's';
+        break;
+      case ('minutes'):
+        date.suffix = 'm';
+        break;
+      case ('minute'):
+        date.timeAgo = 1;
+        date.suffix = 'm';
+        break;
+      case ('hours'):
+        date.suffix = 'h';
+        break;
+      case ('hour'):
+        date.timeAgo = 1;
+        date.suffix = 'h';
+        break;
+      case ('days'):
+        if (date.timeAgo > 7) {
+          date.timeAgo = Math.floor(date.timeAgo / 7);
+          date.suffix = 'w';
+        } else {
+          date.suffix = 'd';
+        }
+        break;
+      case ('day'):
+        date.timeAgo = 1;
+        date.suffix = 'd';
+        break;
+      case ('months'):
+        date.timeAgo = date.timeAgo * 4;
+        date.suffix = 'w';
+        break;
+      case ('month'):
+        date.timeAgo = 4;
+        date.suffix = 'w';
+        break;
+      case ('years'):
+        date.suffix = 'y';
+        break;
+      case ('year'):
+        date.timeAgo = 1;
+        date.suffix = 'y';
+        break;
+    }
+
+    return date;
   }
 
   render() {
@@ -20,41 +75,12 @@ export default class Comment extends React.Component {
     let pic = (
       <img src={this.props.user.pictureUrl} className="picture" id={`comment-picture-${this.props.idx}`}></img>
     );
-    let date = {
-      timeAgo: 0,
-      suffix: ""
-    };
+    let date = {};
     let post = this.props.comment;
     let deleteButton = '';
 
     if (post) {
-      let today = new Date();
-      let todayMinutes = today.getMinutes();
-      let todayHour = today.getHours();
-      let todayDay = today.getDate();
-      let todayMonth = today.getMonth();
-      let fullDate = post.createdAt.split("T")[0];
-      let fullTime = post.createdAt.split("T")[1];
-      let postMonth = fullDate.split("-")[1];
-      let postDay = fullDate.split("-")[2];
-      let postHour = fullTime.split(":")[0];
-      let postMinutes = fullTime.split(":")[1];
-      if ((todayMonth - postMonth) > 0) {
-        date.timeAgo += ((todayMonth - postMonth) * 4);
-        date.suffix = "w";
-      } else if ((todayDay - postDay) > 0) {
-        date.timeAgo += ((todayDay - postDay));
-        date.suffix = "d";
-      } else if ((todayHour - postHour) > 0) {
-        date.timeAgo += ((todayHour - postHour));
-        date.suffix = "h";
-      } else if ((todayMinutes - postMinutes) > 0) {
-        date.timeAgo += ((todayMinutes - postMinutes));
-        date.suffix = "m";
-      } else {
-        date.timeAgo += 1;
-        date.suffix = "m";
-      }
+      date = this.calcTimeAgo();
     }
 
     if (this.props.user.id === this.props.currentUser.id) {
