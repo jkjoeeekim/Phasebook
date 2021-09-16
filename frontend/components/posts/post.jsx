@@ -69,11 +69,11 @@ export default class Post extends React.Component {
     this.setState({ body: '' });
     // disableBodyScroll(wnd);
     this.props.postPost(newPost)
-      .then(res => {
-        // enableBodyScroll(wnd);
-        currentPost.focus();
-        that.focusInput(that.props.idx)
-      });
+      // .then(res => {
+      //   // enableBodyScroll(wnd);
+      //   currentPost.focus();
+      //   that.focusInput(that.props.idx);
+      // });
   }
 
   toggleLike() {
@@ -155,7 +155,7 @@ export default class Post extends React.Component {
 
       if (!!this.props.ui) {
         viewMore = (
-          <button className='comments-counts' onClick={this.toggleComments}>
+          <button className='comments-show-toggle' onClick={this.toggleComments}>
             Hide comments
           </button>
         );
@@ -172,8 +172,8 @@ export default class Post extends React.Component {
         });
       } else {
         viewMore = (
-          <button className='comments-counts' onClick={this.toggleComments}>
-            View previous comments
+          <button className='comments-show-toggle' onClick={this.toggleComments}>
+            View {comments.length - 1} more comments
           </button>
         );
         allComments.unshift(
@@ -294,10 +294,12 @@ export default class Post extends React.Component {
           {likeButton}
           {commentButton}
         </section>
-        {viewMore}
-        {allComments.map(comment => {
-          return comment;
-        })}
+        <section className="comments-section">
+          {viewMore}
+          {allComments.map(comment => {
+            return comment;
+          })}
+        </section>
         <form className="new-comment" onSubmit={this.handleSubmit}>
           {imgCurrent}
           <input id={`input-field-${this.props.idx}`}
@@ -307,7 +309,7 @@ export default class Post extends React.Component {
             value={this.state.body}
             onChange={this.updateBody}
           ></input>
-        <input type='submit' ref={this.post}></input>
+          {/* <input type='submit' ref={this.post}></input> */}
         </form>
       </section>
     );

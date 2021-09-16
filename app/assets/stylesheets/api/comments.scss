@@ -61,6 +61,22 @@
     .created-ats:hover {
       text-decoration: underline;
       cursor: pointer;
+
+      + .created-ats-full {
+        display: block;
+      }
+    }
+
+    .created-ats-full {
+      display: none;
+      position: absolute;
+      padding: 12px;
+      color: white;
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 70%);
+      margin: 0px 0px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
     }
   }
 

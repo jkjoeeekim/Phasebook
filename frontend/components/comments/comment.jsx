@@ -11,17 +11,19 @@ export default class Comment extends React.Component {
     };
 
     let commentTime = new Moment(this.props.comment.createdAt).format('YYYYMMDDhhmmss');
-    let timeAgo = new Moment(commentTime, 'YYYYMMDDhhmmss').fromNow(true).split(' ');
- 
+    let timeAgo = new Moment(this.props.comment.createdAt, 'YYYYMMDDhhmmss').fromNow(true).split(' ');
+
+    console.log(commentTime);
+    console.log(timeAgo);
+
     date.timeAgo = timeAgo[0];
 
     switch (timeAgo[1]) {
-      case ('seconds'):
-        date.siffix = 's';
-        break;
-      case ('second'):
-        date.timeAgo = 1;
-        date.siffix = 's';
+      case ('few'):
+        if (timeAgo[2] === 'seconds') {
+          date.suffix = 'm'
+          date.timeAgo = 1;
+        } 
         break;
       case ('minutes'):
         date.suffix = 'm';
@@ -76,11 +78,13 @@ export default class Comment extends React.Component {
       <img src={this.props.user.pictureUrl} className="picture" id={`comment-picture-${this.props.idx}`}></img>
     );
     let date = {};
+    let time;
     let post = this.props.comment;
     let deleteButton = '';
 
     if (post) {
       date = this.calcTimeAgo();
+      time = new Moment(post.createdAt).format('dddd, MMMM DD, YYYY [at] h:mm a');
     }
 
     if (this.props.user.id === this.props.currentUser.id) {
@@ -104,6 +108,7 @@ export default class Comment extends React.Component {
             </section>
             <section className="time-section">
               <Link to="/" className="created-ats">{date.timeAgo}{date.suffix}</Link>
+              <p className="created-ats-full">{time}</p>
             </section>
           </section>
         </section>

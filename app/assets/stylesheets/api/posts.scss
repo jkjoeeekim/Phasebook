@@ -474,6 +474,24 @@
       }
     };
 
+    .comments-section {
+
+      .comments-show-toggle {
+        border: none;
+        background-color: inherit;
+        color: rgba(101,103,107, 78%);
+        font-size: 15px;
+        font-weight: 600;
+        margin-top: 10px;
+        padding-left: 0px;
+      }
+
+      .comments-show-toggle:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+
     .new-comment {
       display: flex;
       flex-direction: row;

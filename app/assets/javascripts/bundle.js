@@ -489,17 +489,18 @@ var Comment = /*#__PURE__*/function (_React$Component) {
         suffix: ''
       };
       var commentTime = new (moment__WEBPACK_IMPORTED_MODULE_1___default())(this.props.comment.createdAt).format('YYYYMMDDhhmmss');
-      var timeAgo = new (moment__WEBPACK_IMPORTED_MODULE_1___default())(commentTime, 'YYYYMMDDhhmmss').fromNow(true).split(' ');
+      var timeAgo = new (moment__WEBPACK_IMPORTED_MODULE_1___default())(this.props.comment.createdAt, 'YYYYMMDDhhmmss').fromNow(true).split(' ');
+      console.log(commentTime);
+      console.log(timeAgo);
       date.timeAgo = timeAgo[0];
 
       switch (timeAgo[1]) {
-        case 'seconds':
-          date.siffix = 's';
-          break;
+        case 'few':
+          if (timeAgo[2] === 'seconds') {
+            date.suffix = 'm';
+            date.timeAgo = 1;
+          }
 
-        case 'second':
-          date.timeAgo = 1;
-          date.siffix = 's';
           break;
 
         case 'minutes':
@@ -569,11 +570,13 @@ var Comment = /*#__PURE__*/function (_React$Component) {
         id: "comment-picture-".concat(this.props.idx)
       });
       var date = {};
+      var time;
       var post = this.props.comment;
       var deleteButton = '';
 
       if (post) {
         date = this.calcTimeAgo();
+        time = new (moment__WEBPACK_IMPORTED_MODULE_1___default())(post.createdAt).format('dddd, MMMM DD, YYYY [at] h:mm a');
       }
 
       if (this.props.user.id === this.props.currentUser.id) {
@@ -611,7 +614,9 @@ var Comment = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/",
         className: "created-ats"
-      }, date.timeAgo, date.suffix)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+      }, date.timeAgo, date.suffix), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "created-ats-full"
+      }, time)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "right-section"
       }, deleteButton));
     }
@@ -1134,11 +1139,11 @@ var Post = /*#__PURE__*/function (_React$Component) {
         body: ''
       }); // disableBodyScroll(wnd);
 
-      this.props.postPost(newPost).then(function (res) {
-        // enableBodyScroll(wnd);
-        currentPost.focus();
-        that.focusInput(that.props.idx);
-      });
+      this.props.postPost(newPost); // .then(res => {
+      //   // enableBodyScroll(wnd);
+      //   currentPost.focus();
+      //   that.focusInput(that.props.idx);
+      // });
     }
   }, {
     key: "toggleLike",
@@ -1227,7 +1232,7 @@ var Post = /*#__PURE__*/function (_React$Component) {
 
         if (!!this.props.ui) {
           viewMore = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-            className: "comments-counts",
+            className: "comments-show-toggle",
             onClick: this.toggleComments
           }, "Hide comments");
           comments.forEach(function (comment, idx) {
@@ -1242,9 +1247,9 @@ var Post = /*#__PURE__*/function (_React$Component) {
           });
         } else {
           viewMore = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-            className: "comments-counts",
+            className: "comments-show-toggle",
             onClick: this.toggleComments
-          }, "View previous comments");
+          }, "View ", comments.length - 1, " more comments");
           allComments.unshift( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_comments_comment__WEBPACK_IMPORTED_MODULE_1__.default, {
             idx: 0,
             key: 0,
@@ -1365,9 +1370,11 @@ var Post = /*#__PURE__*/function (_React$Component) {
         className: "count-likes-comments"
       }, numLikes, numComments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "likes-and-comments"
-      }, likeButton, commentButton), viewMore, allComments.map(function (comment) {
+      }, likeButton, commentButton), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+        className: "comments-section"
+      }, viewMore, allComments.map(function (comment) {
         return comment;
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         className: "new-comment",
         onSubmit: this.handleSubmit
       }, imgCurrent, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -1377,9 +1384,6 @@ var Post = /*#__PURE__*/function (_React$Component) {
         placeholder: "Write a comment...",
         value: this.state.body,
         onChange: this.updateBody
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        type: "submit",
-        ref: this.post
       })));
     }
   }]);
